@@ -6,7 +6,7 @@
 	"description": "OWASP SSO is a javascript application that allows a secure-by-default self-hosted SSO experience, including phishing-proof two-factor authentication, using state-of-the-art security mechanisms.",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/OWASP/SSO_Project.git",
+		"url": "https://github.com/OWASP/SSO_Project.git"
 	},
 	"scripts": {
 		"setup": "cd js-backend && npm install && cd .. && cd vue-ui && npm install && cd ..",
