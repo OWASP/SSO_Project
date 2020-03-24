@@ -8,6 +8,16 @@ jobs:
     - stage: lint
       os: linux
       dist: xenial
-      install: npm run setup
+      install: 
+        - cd js-backend
+        - npm install
+      script:
+        - npm run lint
+    - stage: lint
+      os: linux
+      dist: xenial
+      install: 
+        - cd vue-ui
+        - npm install
       script:
         - npm run lint
