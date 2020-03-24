@@ -10,8 +10,6 @@ node_js:
   - 13
 stages:
   - lint
-addons:
-  chrome: stable
 jobs:
   include:
     - stage: lint
