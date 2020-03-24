@@ -1,0 +1,21 @@
+dist: xenial
+language: node_js
+os:
+  - linux
+  - osx
+  - windows
+node_js:
+  - 12
+  - 10
+  - 13
+stages:
+  - lint
+addons:
+  chrome: stable
+jobs:
+  include:
+    - stage: lint
+      install: cd js-backend && npm install && cd .. && cd vue-ui && npm install && cd ..
+      script:
+        - cd js-backend && npm run lint && cd ..
+        - cd vue-ui && npm run lint && cd ..
