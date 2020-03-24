@@ -11,6 +11,7 @@
 	"scripts": {
 		"setup": "cd js-backend && npm install && cd .. && cd vue-ui && npm install && cd ..",
 		"lint": "cd js-backend && npm run lint && cd .. && cd vue-ui && npm run lint && cd ..",
+		"test": "echo \"Error: no test specified\" && exit 0"
 	},
 	"contributors": []
 }
