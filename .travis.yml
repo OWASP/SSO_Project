@@ -6,16 +6,14 @@ addons:
 jobs:
   include:
     - stage: lint
-      os: linux
-      dist: xenial
+      node_js: 13
       install: 
         - cd js-backend
         - npm install
       script:
         - npm run lint
     - stage: lint
-      os: linux
-      dist: xenial
+      node_js: 13
       install: 
         - cd vue-ui
         - npm install
