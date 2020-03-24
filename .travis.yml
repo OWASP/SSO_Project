@@ -15,7 +15,6 @@ addons:
 jobs:
   include:
     - stage: lint
-      install: cd js-backend && npm install && cd .. && cd vue-ui && npm install && cd ..
       script:
-        - cd js-backend && npm run lint && cd ..
-        - cd vue-ui && npm run lint && cd ..
+        - cd js-backend && npm install && npm run lint && cd ..
+        - cd vue-ui && npm install && npm run lint && cd ..
