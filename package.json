@@ -1,0 +1,16 @@
+{
+	"name": "OWASP-SSO",
+	"version": "1.0.0",
+	"author": "JamesCullum (https://github.com/JamesCullum)",
+	"license": "GPL-3.0-or-later",
+	"description": "OWASP SSO is a javascript application that allows a secure-by-default self-hosted SSO experience, including phishing-proof two-factor authentication, using state-of-the-art security mechanisms.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/OWASP/SSO_Project.git",
+	},
+	"scripts": {
+		"setup": "cd js-backend && npm install && cd .. && cd vue-ui && npm install && cd ..",
+		"lint": "cd js-backend && npm run lint && cd .. && cd vue-ui && npm run lint && cd ..",
+	},
+	"contributors": []
+}

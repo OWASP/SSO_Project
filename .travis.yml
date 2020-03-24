@@ -10,9 +10,11 @@ node_js:
   - 13
 stages:
   - lint
+addons:
+  chrome: stable
 jobs:
   include:
     - stage: lint
+      install: npm run setup
       script:
-        - cd js-backend && npm install && npm run lint && cd ..
-        - cd vue-ui && npm install && npm run lint && cd ..
+        - npm run lint
