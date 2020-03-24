@@ -1,0 +1,104 @@
+{
+	"name": "OWASP-SSO-Backend",
+	"version": "1.0.0",
+	"author": "JamesCullum (https://github.com/JamesCullum)",
+	"license": "GPL-3.0-or-later",
+	"description": "NodeJS backend for the OWASP Single Sign-On project",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/OWASP/SSO_Project.git",
+		"directory": "js-backend"
+	},
+	"scripts": {
+		"serve": "node index.js",
+		"lint": "eslint .",
+		"lint:fix": "eslint --fix ."
+	},
+	"dependencies": {
+		"argon2": "^0.24.1",
+		"base64-arraybuffer": "^0.2.0",
+		"body-parser": "^1.19.0",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"express-rate-limit": "^5.1.1",
+		"fido2-lib": "^2.1.1",
+		"ip-country": "^1.0.2",
+		"jsonwebtoken": "^8.5.1",
+		"mysql2": "^1.7.0",
+		"node-forge": "^0.9.1",
+		"nodemailer": "^6.4.4",
+		"password-validator": "^4.1.3",
+		"samlp": "^3.4.1",
+		"validator": "^12.2.0"
+	},
+	"devDependencies": {
+		"babel-eslint": "^10.1.0",
+		"eslint": "^6.8.0",
+		"eslint-plugin-vue": "^6.2.2"
+	},
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"node": true
+		},
+		"extends": [
+			"plugin:vue/recommended"
+		],
+		"rules": {
+			"no-mixed-spaces-and-tabs": "error",
+			"quotes": [
+				"error",
+				"double",
+				{
+					"avoidEscape": true
+				}
+			],
+			"comma-dangle": [
+				"error",
+				{
+					"arrays": "always-multiline",
+					"objects": "always-multiline",
+					"imports": "never",
+					"exports": "never",
+					"functions": "ignore"
+				}
+			],
+			"indent": [
+				"error",
+				"tab",
+				{
+					"SwitchCase": 1
+				}
+			],
+			"semi": [
+				"error",
+				"always"
+			],
+			"no-multiple-empty-lines": [
+				"error",
+				{
+					"max": 2,
+					"maxEOF": 1
+				}
+			]
+		},
+		"parserOptions": {
+			"parser": "babel-eslint"
+		},
+		"overrides": [
+			{
+				"files": [
+					"**/__tests__/*.{j,t}s?(x)"
+				],
+				"env": {
+					"mocha": true
+				}
+			}
+		]
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions"
+	],
+	"contributors": []
+}

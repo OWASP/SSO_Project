@@ -1,0 +1,4 @@
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+extendedKeyUsage = serverAuth, clientAuth, emailProtection
+keyUsage=nonRepudiation, digitalSignature, keyEncipherment

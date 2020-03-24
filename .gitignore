@@ -1,0 +1,4 @@
+/js-backend/keys/server_cert.pem
+/js-backend/keys/server_key.pem
+node_modules
+dist

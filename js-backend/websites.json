@@ -1,0 +1,22 @@
+{
+	"1": {
+		"jwt": "hello-world",
+		"signedRequestsOnly": false,
+		"name": "E Corp",
+		"redirect": "https://postman-echo.com/post",
+		"branding": {
+			"backgroundColor": "#fff",
+			"fontColor": "#254799",
+			"legalName": "E Corp",
+			"privacyPolicy": "https://www.nbcuniversal.com/privacy",
+			"logo": "https://www.e-corp-usa.com/images/e-corp-logo-blue.png"
+		},
+		"certificates": [{
+			"authorities": ["e-corp.ca.pem"],
+			"webhook": {
+				"url": "https://postman-echo.com/post",
+				"successContains": "94:0B:DE:AD:BB:80:10:BD:17:C1:48:B4:5A:B2:66:3C:B5:75:DE:7B:89:37:65:D3:60:FF:B0:09:26:27:B2:91"
+			}
+		}]
+	}
+}

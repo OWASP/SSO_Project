@@ -1,0 +1,79 @@
+version: '3.7'
+
+services:
+  database:
+    image: mysql:5
+    volumes:
+      - ./owasp_sso.sql:/docker-entrypoint-initdb.d/setup.sql
+      - ./cache/database:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: insecure-default-root-password
+      MYSQL_DATABASE: owasp_sso
+      MYSQL_USER: owasp_sso
+      MYSQL_PASSWORD: insecure-default-password
+
+  # If you want to take a look at the database for debugging
+  #database-admin:
+  #  image: adminer
+  #  restart: always
+  #  ports:
+  #    - 8008:8080
+  
+  smtp:
+    image: mailhog/mailhog
+    restart: always
+  
+  backend:
+    restart: always
+    depends_on: 
+      - smtp
+      - database
+    build:
+      context: .
+      dockerfile: backend.dockerfile
+    volumes:
+      - ./cache/ca.pem:/app/keys/bundled-ca.pem
+    environment:
+      - DOMAIN
+      - FRONTENDPORT=443
+  
+  # Nginx fails if backend is not available
+  frontend:
+    depends_on:
+      - backend
+    restart: always
+    build:
+      context: .
+      dockerfile: frontend+proxy.dockerfile
+    ports:
+      - mode: host
+        protocol: tcp
+        published: 80
+        target: 80
+      - mode: host
+        protocol: tcp
+        published: 443
+        target: 443
+    volumes:
+      - ./cache/certbot/conf:/etc/letsencrypt
+      - ./cache/certbot/www:/var/www/certbot
+      - ./cache/ca.pem:/etc/nginx/crypto/ca.pem
+    environment:
+      - DOMAIN
+    
+  certbot:
+    depends_on:
+      - frontend
+    build:
+      context: .
+      dockerfile: certbot.dockerfile
+    restart: always
+    volumes:
+      - ./cache/certbot/conf:/etc/letsencrypt
+      - ./cache/certbot/www:/var/www/certbot
+    environment:
+      - DOMAIN
+      - STAGING
+      - EMAIL
+
