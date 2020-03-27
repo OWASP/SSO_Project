@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ -n "$DOMAIN" ]; then
-	echo "Check default certificates"
+if [ -n "$DOMAIN" ] && [ "$DOMAIN" != "localhost" ]; then
+	echo "Check default certificates for $DOMAIN"
 	if [ -e "/etc/letsencrypt/live/$DOMAIN/chain.pem" ]; then
 		echo "Certificates exist"
 	else
@@ -9,7 +9,7 @@ if [ -n "$DOMAIN" ]; then
 		rm -rf /etc/letsencrypt/live/$DOMAIN
 		
 		CERTBOTPARAMS=""
-		if [ -n "$STAGING" ]; then
+		if [ -n "$STAGING" ] && [ "$STAGING" == "true" ]; then
 			echo "Using staging"
 			CERTBOTPARAMS="--staging"
 		fi

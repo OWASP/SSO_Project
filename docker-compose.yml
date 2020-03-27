@@ -1,34 +1,8 @@
 version: '3.7'
 
 services:
-  database:
-    image: mysql:5
-    volumes:
-      - ./owasp_sso.sql:/docker-entrypoint-initdb.d/setup.sql
-      - ./cache/database:/var/lib/mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: insecure-default-root-password
-      MYSQL_DATABASE: owasp_sso
-      MYSQL_USER: owasp_sso
-      MYSQL_PASSWORD: insecure-default-password
-
-  # If you want to take a look at the database for debugging
-  #database-admin:
-  #  image: adminer
-  #  restart: always
-  #  ports:
-  #    - 8008:8080
-  
-  smtp:
-    image: mailhog/mailhog
-    restart: always
-  
   backend:
     restart: always
-    depends_on: 
-      - smtp
-      - database
     build:
       context: .
       dockerfile: backend.dockerfile
@@ -37,11 +11,31 @@ services:
     environment:
       - DOMAIN
       - FRONTENDPORT=443
+      - DBHOST
+      - DBUSER
+      - DBDATABASE
+      - DBPASS
+      - SMTPHOST
+      - SMTPPORT
+      - SMTPSECURE
+      - SMTPUSER
+      - SMTPPASS
+      - ISSUERNAME
+      - FIDO2FACTOR
+      - FIDO2TIMEOUT
+      - DISABLELOCALHOSTPATCHING
+      - PWNEDPASSFAILSAFE
+      - PWHISTORY
+      - ARGON2TYPE
+      - ARGON2PARALLEL
+      - ARGON2TIME
+      - ARGON2MEMORY
+      - AUDITPAGELENGTH
+      - FALLBACKEMAILFROM
   
-  # Nginx fails if backend is not available
   frontend:
     depends_on:
-      - backend
+      - backend # Nginx fails if backend is not available
     restart: always
     build:
       context: .

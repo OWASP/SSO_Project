@@ -2,3 +2,7 @@
 /js-backend/keys/server_key.pem
 node_modules
 dist
+/cache/certbot/*
+!/cache/certbot/.gitkeep
+/cache/database/*
+!/cache/database/.gitkeep

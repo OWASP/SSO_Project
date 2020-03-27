@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Replace environment variables"
+echo "Replace environment variables for $DOMAIN"
 envsubst '${DOMAIN}' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf
 
 echo "Check default certificates"

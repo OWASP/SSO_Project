@@ -38,7 +38,7 @@ You will need to restart the command line in such case
 
 ### Docker Container
 
-You can use the `docker-compose.yml` file to start a production-ready environment via `docker-compose up --build`.
+You can use the `docker-compose.yml` file to start a production-ready environment via `docker-compose up -f docker-compose.yml -f docker-compose.test.yml --build`.
 
 In the future, all components will be available to be directly pulled from the registry.
 

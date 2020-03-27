@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  database:
+    image: mysql:5
+    volumes:
+      - ./owasp_sso.sql:/docker-entrypoint-initdb.d/setup.sql
+      - ./cache/database:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: insecure-default-root-password
+      MYSQL_DATABASE: owasp_sso
+      MYSQL_USER: owasp_sso
+      MYSQL_PASSWORD: insecure-default-password
+
+  database-admin:
+    image: adminer
+    restart: always
+    ports:
+      - 8008:8080
+  
+  smtp:
+    image: mailhog/mailhog
+    restart: always
+
