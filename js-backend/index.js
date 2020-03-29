@@ -1,6 +1,7 @@
 require("dotenv").config();
 const https = require("https");
 const express = require("express");
+const syslogPro = require("syslog-pro");
 const rateLimit = require("express-rate-limit");
 
 const { execFile, execFileSync } = require("child_process");
@@ -24,10 +25,23 @@ PassportProfileMapper.prototype.getClaims = function() {
 	};
 };
 
+// Load page settings
 const customPages = require("./websites.json");
+for (let websiteIndex of Object.keys(customPages)) {
+	const thisPage = customPages[websiteIndex];
+	
+	if(thisPage.hasOwnProperty("syslog")) {
+		// Load syslog handler
+		// Documentation: https://cyamato.github.io/SyslogPro/module-SyslogPro-Syslog.html
+		thisPage.syslog = new syslogPro.Syslog(thisPage.syslog);
+		console.log("Loaded syslog for website key", websiteIndex);
+	}
+}
 
 // Custom classes
+const packageList = require("./package.json");
 const {DB, User, PwUtil, Audit, Mailer} = require("./utils");
+Audit.prepareLoggers(customPages, packageList.version);
 
 const expressPort = process.env.BACKENDPORT || 3000;
 const frontendPort = process.env.FRONTENDPORT || 8080;
@@ -37,8 +51,6 @@ const emailFrom = process.env.SMTPUSER || process.env.FALLBACKEMAILFROM;
 
 // Configure Fido2
 if(hostname == "localhost" && !disableLocalhostPatching) {
-	const packageList = require("./package.json");
-	
 	const utilsLocation = require.resolve("fido2-lib/lib/utils.js");
 	if(packageList.dependencies["fido2-lib"] == "^2.1.1" && fs.statSync(utilsLocation).size == 7054) {
 		// FIDO2-Lib does not natively support localhost and due to little maintenance this issue hasn't been fixed yet. See https://github.com/apowers313/fido2-lib/pull/19/files
@@ -170,7 +182,7 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 		});
 	});
 	app.post("/authenticator/delete", isAuthenticated, (req, res, next) => {
-		Audit.add(req.user.id, getIP(req), "authenticator", "remove", req.body.handle).then(aID => {
+		Audit.add(req, "authenticator", "remove", req.body.handle).then(aID => {
 			User.removeAuthenticator(req.body.type, req.user.id, req.body.handle).then(() => {
 				next();
 			}).catch(err => {
@@ -182,9 +194,15 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 	}, showSuccess);
 	app.get("/email-confirm", onEmailConfirm, createAuthToken);
 	
-	// JWT flow
+	// User SSO flow
 	app.route("/flow/in").get(onFlowIn, showSuccess).post(onFlowIn, showSuccess);
 	app.post("/flow/out", isAuthenticated, onFlowOut, showSuccess);
+	app.get("/default-page", (req, res, next) => {
+		const defaultPage = customPages["default"];
+		return res.status(200).json({
+			branding: defaultPage.branding,
+		});
+	});
 	
 	// SAML
 	// Test flow: https://samltest.id/start-idp-test/
@@ -277,7 +295,7 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 	app.post("/local/change", onChange, createAuthToken);
 	app.post("/local/session-clean", isAuthenticated, (req, res, next) => {
 		const token = req.user.token;
-		Audit.add(req.user.id, getIP(req), "session", "clean", null).then(() => {
+		Audit.add(req, "session", "clean", null).then(() => {
 			User.cleanSession(req.user.id, token).then(() => {
 				next();
 			}).catch(err => {
@@ -311,12 +329,12 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 			console.error(err);
 			res.status(404).send("No user with this username/password combination found");
 		}).then(() => {
-			return Audit.add(req.user.id, getIP(req), "login", "password", null);
+			return Audit.add(req, "login", "password", null);
 		}).then(() => {
 			req.loginEmail = req.body.username;
 			next();
 		}).catch(err => {
-			//console.error(err)
+			console.error(err);
 			res.status(500).send("Internal error during login");
 		});
 	}, createLoginToken);
@@ -328,7 +346,7 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 	}), isLoggedIn, (req, res, next) => {
 		const email = req.user.username;
 		
-		User.requestEmailActivation(email, getIP(req), "login").then(token => {
+		User.requestEmailActivation(email, Audit.getIP(req), "login").then(token => {
 			Mailer.sendMail({
 				from: "OWASP Single Sign-On <"+emailFrom+">",
 				to: email,
@@ -407,7 +425,7 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 				publicKey: authnrData.get("credentialPublicKeyPem"),
 			};
 			
-			return Audit.add(userId, getIP(req), "authenticator", "add", label + " ("+credId+")");
+			return Audit.add(req, "authenticator", "add", label + " ("+credId+")");
 			
 		}).then(() => {
 			return User.addAuthenticator("fido2", req.user.username, label, {
@@ -505,7 +523,7 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 			};
 			return Promise.all([
 				User.updateAuthenticatorCounter("fido2", thisCred.userHandle, returnObj.counter),
-				Audit.add(userId, getIP(req), "authenticator", "login", thisCred.label + " (" + thisCred.userHandle + ")"),
+				Audit.add(req, "authenticator", "login", thisCred.label + " (" + thisCred.userHandle + ")"),
 			]);
 		}).then(() => {
 			next();
@@ -642,7 +660,7 @@ function onFlowIn(req, res, next) {
 			User.findUserByName(email).then(userData => {
 				req.loginEmail = email;
 				req.user = userData;
-				return Audit.add(req.user.id, getIP(req), "page", "request", thisPage.name);
+				return Audit.add(req, "page", "request", thisPage.name);
 			}).then(() => {
 				// Artificially log in as this user
 				createLoginToken(req, res, next);
@@ -656,7 +674,7 @@ function onFlowIn(req, res, next) {
 					req.loginEmail = email;
 					req.user = userData;
 					
-					return Audit.add(req.user.id, getIP(req), "page", "registration", thisPage.name);
+					return Audit.add(req, "page", "registration", thisPage.name);
 				}).then(() => {
 					createLoginToken(req, res, next);
 				}).catch(err => {
@@ -685,7 +703,7 @@ function onFlowOut(req, res, next) {
 		return res.status(400).send("Invalid session JWT");
 	}
 	
-	Audit.add(req.user.id, getIP(req), "page", "login", thisPage.name).then(() => {
+	Audit.add(req, "page", "login", thisPage.name).then(() => {
 		if(jwtRequest.jwt) {
 			jwt.sign({
 				sub: req.user.username,
@@ -694,7 +712,7 @@ function onFlowOut(req, res, next) {
 			}, thisPage.jwt, {
 				expiresIn: shortJWTAge,
 			}, (err, jwtData) => {
-				Audit.add(req.user.id, getIP(req), "page", "login", thisPage.name).then(() => {
+				Audit.add(req, "page", "login", thisPage.name).then(() => {
 					const returnObj = {
 						redirect: thisPage.redirect,
 						token: jwtData,
@@ -761,8 +779,6 @@ function onCertLogin(req, res, next) {
 	//console.log("cert login", cert, req.user)
 	
 	if(!cert.subject) {
-		console.log("no subject", req.headers["x-tls-verified"]);
-		
 		// No direct connection - check header value
 		if(req.headers.hasOwnProperty("x-tls-verified") && req.headers["x-tls-verified"] == "SUCCESS") {
 			//console.log("receive certificate via proxy", req.headers["x-tls-cert"]);
@@ -847,7 +863,7 @@ function onCertLogin(req, res, next) {
 					}
 					
 					if(!certHandler.webhook || !certHandler.webhook.url) {
-						return Audit.add(req.user.id, getIP(req), "authenticator", "login", thisPage.name + " certificate").then(() => {
+						return Audit.add(req, "authenticator", "login", thisPage.name + " certificate").then(() => {
 							next();
 						}).catch(err => {
 							console.error(err);
@@ -868,7 +884,7 @@ function onCertLogin(req, res, next) {
 							if(!passCertificate) {
 								return res.status(403).send("Certificate denied by page");
 							} else {
-								Audit.add(req.user.id, getIP(req), "authenticator", "login", thisPage.name + " certificate").then(() => {
+								Audit.add(req, "authenticator", "login", thisPage.name + " certificate").then(() => {
 									next();
 								}).catch(err => {
 									console.error(err);
@@ -902,7 +918,7 @@ function onCertLogin(req, res, next) {
 		//console.log("allowed fingerprints", fingerprints)
 		if(cert.fingerprint256 in fingerprints) {
 			const thisCert = fingerprints[cert.fingerprint256];
-			Audit.add(req.user.id, getIP(req), "authenticator", "login", thisCert.label + " (" + cert.fingerprint256 + ")").then(() => {
+			Audit.add(req, "authenticator", "login", thisCert.label + " (" + cert.fingerprint256 + ")").then(() => {
 				next();
 			});
 		} else {
@@ -920,7 +936,7 @@ function onEmailConfirm(req, res, next) {
 	const token = req.query.token;
 	const action = req.query.action;
 	
-	Audit.add(req.user ? req.user.id : null, getIP(req), action, "email", null).then(aID => {
+	Audit.add(req, action, "email", null).then(aID => {
 		switch(action) {
 			default:
 				return res.status(400).send("Invalid action");
@@ -929,7 +945,7 @@ function onEmailConfirm(req, res, next) {
 			case "change":
 				return res.redirect(303, "/password-change.html?" + token);
 			case "login":
-				return User.resolveEmailActivation(token, getIP(req), action).then(confirmation => {
+				return User.resolveEmailActivation(token, Audit.getIP(req), action).then(confirmation => {
 					next();
 				}).catch(err => {
 					res.status(400).send(err);
@@ -943,7 +959,7 @@ function onEmailConfirm(req, res, next) {
 function onRegister(req, res, next) {
 	const email = req.body.email;
 	
-	User.requestEmailActivation(email, getIP(req), "registration").then(token => {
+	User.requestEmailActivation(email, Audit.getIP(req), "registration").then(token => {
 		Mailer.sendMail({
 			from: "OWASP Single Sign-On <"+emailFrom+">",
 			to: email,
@@ -972,6 +988,10 @@ function onCertRegister(req, res, next) {
 	const email = req.user.username;
 	const label = req.body.label;
 	
+	if(email.indexOf('"') != -1) {
+		return res.send(500).send("Email address can't be used for generating certificates");
+	}
+	
 	// On Windows you can use bash.exe delivered with Git and add it to your PATH environment variable
 	execFile("bash", [
 		"-c", "scripts/create-client.bash '"+email+"' '"+email+"'",
@@ -990,7 +1010,7 @@ function onCertRegister(req, res, next) {
 				return res.status(500).send("Internal error");
 			}
 			
-			Audit.add(req.user.id, getIP(req), "authenticator", "add", label+" ("+certData.fingerprint256+")").then(() => {
+			Audit.add(req, "authenticator", "add", label+" ("+certData.fingerprint256+")").then(() => {
 				res.download(certPath, "client-certificate.p12", async err => {
 					//console.log("res.download", err)
 					fs.unlink(certPath, err => {
@@ -1015,7 +1035,7 @@ function onCertRegister(req, res, next) {
 function onChangeRequest(req, res, next) {
 	const email = req.body.email;
 	
-	User.requestEmailActivation(email, getIP(req), "change").then(token => {
+	User.requestEmailActivation(email, Audit.getIP(req), "change").then(token => {
 		Mailer.sendMail({
 			from: "OWASP Single Sign-On <"+emailFrom+">",
 			to: email,
@@ -1052,7 +1072,7 @@ function onActivate(req, res, next) {
 	const password = req.body.password;
 	
 	PwUtil.checkPassword(null, password).then(() => {
-		return User.resolveEmailActivation(token, getIP(req), "registration");
+		return User.resolveEmailActivation(token, Audit.getIP(req), "registration");
 	}).then(confirmation => {
 		req.body.username = confirmation.username;
 		req.body.password = password;
@@ -1069,7 +1089,7 @@ function onChange(req, res, next) {
 	
 	let confirmation;
 	let userId;
-	User.resolveEmailActivation(token, getIP(req), "change", true).then(confirmed => {
+	User.resolveEmailActivation(token, Audit.getIP(req), "change", true).then(confirmed => {
 		confirmation = confirmed;
 		return User.findUserByName(confirmation.username);
 	}).then(userData => {
@@ -1090,10 +1110,6 @@ function onChange(req, res, next) {
 		console.error(err);
 		res.status(400).send(err);
 	});
-}
-
-function getIP(req) {
-	return req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 }
 
 function str2ab(str) {

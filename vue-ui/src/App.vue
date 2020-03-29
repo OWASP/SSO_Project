@@ -36,10 +36,14 @@
 							class="brand"
 							:class="{round: $root.ssoPage.branding.logoIsRound}"
 						>
-							<img
-								:src="$root.ssoPage.branding.logo"
-								:alt="$root.ssoPage.branding.legalName + ' - Logo'"
+							<router-link
+								to="/"
 							>
+								<img
+									:src="$root.ssoPage.branding.logo"
+									:alt="$root.ssoPage.branding.legalName + ' - Logo'"
+								>
+							</router-link>
 						</div>
 						<div class="card fat">
 							<router-view></router-view>
@@ -64,6 +68,13 @@
 									:style="{color: $root.ssoPage.branding.fontColor}"
 								>Imprint</a>
 							</span>
+							&bull; 
+							<router-link
+								to="/about"
+								:style="{color: $root.ssoPage.branding.fontColor}"
+							>
+								About
+							</router-link>
 						</div>
 					</div>
 				</div>

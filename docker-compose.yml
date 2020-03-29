@@ -31,6 +31,7 @@ services:
       - ARGON2TIME
       - ARGON2MEMORY
       - AUDITPAGELENGTH
+      - SYSLOGHEARTBEAT
       - FALLBACKEMAILFROM
   
   frontend:

@@ -38,7 +38,9 @@ You will need to restart the command line in such case
 
 ### Docker Container
 
-You can use the `docker-compose.yml` file to start a production-ready environment via `docker-compose up -f docker-compose.yml -f docker-compose.test.yml --build`.
+You can use the `docker-compose.yml` file to start a test environment via `docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build`
+and a production-ready environment via `docker-compose -f docker-compose.yml up --build`.
+This environment requires to set the environment variables for all external services.
 
 In the future, all components will be available to be directly pulled from the registry.
 
@@ -52,6 +54,21 @@ Below you find a sample configuration.
 
 ```json
 {
+	"default": { // Default behavior of the website, if no SSO flow is used
+		"branding": { // Allows branding the login page
+			"backgroundColor": "#f7f9fb", // Page background color
+			"fontColor": "#888", // Color of the text below the login box
+			"legalName": "OWASP Foundation", // Legal name displayed below the login box
+			"privacyPolicy": "https://owasp.org/www-policy/operational/privacy", // Link to privacy policy, mandatory
+			"imprint": "https://owasp.org/contact/", // Link to legal imprint, optional
+			"logo": "https://owasp.org/assets/images/logo.png" // Link to logo
+		},
+		"syslog": { // Configure a syslog server that will receive audit logs in CEF format, optional
+			"target": "default-siem", // IP or hostname
+			"protocol": "tcp" // Protocol
+			// Check out all parameters at https://cyamato.github.io/SyslogPro/module-SyslogPro-Syslog.html
+		}
+	},
 	"1": { // ID of the website
 		"jwt": "hello-world", // JWT secret for authentication flow
 		"signedRequestsOnly": false, // If set to true, only signed login requests are allowed

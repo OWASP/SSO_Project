@@ -29,6 +29,7 @@
 		"nodemailer": "^6.4.4",
 		"password-validator": "^4.1.3",
 		"samlp": "^3.4.1",
+		"syslog-pro": "^1.0.0",
 		"validator": "^12.2.0"
 	},
 	"devDependencies": {

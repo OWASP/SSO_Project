@@ -19,15 +19,16 @@ const emptyUser = {
 	session: null,
 	flow: null,
 };
-const defaultPage = {
+
+// Only used if the default page or SSO page design can't load
+const fallbackPage = {
 	name: "OWASP SSO",
 	branding: {
 		backgroundColor: "#f7f9fb",
 		fontColor: "#888",
 		legalName: "OWASP Foundation",
-		privacyPolicy: "https://owasp.org/www-policy/operational/privacy",
-		imprint: "https://owasp.org/contact/",
-		logo: require("@/assets/logo.png"),
+		privacyPolicy: "",
+		logo: "https://owasp.org/assets/images/logo.png",
 	},
 };
 
@@ -39,9 +40,18 @@ new Vue({
 		user: emptyUser,
 		emptyUser,
 		authToken: null,
-		ssoPage: defaultPage,
+		ssoPage: {
+			name: "",
+			branding: {
+				backgroundColor: "#f7f9fb",
+				fontColor: "#888",
+				legalName: "",
+				privacyPolicy: "",
+				logo: "about:blank",
+			},
+		},
 	},
-	beforeMount() {
+	async beforeMount() {
 		const users = this.listLoginToken();
 		if(users.length == 1) {
 			this.useLoginToken(users[0]);
@@ -51,7 +61,24 @@ new Vue({
 		if(pageLoad) {
 			this.ssoPage = JSON.parse(pageLoad);
 			this.axios.defaults.headers.common["X-SSO-Token"] = this.ssoPage.token;
+		} else if(this.ssoPage.name == "") {
+			let defaultLoad = sessionStorage.getItem("default-page");
+			
+			if(!defaultLoad) {
+				// First visit, doesn't have default styling of SSO yet
+				const defaultPage = await this.apiGet("/default-page");
+				sessionStorage.setItem("default-page", JSON.stringify(defaultPage.data));
+				defaultLoad = defaultPage.data;
+			} else {
+				defaultLoad = JSON.parse(defaultLoad);
+			}
+			this.ssoPage = defaultLoad;
 		}
+		
+		if(!this.ssoPage || !this.ssoPage.name || this.ssoPage.name == "") {
+			this.ssoPage = fallbackPage;
+		}
+		
 		document.body.style.backgroundColor = this.ssoPage.branding.backgroundColor;
 	},
 	methods: {

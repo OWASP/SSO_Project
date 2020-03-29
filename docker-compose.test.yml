@@ -1,6 +1,7 @@
 version: '3.7'
 
 services:
+  # Emulate database
   database:
     image: mysql:5
     volumes:
@@ -13,13 +14,24 @@ services:
       MYSQL_USER: owasp_sso
       MYSQL_PASSWORD: insecure-default-password
 
+  # Database admin
   database-admin:
     image: adminer
     restart: always
     ports:
       - 8008:8080
   
+  # Emulate SMTP
   smtp:
     image: mailhog/mailhog
     restart: always
 
+  # Emulate syslog server for the central SIEM
+  # Run it alone like this: docker run --name rsyslog.service -h test-host -p 514:514 jumanjiman/rsyslog
+  # You can test payloads like here: https://superuser.com/a/1229424/497745
+  # It is not enabled by default, as the website does not fully work if the server does not exist.
+  # You need to enable this manually in to websites.json
+  default-siem:
+    image: jumanjiman/rsyslog
+    hostname: default-siem
+    restart: always

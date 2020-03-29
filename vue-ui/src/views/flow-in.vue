@@ -42,7 +42,9 @@ export default {
 					sessionStorage.setItem("sso-request", JSON.stringify(response.data.page));
 				}
 			}
-			this.$router.push("/");
+			
+			window.location.hash = "#/"; // prevent endless loop
+			window.location.href = "/";
 			window.location.reload();
 		},
 	},
