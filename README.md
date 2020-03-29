@@ -18,7 +18,7 @@ overview please visit the official project page:
 
 1. Go into the cloned folder with `cd SSO_Project`
 2. Go into the backend folder with `cd js-backend` folder
-3. Run `npm install` to set it up the first time
+3. Run `npm install` to set it up the first time. If you use windows and visual studio as IDE, you may run into build issue, please follow (https://github.com/nodejs/node-gyp#on-windows).
 4. Edit the `.env` file and set all mandatory environment variables, especially your MariaDB database and SMTP server.
 You can use your email account like [Gmail](https://www.hostinger.com/tutorials/how-to-use-free-google-smtp-server) for testing.
 5. If you are on an operating system without the bash shell, you need to install it and add it to the PATH.
