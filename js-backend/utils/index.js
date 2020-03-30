@@ -4,6 +4,7 @@ const pwUtilLib = require("./password.js").PwUtil;
 const UserLib = require("./user.js").User;
 const Mailer = require("./mail.js").Mailer;
 const Audit = require("./audit.js").Audit;
+const JWTHandler = require("./jwt.js").JWTHandler;
 
 const db = mysql.createConnection({
 	host: process.env.DBHOST,
@@ -17,6 +18,8 @@ exports.DB = db;
 exports.User = (new UserLib(db));
 exports.PwUtil = (new pwUtilLib(db));
 exports.Audit = (new Audit(db));
+
+exports.JWT = (new JWTHandler());
 
 const MailerConfig = {
 	host: process.env.SMTPHOST,

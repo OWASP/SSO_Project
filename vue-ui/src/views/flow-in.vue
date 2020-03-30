@@ -2,9 +2,9 @@
 	<div class="card-body">
 		<div class="col-md-12 text-center">
 			<div
-class="spinner-border spinner-border-lg"
-role="status"
-></div>
+				class="spinner-border spinner-border-lg"
+				role="status"
+			></div>
 		</div>
 	</div>
 </template>
@@ -39,7 +39,7 @@ export default {
 				}
 				
 				if(response.data.page) {
-					sessionStorage.setItem("sso-request", JSON.stringify(response.data.page));
+					localStorage.setItem("sso-request", JSON.stringify(response.data.page));
 				}
 			}
 			

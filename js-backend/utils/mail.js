@@ -8,8 +8,16 @@ class Mailer {
 				console.error("SMTP server not available", err);
 			}
 		});
+		
+		this.emailFrom = process.env.SMTPUSER || process.env.FALLBACKEMAILFROM;
 	}
 	sendMail(data, callback) {
+		if(!data.hasOwnProperty("from")) {
+			data.from = "OWASP Single Sign-On <"+this.emailFrom+">";
+		}
+		if(!data.hasOwnProperty("html")) {
+			data.html = data.text;
+		}
 		return this.transport.sendMail(data, callback);
 	}
 }

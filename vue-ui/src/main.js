@@ -57,7 +57,7 @@ new Vue({
 			this.useLoginToken(users[0]);
 		}
 		
-		const pageLoad = sessionStorage.getItem("sso-request");
+		const pageLoad = localStorage.getItem("sso-request");
 		if(pageLoad) {
 			this.ssoPage = JSON.parse(pageLoad);
 			this.axios.defaults.headers.common["X-SSO-Token"] = this.ssoPage.token;

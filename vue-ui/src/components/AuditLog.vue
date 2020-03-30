@@ -24,7 +24,7 @@
 			role="tablist"
 		>
 			<div 
-				v-if="!auditLogs.length"
+				v-if="!auditLogs.length && loading"
 				class="loading-logs"
 			>
 				<div
@@ -140,6 +140,7 @@ export default {
 	data() {
 		return {
 			auditLogs: [],
+			loading: true,
 			auditPage: 0,
 			activeAccordion: "",
 		};
@@ -160,6 +161,7 @@ export default {
 				});
 		},
 		loadAudits() {
+			this.loading = true;
 			return new Promise((resolve, reject) => {
 				this.$root.apiGet("/audit?page=" + this.auditPage)
 					.then(response => {
@@ -170,6 +172,8 @@ export default {
 					})
 					.catch(() => {
 						reject();
+					}).finally(() => {
+						this.loading = false;
 					});
 			});
 		},

@@ -1,4 +1,14 @@
 {
+	"default": {
+		"branding": {
+			"backgroundColor": "#f7f9fb",
+			"fontColor": "#888",
+			"legalName": "OWASP Foundation",
+			"privacyPolicy": "https://owasp.org/www-policy/operational/privacy",
+			"imprint": "https://owasp.org/contact/",
+			"logo": "https://owasp.org/assets/images/logo.png"
+		}
+	},
 	"1": {
 		"jwt": "hello-world",
 		"signedRequestsOnly": false,

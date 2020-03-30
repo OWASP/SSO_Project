@@ -1,5 +1,11 @@
 # OWASP Juice Shop [![OWASP Incubator](https://img.shields.io/badge/owasp-incubator%20project-fe7d37.svg)](https://owasp.org/projects/) [![GitHub release](https://img.shields.io/github/v/release/OWASP/SSO_Project.svg)](https://github.com/OWASP/SSO_Project/releases/latest) [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_sso?style=social)](https://reddit.com/r/owasp_sso)
 
+[![Build Status](https://travis-ci.com/OWASP/SSO_Project.svg?branch=master)](https://travis-ci.com/OWASP/SSO_Project)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ed0dcb586f3143886687/maintainability)](https://codeclimate.com/github/OWASP/SSO_Project/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ed0dcb586f3143886687/test_coverage)](https://codeclimate.com/github/OWASP/SSO_Project/test_coverage)
+[![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/OWASP/SSO_Project)](https://codeclimate.com/github/OWASP/SSO_Project/trends/technical_debt)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
+
 OWASP SSO is a javascript application that allows a secure-by-default self-hosted SSO experience, 
 including phishing-proof two-factor authentication, using state-of-the-art security mechanisms.
 
