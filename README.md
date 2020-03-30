@@ -1,4 +1,4 @@
-# OWASP Juice Shop [![OWASP Incubator](https://img.shields.io/badge/owasp-incubator%20project-fe7d37.svg)](https://owasp.org/projects/) [![GitHub release](https://img.shields.io/github/v/release/OWASP/SSO_Project.svg)](https://github.com/OWASP/SSO_Project/releases/latest) [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_sso?style=social)](https://reddit.com/r/owasp_sso)
+# OWASP Single Sign-On [![OWASP Incubator](https://img.shields.io/badge/owasp-incubator%20project-fe7d37.svg)](https://owasp.org/projects/) [![GitHub release](https://img.shields.io/github/v/release/OWASP/SSO_Project.svg)](https://github.com/OWASP/SSO_Project/releases/latest) [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_sso?style=social)](https://reddit.com/r/owasp_sso)
 
 [![Build Status](https://travis-ci.com/OWASP/SSO_Project.svg?branch=master)](https://travis-ci.com/OWASP/SSO_Project)
 [![Maintainability](https://api.codeclimate.com/v1/badges/ed0dcb586f3143886687/maintainability)](https://codeclimate.com/github/OWASP/SSO_Project/maintainability)
@@ -177,15 +177,15 @@ forking and opening a Pull Request!
 ## Donations [![](https://img.shields.io/badge/support-OWASP%20SSO-blue)](https://owasp.org/donate?reponame=www-project-sso&title=OWASP+Single+Sign-On)
 
 The OWASP Foundation gratefully accepts donations via Stripe. Projects
-such as Juice Shop can then request reimbursement for expenses from the
-Foundation. If you'd like to express your support of the Juice Shop
+such as Single Sign-On can then request reimbursement for expenses from the
+Foundation. If you'd like to express your support of the SSO
 project, please make sure to tick the "Publicly list me as a supporter
 of OWASP SSO" checkbox on the donation form. You can find our
 more about donations and how they are used [here](https://owasp.org/donate/?reponame=www-project-sso&title=OWASP+Single+Sign-On).
 
 ## Contributors
 
-The OWASP Juice Shop core project team are:
+The OWASP SSO core project team are:
 
 - [@JamesCullum](https://github.com/JamesCullum)
 
