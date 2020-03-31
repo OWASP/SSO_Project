@@ -44,7 +44,7 @@ You will need to restart the command line in such case
 
 ### Docker Container
 
-You can use the `docker-compose.yml` file to start a test environment via `docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build`
+You can use the `docker-compose.yml` file to start a test environment via `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build`
 and a production-ready environment via `docker-compose -f docker-compose.yml up --build`.
 This environment requires to set the environment variables for all external services.
 
