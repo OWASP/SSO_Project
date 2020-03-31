@@ -1,7 +1,7 @@
 <template>
 	<div class="card-body">
 		<h4 class="card-title">
-			Register
+			{{ $t("router.register") }}
 		</h4>
 		<ValidationObserver v-slot="{ invalid }">
 			<form @submit.prevent="submit">
@@ -9,7 +9,7 @@
 					v-if="!token"
 					class="form-group"
 				>
-					<label for="email">E-Mail Address</label>
+					<label for="email">{{ $t("general.email-address") }}</label>
 					<ValidationProvider
 						v-slot="{ errors }"
 						rules="max:255"
@@ -27,7 +27,7 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							Please provide a valid email address
+							{{ $t("login.fill-email") }}
 						</span>
 					</ValidationProvider>
 				</div>
@@ -36,7 +36,7 @@
 					v-if="token"
 					class="form-group"
 				>
-					<label for="password">Password</label>
+					<label for="password">{{ $t("general.password") }}</label>
 					<ValidationProvider
 						v-slot="{ errors }"
 						rules="required|min:8"
@@ -52,7 +52,7 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							Password policy: Minimum 8 characters
+							{{ $t("login.fill-password") }}
 						</span>
 					</ValidationProvider>
 				</div>
@@ -61,7 +61,7 @@
 					v-if="token"
 					class="form-group"
 				>
-					<label for="confirm">Confirm Password</label>
+					<label for="confirm">{{ $t("change-password.confirm-password") }}</label>
 					<ValidationProvider
 						v-slot="{ errors }"
 						rules="required|confirmed:password"
@@ -77,7 +77,7 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							The passwords do not match
+							{{ $t("change-password.fill-confirmation") }}
 						</span>
 					</ValidationProvider>
 				</div>
@@ -102,14 +102,13 @@
 							<label
 								for="agree"
 								class="custom-control-label"
-							>
-								I agree to the <a href="#">Terms and Conditions</a>
-							</label>
+								v-html="$t('register.toc-agree-label', { terms: '<a href=\'#\'>' + $t('register.terms') + '</a>' })"
+							></label>
 							<span
 								v-if="errors.length"
 								class="badge badge-danger"
 							>
-								You need to agree to use this service
+								{{ $t("register.fill-toc") }}
 							</span>
 						</ValidationProvider>
 					</div>
@@ -119,16 +118,14 @@
 					v-if="success === true && !token"
 					class="alert alert-success"
 				>
-					If the email address you entered is not already registered, please
-					check your email inbox for a confirmation link!
+					{{ $t("register.success") }}
 				</div>
 				
 				<div
 					v-if="error == 400 && token"
 					class="alert alert-danger"
 				>
-					Your password was not sufficiently secure or you are resetting from a
-					different network than you requested it from.
+					{{ $t("register.400") }}
 				</div>
 
 				<div class="form-group m-0">
@@ -137,13 +134,13 @@
 						class="btn btn-primary btn-block"
 						:disabled="invalid"
 					>
-						Register
+						{{ $t("register.register") }}
 					</button>
 				</div>
 				<div class="mt-4 text-center">
-					Already have an account?
+					{{ $t("register.already-account") }}
 					<router-link to="/">
-						Back to login
+						{{ $t("register.switch-login") }}
 					</router-link>
 				</div>
 			</form>

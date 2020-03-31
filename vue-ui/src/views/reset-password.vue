@@ -1,12 +1,12 @@
 <template>
 	<div class="card-body">
 		<h4 class="card-title">
-			Reset password
+			{{ $t("router.reset-password") }}
 		</h4>
 		<ValidationObserver v-slot="{ invalid }">
 			<form @submit.prevent="submit">
 				<div class="form-group">
-					<label for="email">E-Mail Address</label>
+					<label for="email">{{ $t("general.email-address") }}</label>
 					<ValidationProvider
 						v-slot="{ errors }"
 						name="Email"
@@ -23,7 +23,7 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							Please provide a valid email address
+							{{ $t("login.fill-email") }}
 						</span>
 					</ValidationProvider>
 				</div>
@@ -31,14 +31,13 @@
 					v-if="success === false"
 					class="alert alert-danger"
 				>
-					An error occured - please try again later!
+					{{ $t("reset-password.error") }}
 				</div>
 				<div
 					v-if="success === true"
 					class="alert alert-success"
 				>
-					If the email address you entered is known, please check your email
-					inbox for a password reset link!
+					{{ $t("reset-password.success") }}
 				</div>
 
 				<div class="form-group m-0">
@@ -47,13 +46,13 @@
 						class="btn btn-primary btn-block"
 						:disabled="invalid"
 					>
-						Reset password
+						{{ $t("reset-password.reset-password") }}
 					</button>
 				</div>
 				<div class="mt-4 text-center">
-					Remember you password? 
+					{{ $t("reset-password.remember-password") }}
 					<router-link to="/">
-						Back to login
+						{{ $t("register.switch-login") }}
 					</router-link>
 				</div>
 			</form>

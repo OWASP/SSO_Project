@@ -157,7 +157,7 @@ where community members can best try to help you.
 :stop_sign: **Please avoid opening GitHub issues for support requests or
 questions!**
 
-## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/OWASP/SSO_Project.svg)](https://github.com/OWASP/SSO_Project/graphs/contributors) ![GitHub issues by-label](https://img.shields.io/github/issues/OWASP/SSO_Project/help%20wanted.svg) ![GitHub issues by-label](https://img.shields.io/github/issues/OWASP/SSO_Project/good%20first%20issue.svg)
+## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/OWASP/SSO_Project.svg)](https://github.com/OWASP/SSO_Project/graphs/contributors) [![Crowdin](https://badges.crowdin.net/owasp-single-sign-on/localized.svg)](https://crowdin.com/project/owasp-single-sign-on) ![GitHub issues by-label](https://img.shields.io/github/issues/OWASP/SSO_Project/help%20wanted.svg) ![GitHub issues by-label](https://img.shields.io/github/issues/OWASP/SSO_Project/good%20first%20issue.svg)
 
 We are always happy to get new contributors on board! Please check
 [CONTRIBUTING.md](CONTRIBUTING.md) to learn how to

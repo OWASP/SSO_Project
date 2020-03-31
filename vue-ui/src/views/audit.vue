@@ -1,7 +1,7 @@
 <template>
 	<div class="card-body">
 		<h4 class="card-title mb-2">
-			Review Activity
+			{{ $t("router.review") }}
 		</h4>
 		<div v-if="!loading">
 			<AuditLog ref="loglist"></AuditLog>
@@ -19,15 +19,14 @@
 					"
 					class="alert alert-danger"
 				>
-					Please log into your account {{ $root.ssoPage.username }} to continue
-					to {{ $root.ssoPage.name }}.
+					{{ $t("audit.wrong-account", { username: $root.ssoPage.username, website: $root.ssoPage.name }) }}
 				</div>
 				<button
 					type="button"
 					class="btn btn-warning"
 					@click="$root.logout"
 				>
-					&laquo; Log out
+					&laquo; {{ $t("audit.logout") }}
 				</button>
 				<button
 					v-if="
@@ -38,8 +37,8 @@
 					type="button"
 					class="btn btn-primary float-right"
 					@click="flowOut"
-					>
-					Continue to {{ $root.ssoPage.name }} &raquo;
+				>
+					{{ $t("audit.continue-page", { website: $root.ssoPage.name }) }} &raquo;
 				</button>
 			</div>
 		</div>
@@ -77,9 +76,9 @@
 			class="col-md-12 text-center mt-4"
 		>
 			<div
-class="spinner-border spinner-border-lg"
-role="status"
-></div>
+				class="spinner-border spinner-border-lg"
+				role="status"
+			></div>
 		</div>
 	</div>
 </template>

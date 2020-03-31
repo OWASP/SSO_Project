@@ -1,7 +1,7 @@
 <template>
 	<div class="card-body">
 		<h4 class="card-title">
-		Login
+		{{ $t("router.login") }}
 	</h4>
 		<ValidationObserver
 			v-if="!loading"
@@ -12,11 +12,11 @@
 					v-if="error == 404"
 					class="alert alert-danger"
 				>
-					Username or password invalid
+					{{ $t("login.404") }}
 				</div>
 
 				<div class="form-group">
-					<label for="email">E-Mail Address</label>
+					<label for="email">{{ $t("general.email-address") }}</label>
 					<ValidationProvider
 						v-slot="{ errors }"
 						name="Email"
@@ -33,7 +33,7 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							Please provide a valid email address
+							{{ $t("login.fill-email") }}
 						</span>
 					</ValidationProvider>
 				</div>
@@ -42,12 +42,12 @@
 					<label
 						for="password"
 					>
-						Password
+						{{ $t("general.password") }}
 						<router-link
 							to="/reset-password"
 							class="float-right"
 						>
-							Forgot Password?
+							{{ $t("login.reset-password") }}
 						</router-link>
 					</label>
 					<ValidationProvider
@@ -65,7 +65,7 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							Password policy: Minimum 8 characters
+							{{ $t("login.fill-password") }}
 						</span>
 					</ValidationProvider>
 				</div>
@@ -76,13 +76,13 @@
 						class="btn btn-primary btn-block"
 						:disabled="invalid"
 					>
-						Login
+						{{ $t("login.login") }}
 					</button>
 				</div>
 				<div class="mt-4 text-center">
-					Don't have an account?
+					{{ $t("login.no-account") }}
 					<router-link to="/register">
-						Register Now
+						{{ $t("login.register") }}
 					</router-link>
 				</div>
 			</form>
@@ -93,9 +93,9 @@
 			class="col-md-12 text-center"
 		>
 			<div
-class="spinner-border spinner-border-lg"
-role="status"
-></div>
+				class="spinner-border spinner-border-lg"
+				role="status"
+			></div>
 		</div>
 		
 		<iframe

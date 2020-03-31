@@ -58,7 +58,7 @@
 								target="_privacy"
 								rel="noopener noreferrer"
 								:style="{color: $root.ssoPage.branding.fontColor}"
-							>Privacy</a> 
+							>{{ $t("general.privacy") }}</a> 
 							<span v-if="$root.ssoPage.branding.imprint">
 								&bull; 
 								<a
@@ -66,14 +66,14 @@
 									target="_imprint"
 									rel="noopener noreferrer"
 									:style="{color: $root.ssoPage.branding.fontColor}"
-								>Imprint</a>
+								>{{ $t("general.imprint") }}</a>
 							</span>
 							&bull; 
 							<router-link
 								to="/about"
 								:style="{color: $root.ssoPage.branding.fontColor}"
 							>
-								About
+								{{ $t("general.about") }}
 							</router-link>
 						</div>
 					</div>

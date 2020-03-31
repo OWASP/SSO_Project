@@ -1,7 +1,7 @@
 <template>
 	<div class="card-body">
 		<h4 class="card-title">
-			About this page
+			{{ $t("router.about") }}
 		</h4>
 		
 		<div
@@ -61,7 +61,7 @@ export default {
 			activeAccordion: "",
 			categories: [
 				{
-					name: "Icons",
+					name: this.$t("about.icons"),
 					list: [
 						"Dave Gandy (FontAwesome - fontawesome.com)",
 						"Keyamoon (IcoMoon - icomoon.io)",
@@ -69,14 +69,14 @@ export default {
 						"simpleicons.org",
 					],
 				},{
-					name: "Open Source Components",
+					name: this.$t("about.opensource"),
 					list: [
 						"Muhamad Nauval Azhar (github.com/nauvalazhar)",
 						"Ackermann Yuriy (github.com/herrjemand)",
 					],
 				},{
-					name: "Security Reports",
-					banner: "To be listed here, find and report security vulnerabilities via GitHub",
+					name: this.$t("about.security"),
+					banner: this.$t("about.security-banner"),
 					list: [],
 				},
 			],

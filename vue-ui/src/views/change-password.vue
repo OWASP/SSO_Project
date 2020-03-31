@@ -1,12 +1,14 @@
 <template>
 	<div class="card-body">
 		<h4 class="card-title">
-			Change Password
+			{{ $t("router.change-password") }}
 		</h4>
 		<ValidationObserver v-slot="{ invalid }">
 			<form @submit.prevent="submit">
 				<div class="form-group">
-					<label for="token">Email token</label>
+					<label for="token">
+						{{ $t("change-password.token") }}
+					</label>
 					<ValidationProvider
 						v-slot="{ errors }"
 						rules="min:60|max:60"
@@ -24,14 +26,13 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							Enter the full confirmation token that you received via
-							email
+							{{ $t("change-password.fill-token") }}
 						</span>
 					</ValidationProvider>
 				</div>
 
 				<div class="form-group">
-					<label for="password">Password</label>
+					<label for="password">{{ $t("general.password") }}</label>
 					<ValidationProvider
 						v-slot="{ errors }"
 						rules="required|min:8"
@@ -47,13 +48,13 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							Password policy: Minimum 8 characters
+							{{ $t("login.fill-password") }}
 						</span>
 					</ValidationProvider>
 				</div>
 
 				<div class="form-group">
-					<label for="confirm">Confirm Password</label>
+					<label for="confirm">{{ $t("change-password.confirm-password") }}</label>
 					<ValidationProvider
 						v-slot="{ errors }"
 						rules="required|confirmed:password"
@@ -69,7 +70,7 @@
 							v-if="errors.length"
 							class="badge badge-danger"
 						>
-							The passwords do not match
+							{{ $t("change-password.fill-confirmation") }}
 						</span>
 					</ValidationProvider>
 				</div>
@@ -78,8 +79,7 @@
 					v-if="error == 400"
 					class="alert alert-danger"
 				>
-					Your password was not sufficiently secure or you are resetting from a
-					different network than you requested it from.
+					{{ $t("register.400") }}
 				</div>
 
 				<div class="form-group m-0">
@@ -88,7 +88,7 @@
 						class="btn btn-primary btn-block"
 						:disabled="invalid"
 					>
-						Apply Changes
+						{{ $t("change-password.submit") }}
 					</button>
 				</div>
 			</form>

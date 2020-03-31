@@ -19,5 +19,6 @@ To fix most issues automatically, you can use `npm run lint:fix`.
 
 ## I18N Contributions
 
-The `vue-ui` component needs translation support!
-The views and components need to be converted to the i18n syntax and correct entries in the `vue-ui/locales` need to be created.
+All contributions for other languages are highly appreciated!
+You can find learn more about it on our crowd-sourced
+[translation project on Crowdin](https://crowdin.com/project/owasp-single-sign-on).

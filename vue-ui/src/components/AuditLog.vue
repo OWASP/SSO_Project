@@ -41,7 +41,7 @@
 								class="spinner-grow spinner-grow-sm"
 								role="status"
 							></div>
-							Loading...
+							{{ $t("general.loading") }}
 						</div>
 					</div>
 				</div>
@@ -61,7 +61,7 @@
 							class="btn btn-block btn-sm btn-secondary py-1 px-2 text-left"
 							@click="clickAccordion(log.id)"
 						>
-							{{ log.action | capitalize }} {{ log.object }}
+							{{ $t("audit-log.titles." + log.object + "-" + log.action) }}
 							<country-flag
 								v-if="log.country"
 								:country="log.country"
@@ -78,17 +78,12 @@
 						>
 							<div class="card-body py-1">
 								<p class="card-text">
-									At {{ new Date(log.created).toLocaleString($i18n.locale) }} by
-									IP: {{ log.ip }}
-									<span
-										v-if="log.attribute1"
-									>
-										for object {{ log.attribute1 }}
-									</span>
+									{{ $t("audit-log.messages." + log.object + "-" + log.action, { attribute: log.attribute1 }) }}
+									{{ $t("audit-log.meta", { date: (new Date(log.created).toLocaleString($i18n.locale)), IP: log.ip }) }}
 									<a
 										href="#"
 										class="btn btn-link text-danger float-right"
-										title="This wasn't me - report suspicious event"
+										:title="$t('audit-log.report')"
 									>
 										<svg><use xlink:href="#icon-flag" /></svg>
 									</a>
@@ -110,14 +105,14 @@
 						type="button"
 						@click="loadMoreAudit"
 					>
-						Load more
+						{{ $t("audit-log.load-more") }}
 					</button>
 					<button
 						class="btn btn-warning py-1 px-2"
 						type="button"
 						@click="closeSessions"
 					>
-						Close sessions
+						{{ $t("audit-log.close-sessions") }}
 					</button>
 				</div>
 			</div>

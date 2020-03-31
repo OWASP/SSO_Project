@@ -36,7 +36,7 @@
 		</svg>
 	
 		<h4 class="card-title mb-2">
-			{{ $root.user.authenticators.length ? "Review" : "Add" }} Authenticators
+			{{ $root.user.authenticators.length ? $t("authenticator.review") : $t("authenticator.add") }}
 		</h4>
 		<div class="list-group">
 			<div
@@ -47,8 +47,8 @@
 				<svg
 					:title="
 						authenticator.type == 'fido2'
-							? 'FIDO2 Token'
-							: 'Device Certificate'
+							? $t('authenticator.fido2-title')
+							: $t('authenticator.cert-title')
 					"
 				>
 					<use
@@ -64,7 +64,7 @@
 				<a
 					href="#"
 					class="text-danger float-right"
-					title="Remove this authenticator"
+					:title="$t('authenticator.remove')"
 					@click="
 						removeAuthenticator(authenticator.type, authenticator.userHandle)
 					"
@@ -91,29 +91,29 @@
 								<select
 									v-model="createType"
 									class="custom-select"
-									title="Choose the type of authenticator you want to add"
+									:title="$t('authenticator.choose-type-title')"
 								>
 									<option
 										selected
 										disabled
 									>
-										Choose...
+										{{ $t("authenticator.choose") }}
 									</option>
 									<option value="cert">
-										Certificate
+										{{ $t("authenticator.choose-cert") }}
 									</option>
 									<option
 										value="fido"
 										:disabled="!fidoAvailable"
 									>
-										FIDO2
+										{{ $t("confirm.fido2") }}
 									</option>
 								</select>
 								<span
 									v-if="errors.length"
 									class="badge badge-danger"
 								>
-									Please select a type
+									{{ $t("authenticator.fill-choose") }}
 								</span>
 							</ValidationProvider>
 						</div>
@@ -125,22 +125,22 @@
 							<input
 								v-model="createLabel"
 								type="text"
-								placeholder="Label"
+								:placeholder="$t('authenticator.label')"
 								pattern="^[\w \-]{1,25}$"
 								class="col-sm-12"
-								title="Enter a name for this authenticator"
+								:title="$t('authenticator.label-title')"
 								required
 							>
 							<span
 								v-if="errors.length"
 								class="badge badge-danger"
 							>
-								Please enter a name
+								{{ $t("authenticator.fill-label") }}
 							</span>
 						</ValidationProvider>
 						<div
 							class="input-group-append col-sm-2"
-							title="Fill out details and click here to add an authenticator"
+							:title="$t('authenticator.submit-title')"
 						>
 							<button
 								type="submit"

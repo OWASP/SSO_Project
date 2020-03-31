@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import i18n from "../i18n";
 
 const Register = () => import("@/views/register.vue");
 const TwoFactorAuth = () => import("@/views/two-factor-auth.vue");
@@ -13,7 +14,7 @@ const routes = [
 		name: "login",
 		component: () => import("@/views/login.vue"),
 		meta: {
-			title: "Login",
+			title: i18n.t("router.login"),
 		},
 	},
 	{
@@ -21,7 +22,7 @@ const routes = [
 		name: "register",
 		component: Register,
 		meta: {
-			title: "Register",
+			title: i18n.t("router.register"),
 		},
 	},
 	{
@@ -29,7 +30,7 @@ const routes = [
 		name: "register-confirm",
 		component: Register,
 		meta: {
-			title: "Register",
+			title: i18n.t("router.register"),
 		},
 	},
 	{
@@ -37,7 +38,7 @@ const routes = [
 		name: "reset-password",
 		component: () => import("@/views/reset-password.vue"),
 		meta: {
-			title: "Reset password",
+			title: i18n.t("router.reset-password"),
 		},
 	},
 	{
@@ -45,7 +46,7 @@ const routes = [
 		name: "change-password",
 		component: () => import("@/views/change-password.vue"),
 		meta: {
-			title: "Change password",
+			title: i18n.t("router.change-password"),
 		},
 	},
 	{
@@ -53,7 +54,7 @@ const routes = [
 		name: "two-factor",
 		component: TwoFactorAuth,
 		meta: {
-			title: "Confirm your identity",
+			title: i18n.t("router.confirm"),
 		},
 	},
 	{
@@ -61,7 +62,7 @@ const routes = [
 		name: "two-factor-email-confirm",
 		component: TwoFactorAuth,
 		meta: {
-			title: "Confirm your identity",
+			title: i18n.t("router.confirm"),
 		},
 	},
 	{
@@ -69,7 +70,7 @@ const routes = [
 		name: "audit",
 		component: () => import("@/views/audit.vue"),
 		meta: {
-			title: "Review Activity",
+			title: i18n.t("router.review"),
 		},
 	},
 	{
@@ -77,7 +78,7 @@ const routes = [
 		name: "flow-in-signed",
 		component: FlowIn,
 		meta: {
-			title: "Loading...",
+			title: i18n.t("general.loading"),
 		},
 	},
 	{
@@ -85,7 +86,7 @@ const routes = [
 		name: "flow-in",
 		component: FlowIn,
 		meta: {
-			title: "Loading...",
+			title: i18n.t("general.loading"),
 		},
 	},
 	{
@@ -93,7 +94,7 @@ const routes = [
 		name: "about",
 		component: () => import("@/views/about.vue"),
 		meta: {
-			title: "About",
+			title: i18n.t("router.about"),
 		},
 	},
 ];
@@ -102,7 +103,7 @@ const router = new VueRouter({
 	routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(function(to, from, next) {
 	document.title = to.meta.title;
 	next();
 });

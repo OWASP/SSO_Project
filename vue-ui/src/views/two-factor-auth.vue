@@ -1,8 +1,8 @@
 <template>
 	<div class="card-body">
 		<h4 class="card-title">
-Confirm your identity
-</h4>
+			{{ $t("router.confirm") }}
+		</h4>
 
 		<svg
 			aria-hidden="true"
@@ -49,7 +49,7 @@ Confirm your identity
 							/>
 						</svg>
 					</div>
-					<h6>FIDO2</h6>
+					<h6>{{ $t("confirm.fido2") }}</h6>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -67,7 +67,7 @@ Confirm your identity
 							/>
 						</svg>
 					</div>
-					<h6>E-Mail</h6>
+					<h6>{{ $t("confirm.email") }}</h6>
 				</div>
 			</div>
 		</div>
@@ -77,9 +77,9 @@ Confirm your identity
 			class="col-md-12 text-center mb-3"
 		>
 			<div
-class="spinner-border spinner-border-lg"
-role="status"
-></div>
+				class="spinner-border spinner-border-lg"
+				role="status"
+			></div>
 		</div>
 
 		<div class="row mb-2">
@@ -88,31 +88,30 @@ role="status"
 					v-if="emailClicked"
 					class="alert alert-success"
 				>
-					Please check your email inbox for an authentication link. You can
-					close this window now.
+					{{ $t("confirm.success") }}
 				</div>
 				<div
 					v-if="emailError == 400"
 					class="alert alert-danger"
 				>
-					Email token invalid
+					{{ $t("confirm.400") }}
 				</div>
 				<div
 					v-if="fidoError == 401"
 					class="alert alert-danger"
 				>
-					Invalid FIDO2 authenticator
+					{{ $t("confirm.401") }}
 				</div>
 			</div>
 		</div>
 
 		<div class="text-center">
-			Wrong account? 
+			{{ $t("confirm.wrong-account") }}
 			<a
 				href="#"
 				@click="$root.logout"
 			>
-				Sign Out
+				{{ $t("audit.logout") }}
 			</a>
 		</div>
 	</div>
