@@ -1,0 +1,113 @@
+{
+	"general": {
+		"privacy": "Datenschutz",
+		"imprint": "Impressum",
+		"about": "Über",
+		"loading": "Lädt...",
+		"email-address": "EMail - Adresse",
+		"password": "Passwort"
+	},
+	"router": {
+		"login": "Login",
+		"register": "Registrierung",
+		"reset-password": "Passwort zurücksetzen",
+		"change-password": "Passwort ändern",
+		"confirm": "Identität bestätigen",
+		"review": "Review",
+		"about": "Über diese Webseite"
+	},
+	"about": {
+		"icons": "Symbole",
+		"opensource": "Offene Software",
+		"security": "Sicherheitsmeldungen",
+		"security-banner": "Hier werden Personen aufgelistet, welche wichtige Sicherheitslücken gefunden und gemeldet haben"
+	},
+	"audit": {
+		"wrong-account": "Bitte wechseln Sie zum Konto {username} um sich bei {website} anmelden zu können",
+		"logout": "Abmelden",
+		"continue-page": "Anmelden bei {website}"
+	},
+	"audit-log": {
+		"load-more": "Mehr anzeigen",
+		"close-sessions": "Sitzungen beenden",
+		"report": "Das war ich nicht - auffälliges Ereignis melden",
+		"meta": "von der IP-Adresse {IP} am {date}",
+		"titles": {
+			"page-registration": "Externe Registrierung",
+			"page-request": "Anmeldung angefordert",
+			"page-login": "Angemeldet bei Seite",
+			"login-email": "Verifizierung per Email",
+			"login-password": "Anmeldung",
+			"authenticator-add": "Gerät hinzugefügt",
+			"authenticator-remove": "Gerät entfernt",
+			"authenticator-login": "Verifizierung per Gerät",
+			"session-clean": "Sitzungen beendet"
+		},
+		"messages": {
+			"page-registration": "Registriert durch {attribute}",
+			"page-request": "Anmeldung angefragt von {attribute}",
+			"page-login": "Angemeldet bei {attribute}",
+			"login-email": "Anmeldung verifiziert per EMail - Bestätigung als zweitem Faktor",
+			"login-password": "Anmeldung mit Benutzername und Passwort",
+			"authenticator-add": "Zweiter Faktor {attribute} hinzugefügt",
+			"authenticator-remove": "Zweiter Faktor {attribute} entfernt",
+			"authenticator-login": "Anmeldung verifiziert durch den zweiten Faktor {attribute}",
+			"session-clean": "Alle Sitzungen auf anderen Geräten wurden beendet"
+		}
+	},
+	"authenticator": {
+		"add": "Zweiten Faktor hinzufügen",
+		"review": "Zweiten Faktor prüfen",
+		"remove": "Zweiten Faktor entfernen",
+		"fido2-title": "FIDO2 Gerät",
+		"cert-title": "Gerät - Zertifikat",
+		"choose-type-title": "Wählen Sie die Art von zweitem Faktor, den Sie hinzufügen möchten",
+		"choose": "Auswählen...",
+		"choose-cert": "Zertifikat",
+		"fill-choose": "Bitte wählen Sie die Art eines zweiten Faktors",
+		"label": "Bezeichnung",
+		"label-title": "Geben Sie diesem zweiten Faktor einen Namen",
+		"fill-label": "Bitte geben Sie einen Namen ein",
+		"submit-title": "Bitte füllen Sie alle Felder aus und klicken hier, um einen zweiten Faktor hinzuzufügen"
+	},
+	"change-password": {
+		"token": "EMail Bestätigungscode",
+		"fill-token": "Geben Sie den vollständigen Token ein, welchen Sie per Email erhalten haben",
+		"confirm-password": "Passwort bestätigen",
+		"fill-confirmation": "Die Passwörter stimmen nicht überein",
+		"submit": "Änderungen übernehmen"
+	},
+	"login": {
+		"404": "Benutzername oder Passwort ungültig",
+		"fill-email": "Bitte geben Sie eine gültige EMail - Adresse ein",
+		"reset-password": "Passwort vergessen?",
+		"fill-password": "Das Passwort muss aus mindestens 8 Zeichen bestehen",
+		"login": "Anmelden",
+		"no-account": "Noch kein Konto?",
+		"register": "Jetzt registrieren"
+	},
+	"register": {
+		"toc-agree-label": "Ich stimme den {terms} zu",
+		"terms": "AGBs",
+		"fill-toc": "Sie müssen den AGBs zustimmen um diesen Dienst benutzen zu können",
+		"success": "Wenn die von Ihnen angegebene EMail - Adresse noch nicht registriert ist, werden Sie in Kürze eine EMail zur Vervollständigung der Registrierung erhalten!",
+		"400": "Ihr eingegebenes Passwort war nicht sicher genug oder sie haben während der Änderung das Netzwerk geändert.",
+		"register": "Registrierung abschließen",
+		"already-account": "Sie haben bereits ein Konto?",
+		"switch-login": "Zur Anmeldung"
+	},
+	"reset-password": {
+		"error": "Ein Fehler ist aufgetreten - probieren Sie es später erneut!",
+		"success": "Wenn ein Konto unter dieser Adresse existiert, werden Sie in Kürze eine Email für eine Änderung des Passwortes erhalten!",
+		"reset-password": "Passwort zurücksetzen",
+		"remember-password": "Passwort doch bekannt?"
+	},
+	"confirm": {
+		"fido2": "FIDO2",
+		"email": "EMail",
+		"success": "Sie werden per EMail in Kürze einen Anmeldelink erhalten. Sie können dieses Fenster schließen.",
+		"400": "EMail Bestätigungscode ist ungültig",
+		"401": "Ungültiges FIDO2 Gerät",
+		"wrong-account": "Falsches Konto?"
+	}
+}
