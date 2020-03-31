@@ -44,11 +44,13 @@ You will need to restart the command line in such case
 
 ### Docker Container
 
+#### Backend [![Docker Automated build](https://img.shields.io/docker/automated/owaspsso/js-backend.svg)](https://hub.docker.com/r/owaspsso/js-backend) [![Docker Pulls](https://img.shields.io/docker/pulls/owaspsso/js-backend.svg)](https://hub.docker.com/r/owaspsso/js-backend) ![Docker Stars](https://img.shields.io/docker/stars/owaspsso/js-backend.svg) [![Docker size](https://images.microbadger.com/badges/image/owaspsso/js-backend.svg)](https://microbadger.com/images/owaspsso/js-backend) [![Docker Version](https://images.microbadger.com/badges/version/owaspsso/js-backend.svg)](https://microbadger.com/images/owaspsso/js-backend)
+
+#### Frontend [![Docker Automated build](https://img.shields.io/docker/automated/owaspsso/vue-ui.svg)](https://hub.docker.com/r/owaspsso/vue-ui) [![Docker Pulls](https://img.shields.io/docker/pulls/owaspsso/vue-ui.svg)](https://hub.docker.com/r/owaspsso/vue-ui) ![Docker Stars](https://img.shields.io/docker/stars/owaspsso/vue-ui.svg) [![Docker size](https://images.microbadger.com/badges/image/owaspsso/vue-ui.svg)](https://microbadger.com/images/owaspsso/vue-ui) [![Docker Version](https://images.microbadger.com/badges/version/owaspsso/vue-ui.svg)](https://microbadger.com/images/owaspsso/vue-ui)
+
 You can use the `docker-compose.yml` file to start a test environment via `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build`
 and a production-ready environment via `docker-compose -f docker-compose.yml up --build`.
 This environment requires to set the environment variables for all external services.
-
-In the future, all components will be available to be directly pulled from the registry.
 
 ## Customization
 
@@ -140,9 +142,6 @@ A demo will be provided in the future.
 > guaranteed uptime! Guaranteed stern looks if you break it!
 
 ## Node.js version compatibility
-
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/cpu/OWASP/SSO_Project)
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/os/OWASP/SSO_Project)
 
 OWASP SSO officially supports the [node.js](http://nodejs.org) in line with the
 official [node.js LTS schedule](https://github.com/nodejs/LTS).
