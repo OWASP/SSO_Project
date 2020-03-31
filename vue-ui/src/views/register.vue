@@ -99,11 +99,13 @@
 								class="custom-control-input"
 								required
 							>
+							<!-- eslint-disable vue/no-v-html -->
 							<label
 								for="agree"
 								class="custom-control-label"
 								v-html="$t('register.toc-agree-label', { terms: '<a href=\'#\'>' + $t('register.terms') + '</a>' })"
 							></label>
+							<!-- eslint-enable -->
 							<span
 								v-if="errors.length"
 								class="badge badge-danger"

@@ -58,7 +58,7 @@ as existing environment variables are not overwritten.
 In `js-backend/websites.json` you can configure your own websites for SSO.
 Below you find a sample configuration.
 
-```json
+```javascript
 {
 	"default": { // Default behavior of the website, if no SSO flow is used
 		"branding": { // Allows branding the login page
