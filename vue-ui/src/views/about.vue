@@ -15,6 +15,7 @@
 			>
 				<div class="col-sm-12">
 					<button
+						:id="'title-' + category.name"
 						type="button"
 						class="btn btn-block btn-sm btn-primary py-1 px-2 text-left"
 						@click="clickAccordion(category.name)"

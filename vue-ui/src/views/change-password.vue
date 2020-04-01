@@ -109,7 +109,7 @@ export default {
 	},
 	computed: {
 		tokenFromUrl() {
-			return this.$route.params.token.length == 60;
+			return this.token.length == 60;
 		},
 	},
 	methods: {

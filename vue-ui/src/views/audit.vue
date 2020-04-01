@@ -97,7 +97,6 @@ export default {
 			jwtToken: "",
 			SAMLResponse: "",
 			RelayState: "",
-			
 		};
 	},
 	mounted() {
