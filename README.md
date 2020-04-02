@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.com/OWASP/SSO_Project.svg?branch=master)](https://travis-ci.com/OWASP/SSO_Project)
 [![Maintainability](https://api.codeclimate.com/v1/badges/ed0dcb586f3143886687/maintainability)](https://codeclimate.com/github/OWASP/SSO_Project/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/ed0dcb586f3143886687/test_coverage)](https://codeclimate.com/github/OWASP/SSO_Project/test_coverage)
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/OWASP/SSO_Project)](https://codeclimate.com/github/OWASP/SSO_Project/trends/technical_debt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 

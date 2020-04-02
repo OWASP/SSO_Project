@@ -1,4 +1,4 @@
-import { shallowMount, mount, createLocalVue } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import { expect } from "chai";
 import sinon from "sinon";
 
@@ -82,7 +82,7 @@ describe("Change Password (View)", () => {
 		await tokenWrapper.vm.$nextTick();
 		
 		expect(apiPost.calledWith("/local/change")).to.equal(true);
-		expect(routerPush.called).to.equal(true);
-		expect(setLoginToken.called).to.equal(true);
+		expect(routerPush.calledWith("/audit")).to.equal(true);
+		expect(setLoginToken.calledWith("username")).to.equal(true);
 	});
 });
