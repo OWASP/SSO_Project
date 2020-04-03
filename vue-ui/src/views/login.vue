@@ -179,7 +179,7 @@ export default {
 				this.loading = false;
 				return;
 			}
-		
+
 			this.$root
 				.getMe()
 				.then(() => {
