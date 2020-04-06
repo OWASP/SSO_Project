@@ -59,7 +59,7 @@ describe("Audit (View)", () => {
 		expect(logout.called).to.equal(true);
 	});
 	
-	xit("only shows SSO login button if valid", () => {
+	it("only shows SSO login button if valid", () => {
 		expect(wrapper.find("button.btn-primary.float-right").exists()).to.equal(false);
 		expect(ssoWrapper.find("button.btn-primary.float-right").exists()).to.equal(true);
 	});

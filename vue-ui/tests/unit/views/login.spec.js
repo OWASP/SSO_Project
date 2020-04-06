@@ -70,7 +70,7 @@ describe("Login (View)", () => {
 		expect(apiPost.called).to.equal(false);
 		expect(setLoginToken.called).to.equal(false);
 		
-		wrapper.vm.submit();
+		wrapper.get("form").trigger("submit");
 		await wrapper.vm.$nextTick();
 		
 		expect(apiPost.calledWith("/local/login")).to.equal(true);
@@ -124,6 +124,6 @@ describe("Login (View)", () => {
 			expect(routerPush.calledWith("/audit")).to.equal(true);
 			
 			done();
-		}, 500);
+		}, 10);
 	});
 });

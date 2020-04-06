@@ -1,6 +1,7 @@
 language: node_js
 stages:
   - lint
+  - unit
 addons:
   chrome: stable
 jobs:
@@ -19,3 +20,10 @@ jobs:
         - npm install
       script:
         - npm run lint
+    - stage: unit
+      node_js: 13
+      install: 
+        - cd vue-ui
+        - npm install
+      script:
+        - npm run test:unit

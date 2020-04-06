@@ -32,6 +32,12 @@ const wrapper = mount(ChangePassword, baseOptions);
 
 const longToken = "123456789012345678901234567890123456789012345678901234567890";
 baseOptions.mocks.$route.params.token = longToken;
+baseOptions.data = () => {
+	return {
+		password: "password",
+		confirm: "password",
+	};
+};
 const tokenWrapper = mount(ChangePassword, baseOptions);
 
 describe("Change Password (View)", () => {
@@ -66,11 +72,6 @@ describe("Change Password (View)", () => {
 		expect(routerPush.called).to.equal(false);
 		expect(setLoginToken.called).to.equal(false);
 		
-		tokenWrapper.setData({
-			password: "password",
-		});
-		await tokenWrapper.vm.$nextTick();
-		
 		apiPost.resolves({
 			data: {
 				username: "username",
@@ -78,7 +79,7 @@ describe("Change Password (View)", () => {
 			},
 		});
 		
-		tokenWrapper.vm.submit();
+		tokenWrapper.get("form").trigger("submit");
 		await tokenWrapper.vm.$nextTick();
 		
 		expect(apiPost.calledWith("/local/change")).to.equal(true);

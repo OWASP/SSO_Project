@@ -36,6 +36,7 @@
 		>
 			<div class="col-md-6">
 				<div
+					id="confirmFido"
 					class="choice"
 					:class="{ unavailable: !fidoAvailable }"
 					@click="confirmFido"
@@ -54,6 +55,7 @@
 			</div>
 			<div class="col-md-6">
 				<div
+					id="confirmEmail"
 					class="choice"
 					:class="{ done: emailClicked }"
 					@click="confirmEmail"
@@ -108,6 +110,7 @@
 		<div class="text-center">
 			{{ $t("confirm.wrong-account") }}
 			<a
+				id="logout"
 				href="#"
 				@click="$root.logout"
 			>
@@ -155,6 +158,7 @@ export default {
 								this.$router.push("/audit");
 							})
 							.catch(err => {
+								console.error(err);
 								this.emailError = err.response.status;
 								this.loading = false;
 							});

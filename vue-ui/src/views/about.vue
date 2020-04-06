@@ -85,7 +85,7 @@ export default {
 	},
 	methods: {
 		clickAccordion(newId) {
-			this.activeAccordion = (this.activeAccordion == newId) ? "" : newId;
+			this.activeAccordion = (this.activeAccordion === newId) ? "" : newId;
 		},
 	},
 };
