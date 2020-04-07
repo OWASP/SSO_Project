@@ -31,7 +31,9 @@ class MiddlewareHelper {
 		if(headerParts[0] != "Bearer") return next();
 		
 		this.checkAuthToken(headerParts[1]).then(authentication => {
-			req.user = authentication;
+			if(authentication.hasOwnProperty("token") && Number.isInteger(authentication.sub)) {
+				req.user = authentication;
+			}
 			next();
 		}).catch(() => {
 			next();

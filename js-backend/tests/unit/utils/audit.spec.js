@@ -1,30 +1,17 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
 
-const dbStub = {
-	execute: sinon.stub(),
-};
-dbStub.execute.callsArgWith(2, null, {
+const { db, pages } = require("../_shared.js");
+
+db.execute.callsArgWith(2, null, {
 	insertId: "insertId",
 });
 
-const AuditClass = require("../../utils/audit.js").Audit;
-const Audit = new AuditClass(dbStub, {});
+const AuditClass = require("../../../utils/audit.js").Audit;
+const Audit = new AuditClass(db, {});
 
 const cefStub = sinon.stub(Audit, "cefSend");
 cefStub.resolves({});
-
-const mockPages = {
-	"default": {
-		syslog: "default-syslog",
-	},
-	"1": {
-		syslog: "1-syslog",
-	},
-	"2": {
-		syslog: "2-syslog",
-	},
-};
 
 describe("Audit (Util)", () => {
 	it("prepares loggers", () => {
@@ -33,7 +20,7 @@ describe("Audit (Util)", () => {
 		expect(Audit.heartbeatTimer).to.equal(undefined);
 		expect(cefStub.called).to.equal(false);
 		
-		Audit.prepareLoggers(mockPages, "version");
+		Audit.prepareLoggers(pages, "version");
 		
 		expect(cefStub.calledWith("default-syslog")).to.equal(true);
 		expect(cefStub.calledWith("2-syslog")).to.equal(true);
@@ -50,7 +37,7 @@ describe("Audit (Util)", () => {
 	
 	it("adds an entry", async () => {
 		cefStub.resetHistory();
-		expect(dbStub.execute.called).to.equal(false);
+		expect(db.execute.called).to.equal(false);
 		
 		const insertId = await Audit.add({
 			user: {
@@ -65,7 +52,7 @@ describe("Audit (Util)", () => {
 			headers: {},
 		}, "object", "action", "attribute");
 		
-		expect(dbStub.execute.called).to.equal(true);
+		expect(db.execute.called).to.equal(true);
 		expect(cefStub.calledWith("default-syslog")).to.equal(true);
 		expect(cefStub.calledWith("1-syslog")).to.equal(true);
 		expect(cefStub.calledWith("2-syslog")).to.equal(false);

@@ -27,3 +27,10 @@ jobs:
         - npm install
       script:
         - npm run test:unit
+    - stage: unit
+      node_js: 13
+      install: 
+        - cd js-backend
+        - npm install
+      script:
+        - npm run test:unit

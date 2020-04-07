@@ -9,7 +9,7 @@ class Mailer {
 			}
 		});
 		
-		this.emailFrom = process.env.SMTPUSER || process.env.FALLBACKEMAILFROM;
+		this.emailFrom = process.env.SMTPUSER || process.env.FALLBACKEMAILFROM || "sso@owasp.org";
 	}
 	sendMail(data, callback) {
 		if(!data.hasOwnProperty("from")) {

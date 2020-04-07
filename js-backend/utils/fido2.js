@@ -2,11 +2,9 @@ const base64url = require("base64-arraybuffer");
 
 class Fido2Strategy {
 	// Init
-	constructor(opts, verify) {
-		super();
+	constructor(opts) {
 		this.name = "fido2";
 		
-		this._verify = opts.verify;
 		this._updateCounter = opts.updateCounter;
 		this._readUser = opts.readUser;
 		this._addAuthenticator = opts.addAuthenticator;

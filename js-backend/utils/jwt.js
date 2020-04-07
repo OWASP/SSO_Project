@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 class JWTHandler {
 	constructor() {
-		this.hostname = process.env.DOMAIN || "localhost";;
+		this.hostname = process.env.DOMAIN || "localhost";
 	}
 	
 	age() {
