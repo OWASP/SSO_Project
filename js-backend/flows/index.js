@@ -1,6 +1,6 @@
 const rateLimit = require("express-rate-limit");
 const {User, Audit, Mailer} = require("../utils");
-const MiddlewareHelper = new (require("../utils/middleware.js").MiddlewareHelper)();
+const MiddlewareHelper = new (require("../utils/middleware.js").MiddlewareHelper)(User.db);
 
 // Flow items
 const ssoFlow = require("./sso-flow.js").ssoFlow;
@@ -20,12 +20,12 @@ class FlowLoader {
 	addRoutes(app) {
 		app.use(this.ssoFlow.parseSSOHeader.bind(this.ssoFlow));
 	
-		app.post("/authenticator/delete", MiddlewareHelper.isAuthenticated, this.authenticatorFlow.onAuthenticatorDelete.bind(this.authenticatorFlow), MiddlewareHelper.showSuccess);
+		app.post("/authenticator/delete", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.onAuthenticatorDelete.bind(this.authenticatorFlow), MiddlewareHelper.showSuccess);
 		app.get("/email-confirm", this.localAuthFlow.onEmailConfirm.bind(this.localAuthFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
 		
 		// User SSO flow
 		app.route("/flow/in").get(this.ssoFlow.onFlowIn.bind(this.ssoFlow), MiddlewareHelper.showSuccess).post(this.ssoFlow.onFlowIn.bind(this.ssoFlow), MiddlewareHelper.showSuccess);
-		app.post("/flow/out", MiddlewareHelper.isAuthenticated, this.ssoFlow.onFlowOut.bind(this.ssoFlow), MiddlewareHelper.showSuccess);
+		app.post("/flow/out", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.ssoFlow.onFlowOut.bind(this.ssoFlow), MiddlewareHelper.showSuccess);
 		app.get("/default-page", (req, res, next) => {
 			const defaultPage = this.customPages["default"];
 			return res.status(200).json({
@@ -55,7 +55,7 @@ class FlowLoader {
 			headers: false,
 		}), MiddlewareHelper.antiTiming, this.localAuthFlow.onChangeRequest.bind(this.localAuthFlow), MiddlewareHelper.showSuccess);
 		app.post("/local/change", this.localAuthFlow.onChange.bind(this.localAuthFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
-		app.post("/local/session-clean", MiddlewareHelper.isAuthenticated, (req, res, next) => {
+		app.post("/local/session-clean", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), (req, res, next) => {
 			const token = req.user.token;
 			Audit.add(req, "session", "clean", null).then(() => {
 				User.cleanSession(req.user.id, token).then(() => {
@@ -81,8 +81,8 @@ class FlowLoader {
 		}), MiddlewareHelper.isLoggedIn, this.localAuthFlow.onLocalEmailAuth.bind(this.localAuthFlow), MiddlewareHelper.showSuccess);
 		
 		// FIDO2
-		app.get("/fido2/register", MiddlewareHelper.isAuthenticated, this.authenticatorFlow.onFidoRegisterGet.bind(this.authenticatorFlow));
-		app.post("/fido2/register", MiddlewareHelper.isAuthenticated, this.authenticatorFlow.checkLabel, this.authenticatorFlow.onFidoRegisterPost.bind(this.authenticatorFlow), MiddlewareHelper.showSuccess);
+		app.get("/fido2/register", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.onFidoRegisterGet.bind(this.authenticatorFlow));
+		app.post("/fido2/register", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.checkLabel, this.authenticatorFlow.onFidoRegisterPost.bind(this.authenticatorFlow), MiddlewareHelper.showSuccess);
 		app.get("/fido2/login", MiddlewareHelper.isLoggedIn, this.authenticatorFlow.onFidoLoginGet.bind(this.authenticatorFlow));
 		app.post("/fido2/login", MiddlewareHelper.isLoggedIn, this.authenticatorFlow.onFidoLoginPost.bind(this.authenticatorFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
 		
@@ -93,7 +93,7 @@ class FlowLoader {
 			message: "Too many certificate login requests, please try again later.",
 			headers: false,
 		}), this.isLoggedInBridge, this.authenticatorCertFlow.onCertLogin.bind(this.authenticatorCertFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
-		app.post("/cert/register", MiddlewareHelper.isAuthenticated, this.authenticatorFlow.checkLabel.bind(this.authenticatorFlow), this.authenticatorCertFlow.onCertRegister.bind(this.authenticatorCertFlow));
+		app.post("/cert/register", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.checkLabel.bind(this.authenticatorFlow), this.authenticatorCertFlow.onCertRegister.bind(this.authenticatorCertFlow));
 	}
 	
 	// Client certificate is not used via REST normally, so we need a bridge for a POST request

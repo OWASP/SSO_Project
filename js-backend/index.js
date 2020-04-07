@@ -135,7 +135,7 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 	app.use(require("body-parser").urlencoded({ extended: true }));
 	app.use(express.json());
 	
-	const MiddlewareHelper = new (require("./utils/middleware.js").MiddlewareHelper)();
+	const MiddlewareHelper = new (require("./utils/middleware.js").MiddlewareHelper)(User.db);
 	app.use(MiddlewareHelper.parseAuthHeader.bind(MiddlewareHelper));
 	
 	// Flow loader to separate functionalities

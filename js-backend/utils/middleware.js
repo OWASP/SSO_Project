@@ -1,12 +1,18 @@
 const crypto = require("crypto");
-const { User, JWT } = require("../utils");
+
+const JWTHandler = require("./jwt.js").JWTHandler;
+const UserLib = require("./user.js").User;
 
 // This class is prone to circular dependancies (if part of utils) and missing context (https://stackoverflow.com/q/45643005/1424378) - beware
 class MiddlewareHelper {
-	constructor() {
+	constructor(db) {
 		this.ownJwtToken = process.env.UNIQUEJWTTOKEN;
 		this.hostname = process.env.DOMAIN || "localhost";
 		this.frontendPort = process.env.FRONTENDPORT || 8080;
+		
+		this.db = db;
+		this.User = new UserLib(db);
+		this.JWT = new JWTHandler();
 	}
 	
 	// Protection against timing attacks
@@ -41,8 +47,8 @@ class MiddlewareHelper {
 	}
 
 	checkAuthToken(token) {
-		return JWT.verify(token, this.ownJwtToken, {
-			maxAge: JWT.age().SHORT,
+		return this.JWT.verify(token, this.ownJwtToken, {
+			maxAge: this.JWT.age().SHORT,
 		});
 	}
 
@@ -60,11 +66,11 @@ class MiddlewareHelper {
 		if(!req.user) return res.status(403).send("User not logged in");
 		if(!req.user.token) return res.status(403).send("Authorization token missing");
 		
-		User.validateSession(req.user.token).then(session => {
+		this.User.validateSession(req.user.token).then(session => {
 			if(req.user.id == session.userId) {
 				next();
 			} else {
-				User.deleteSession(req.user.token).then(() => {
+				this.User.deleteSession(req.user.token).then(() => {
 					res.status(400).send("Token mismatch");
 				});
 			}
@@ -80,12 +86,12 @@ class MiddlewareHelper {
 	createLoginToken(req, res, next) {
 		const email = req.loginEmail;
 		
-		User.findUserByName(email).then(user => {
-			return JWT.sign({
+		this.User.findUserByName(email).then(user => {
+			return this.JWT.sign({
 				sub: user.id,
 				id: user.id,
 				username: email,
-			}, this.ownJwtToken, JWT.age().MEDIUM);
+			}, this.ownJwtToken, this.JWT.age().MEDIUM);
 		}).then(jwtData => {
 			let returnObj = {
 				"token": jwtData,
@@ -110,8 +116,8 @@ class MiddlewareHelper {
 		
 		let publicAttributes;
 		Promise.all([
-			User.createSession(req.user.id),
-			User.findUserById(req.user.id),
+			this.User.createSession(req.user.id),
+			this.User.findUserById(req.user.id),
 		]).then(values => {
 			const {password, last_login, created, ...publicAttributesTmp} = values[1];
 			publicAttributes = publicAttributesTmp;
@@ -122,7 +128,7 @@ class MiddlewareHelper {
 				delete v.userKey;
 			});
 			
-			return JWT.sign(publicAttributes, this.ownJwtToken, JWT.age().LONG);
+			return this.JWT.sign(publicAttributes, this.ownJwtToken, this.JWT.age().LONG);
 		}).then(jwtData => {
 			let returnObj = {
 				"token": jwtData,

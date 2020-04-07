@@ -5,7 +5,7 @@ class Mailer {
 		this.transport = nodemailer.createTransport(config);
 		this.transport.verify(err => {
 			if(err) {
-				console.error("SMTP server not available", err);
+				console.error("SMTP server not available", err.message);
 			}
 		});
 		

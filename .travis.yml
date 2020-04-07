@@ -2,8 +2,8 @@ language: node_js
 stages:
   - lint
   - unit
-addons:
-  chrome: stable
+#addons:
+#  chrome: stable
 jobs:
   include:
     - stage: lint
