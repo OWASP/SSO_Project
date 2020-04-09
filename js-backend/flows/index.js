@@ -19,6 +19,7 @@ class FlowLoader {
 	
 	addRoutes(app) {
 		app.use(this.ssoFlow.parseSSOHeader.bind(this.ssoFlow));
+		app.get("/email-confirm", this.localAuthFlow.onEmailConfirm.bind(this.localAuthFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
 	
 		app.post("/authenticator/delete", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.onAuthenticatorDelete.bind(this.authenticatorFlow), MiddlewareHelper.showSuccess);
 		

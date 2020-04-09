@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Packages first for caching
 COPY js-backend/package.json /app/package.json
-RUN npm install
+RUN npm install --only=prod
 
 # Now application
 COPY js-backend /app

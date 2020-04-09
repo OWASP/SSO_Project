@@ -134,6 +134,27 @@ class LocalAuth {
 			res.status(400).send(err);
 		});
 	}
+	
+	onEmailConfirm(req, res, next) {
+		// Inbound email verification
+		const token = req.query.token;
+		const action = req.query.action;
+
+		Audit.add(req, action, "email", null).then(aID => {
+			switch(action) {
+				default:
+					return res.status(400).send("Invalid action");
+				case "login":
+					return User.resolveEmailActivation(token, Audit.getIP(req), action).then(confirmation => {
+						next();
+					}).catch(err => {
+						res.status(400).send(err);
+					});
+			}
+		}).catch(err => {
+			res.status(500).send(err);
+		});
+	}
 }
 
 exports.localAuthFlow = LocalAuth;

@@ -38,7 +38,7 @@ describe("Local-Auth (Flow)", () => {
 		});
 	});
 	
-	it("allows email confirmation", done => {
+	it("allows email confirmation request", done => {
 		stubs.activationStub.resetHistory();
 		stubs.mailStub.resetHistory();
 		
@@ -49,6 +49,22 @@ describe("Local-Auth (Flow)", () => {
 		}, res, () => {
 			expect(stubs.activationStub.calledWith("username", sinon.match.any, "login")).to.equal(true);
 			expect(stubs.mailStub.called).to.equal(true);
+			
+			done();
+		});
+	});
+	
+	it("confirms email confirmation request", done => {
+		stubs.resolveStub.resetHistory();
+		
+		const req = {
+			query: {
+				token: "token",
+				action: "login",
+			},
+		};
+		LocalAuth.onEmailConfirm(req, res, () => {
+			expect(stubs.resolveStub.calledWith("token", sinon.match.any, "login")).to.equal(true);
 			
 			done();
 		});

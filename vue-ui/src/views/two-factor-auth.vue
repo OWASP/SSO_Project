@@ -135,48 +135,51 @@ export default {
 		};
 	},
 	beforeMount() {
-		if (!this.$root.user.id && this.fidoAvailable) {
-			this.$root
-				.getMe()
-				.then(() => {
-					this.fidoAvailable =
-						this.$root.user.authenticators.filter(item => item.type == "fido2")
-							.length > 0;
-
-					if (this.$root.user.isAuthenticated) {
-						return this.$router.push("/audit");
-					}
-
-					if (this.$route.params.token) {
-						this.$root.apiGet("/email-confirm", {
-							token: this.$route.params.token,
-							action: "login",
-						})
-							.then(token => {
-								this.$root.setLoginToken(token.data.username, token.data);
-							
-								this.$router.push("/audit");
-							})
-							.catch(err => {
-								console.error(err);
-								this.emailError = err.response.status;
-								this.loading = false;
-							});
-					} else {
-						this.loading = false;
-					}
-				})
-				.catch(() => {
-					this.$root.logout();
-				});
-		} else {
-			this.fidoAvailable =
-				this.$root.user.authenticators.filter(item => item.type == "fido2")
-					.length > 0;
-			this.loading = false;
-		}
+		this.initTwoFa();
 	},
 	methods: {
+		initTwoFa() {
+			if (!this.$root.user.id && this.fidoAvailable) {
+				this.$root
+					.getMe()
+					.then(() => {
+						this.fidoAvailable =
+							this.$root.user.authenticators.filter(item => item.type == "fido2")
+								.length > 0;
+
+						if (this.$root.user.isAuthenticated) {
+							return this.$router.push("/audit");
+						}
+
+						if (this.$route.params.token) {
+							this.$root.apiGet("/email-confirm", {
+								token: this.$route.params.token,
+								action: "login",
+							})
+								.then(token => {
+									this.$root.setLoginToken(token.data.username, token.data);
+								
+									this.$router.push("/audit");
+								})
+								.catch(err => {
+									console.error(err);
+									this.emailError = err.response.status;
+									this.loading = false;
+								});
+						} else {
+							this.loading = false;
+						}
+					})
+					.catch(() => {
+						this.$root.logout();
+					});
+			} else {
+				this.fidoAvailable =
+					this.$root.user.authenticators.filter(item => item.type == "fido2")
+						.length > 0;
+				this.loading = false;
+			}
+		},
 		confirmFido() {
 			if (!this.fidoAvailable) return;
 

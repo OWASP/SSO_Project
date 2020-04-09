@@ -51,7 +51,7 @@ new Vue({
 			},
 		},
 	},
-	async beforeMount() {
+	async created() {
 		const users = this.listLoginToken();
 		if(users.length == 1) {
 			this.useLoginToken(users[0]);

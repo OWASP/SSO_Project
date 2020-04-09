@@ -13,7 +13,7 @@ class CertAuthenticator {
 		this.ownJwtToken = process.env.UNIQUEJWTTOKEN;
 	}
 	
-	getCert(req) {
+	getCert(req, res) {
 		let cert = req.connection.getPeerCertificate(true);
 		//console.log("cert login", cert, req.user)
 		
@@ -26,7 +26,10 @@ class CertAuthenticator {
 				const rawCertParsed = pki.certificateFromPem(rawCert);
 				
 				const rawCertB64 = rawCert.match(/-----BEGIN CERTIFICATE-----\s*([\s\S]+?)\s*-----END CERTIFICATE-----/i);
-				if(!rawCertB64) return res.status(400).send("Certificate can't be parsed");
+				if(!rawCertB64) {
+					res.status(400).send("Certificate can't be parsed");
+					return false;
+				}
 				const rawCertBinary = Buffer.from(rawCertB64[1], "base64");
 				const sha256sum = crypto.createHash("sha256").update(rawCertBinary).digest("hex");
 				
@@ -41,7 +44,8 @@ class CertAuthenticator {
 					},
 				};
 			} else {
-				return res.status(403).send("Certificate required");
+				res.status(403).send("Certificate required");
+				return false;
 			}
 		} else {
 			cert = {
@@ -133,7 +137,11 @@ class CertAuthenticator {
 	}
 	
 	async onCertLogin(req, res, next) {
-		const { cert, forgeCert } = this.getCert(req);
+		const certResp = this.getCert(req, res);
+		if(certResp === false) {
+			return;
+		}
+		const { cert, forgeCert } = certResp;
 		
 		const certMail = cert.subject.emailAddress;
 		if(certMail && certMail.toLowerCase() != req.user.username.toLowerCase()) {

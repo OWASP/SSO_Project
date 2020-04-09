@@ -26,14 +26,15 @@ class MiddlewareHelper {
 		if(!req || !req.headers || !req.headers.authorization) return next();
 		const authHeader = req.headers.authorization;
 		if(authHeader.indexOf(" ") == -1) return next();
-		
+
 		const headerParts = authHeader.split(" ");
 		if(headerParts[0] != "Bearer") return next();
-		
+
 		this.checkAuthToken(headerParts[1]).then(authentication => {
-			if(authentication.hasOwnProperty("token") && Number.isInteger(authentication.sub)) {
+			if(Number.isInteger(authentication.sub)) {
 				req.user = authentication;
 			}
+
 			next();
 		}).catch(() => {
 			next();

@@ -1,0 +1,8 @@
+{
+	"projectId": "css7c8",
+	"baseUrl": "https://localhost/#",
+	"env": {
+		"basePassword": "OWASPSSOPass123",
+		"emailAddress": "jamescullum@owasp.org"
+	}
+}

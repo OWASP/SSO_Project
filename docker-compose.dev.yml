@@ -25,6 +25,8 @@ services:
   smtp:
     image: mailhog/mailhog
     restart: always
+    ports:
+      - 8025:8025
 
   # Emulate syslog server for the central SIEM
   # Run it alone like this: docker run --name rsyslog.service -h test-host -p 514:514 jumanjiman/rsyslog
