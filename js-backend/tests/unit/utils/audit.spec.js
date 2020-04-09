@@ -1,8 +1,8 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
 
-const { db, pages } = require("../_shared.js");
-
+process.env.DONTMOCKAUDIT = true;
+const { db, pages, stubs } = require("../_shared.js");
 db.execute.callsArgWith(2, null, {
 	insertId: "insertId",
 });

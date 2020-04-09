@@ -32,6 +32,8 @@ describe("Password (Util)", () => {
 			Pw.checkPassword("userId", "password123").then(() => {
 				expect.fail("Pwned passwords not checked");
 			}).catch(() => {
+				expect(httpGetStub.called).to.equal(true);
+				
 				db.execute.callsArgWith(2, null, [{
 					password: "$argon2id$v=19$m=1024,t=1,p=1$c29tZXNhbHQ$p+eSWBJTCGd8GwpCpg/sPq00obwlnQWHG06+4dd22s0", // argon2 hash of "owasp-sso-password"
 				}]);

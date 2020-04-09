@@ -6,7 +6,8 @@ const Mailer = require("./mail.js").Mailer;
 const Audit = require("./audit.js").Audit;
 const JWTHandler = require("./jwt.js").JWTHandler;
 
-const db = mysql.createConnection({
+// MOCKDB is only used by unit tests and can not be set as a normal environment variable
+const db = process.env.MOCKDB ? process.env.MOCKDB : mysql.createConnection({
 	host: process.env.DBHOST,
 	user: process.env.DBUSER,
 	database: process.env.DBDATABASE,

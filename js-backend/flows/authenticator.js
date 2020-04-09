@@ -72,7 +72,6 @@ class Authenticator {
 			};
 			
 			return Audit.add(req, "authenticator", "add", label + " ("+credId+")");
-			
 		}).then(() => {
 			return User.addAuthenticator("fido2", req.user.username, label, {
 				userCounter: req.fido2.counter,
@@ -165,6 +164,7 @@ class Authenticator {
 		}).then(() => {
 			next();
 		}).catch(err => {
+			console.error(err);
 			return res.status(400).send(err.message);
 		});
 	}

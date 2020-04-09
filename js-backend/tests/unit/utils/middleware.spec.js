@@ -1,10 +1,10 @@
 const { expect } = require("chai");
 const sinon = require("sinon");
 
-const { res } = require("../_shared.js");
-const MiddlewareClass = require("../../../utils/middleware.js").MiddlewareHelper;
+const { res, stubs } = require("../_shared.js");
+const { User, JWT } = require("../../../utils");
 
-process.env.UNIQUEJWTTOKEN = "key";
+const MiddlewareClass = require("../../../utils/middleware.js").MiddlewareHelper;
 const Middleware = new MiddlewareClass();
 
 const checkTokenStub = sinon.stub(Middleware, "checkAuthToken").resolves({
@@ -70,7 +70,7 @@ describe("Middleware (Util)", () => {
 	});
 	
 	it("checks if the user is authenticated", done => {
-		const validateSessionStub = sinon.stub(Middleware.User, "validateSession");
+		const validateSessionStub = sinon.stub(User, "validateSession");
 		res.status.resetHistory();
 		
 		// Check login
@@ -84,7 +84,7 @@ describe("Middleware (Util)", () => {
 		expect(res.status.calledWith(403)).to.equal(true);
 		
 		// Session deletion for wrong user
-		const deleteSessionStub = sinon.stub(Middleware.User, "deleteSession").resolves({});
+		const deleteSessionStub = sinon.stub(User, "deleteSession").resolves({});
 		validateSessionStub.resolves({ userId: 2 });
 		Middleware.isAuthenticated({
 			user: {
@@ -123,11 +123,11 @@ describe("Middleware (Util)", () => {
 	});
 	
 	it("creates a login token", done => {
-		const findUserStub = sinon.stub(Middleware.User, "findUserByName").resolves({ id: 1 });
+		stubs.findUserStub.resetHistory().resolves({ id: 1 });
 		
-		Middleware.JWT.sign = (data, token, expiration) => {
+		JWT.sign = (data, token, expiration) => {
 			expect(data.username).to.equal("loginEmail");
-			expect(expiration).to.equal(Middleware.JWT.age().MEDIUM);
+			expect(expiration).to.equal(JWT.age().MEDIUM);
 			expect(token).to.equal("key");
 			
 			return new Promise((resolve, reject) => {
@@ -138,7 +138,7 @@ describe("Middleware (Util)", () => {
 			expect(obj.factor).to.equal(1);
 			expect(obj.test).to.equal("test");
 			expect(obj.token).to.equal("jwt");
-			expect(findUserStub.calledWith("loginEmail")).to.equal(true);
+			expect(stubs.findUserStub.calledWith("loginEmail")).to.equal(true);
 			
 			done();
 		};
@@ -154,19 +154,19 @@ describe("Middleware (Util)", () => {
 	});
 	
 	it("creates an authenticated token", done => {
-		const findUserStub = sinon.stub(Middleware.User, "findUserById").resolves({ 
+		stubs.userFindStub.resetHistory().resolves({ 
 			id: 1,
 			username: "username",
 			password: "password",
 			authenticators: [],
 		});
-		const createSessionStub = sinon.stub(Middleware.User, "createSession").resolves("session");
+		const createSessionStub = sinon.stub(User, "createSession").resolves("session");
 		
-		Middleware.JWT.sign = (data, token, expiration) => {
+		JWT.sign = (data, token, expiration) => {
 			expect(data.sub).to.equal(1);
 			expect(data.token).to.equal("session");
 			expect(data.hasOwnProperty("password")).to.equal(false);
-			expect(expiration).to.equal(Middleware.JWT.age().LONG);
+			expect(expiration).to.equal(JWT.age().LONG);
 			expect(token).to.equal("key");
 			
 			return new Promise((resolve, reject) => {
@@ -179,7 +179,7 @@ describe("Middleware (Util)", () => {
 			expect(obj.username).to.equal("username");
 			expect(obj.token).to.equal("jwt");
 			
-			expect(findUserStub.calledWith(1)).to.equal(true);
+			expect(stubs.userFindStub.calledWith(1)).to.equal(true);
 			expect(createSessionStub.calledWith(1)).to.equal(true);
 			
 			done();
@@ -192,9 +192,7 @@ describe("Middleware (Util)", () => {
 			returnExtra: {
 				test: "test",
 			},
-			body: {
-				
-			},
+			body: {},
 		}, res, () => {
 			expect.fail("Creating authentication token should not forward the request");
 		});
