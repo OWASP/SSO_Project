@@ -1,21 +1,53 @@
-/// <reference types="cypress" />
-// ***********************************************************
-// This example plugins/index.js can be used to load plugins
-//
-// You can change the location of this file or turn off loading
-// the plugins file with the 'pluginsFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/plugins-guide
-// ***********************************************************
+const mysql = require("mysql2");
 
-// This function is called when a project is opened or re-opened (e.g. due to
-// the project's config changing)
+const db = mysql.createConnection({
+	host: process.env.DBHOST || "localhost",
+	user: process.env.DBUSER || "owasp_sso",
+	database: process.env.DBDATABASE || "owasp_sso",
+	password: process.env.DBPASS || "insecure-default-password",
+});
 
-/**
- * @type {Cypress.PluginConfig}
- */
+const sqlPromise = (query, arguments) => {
+	return new Promise((resolve, reject) => {
+		db.execute(query, arguments, (err, results) => {
+			if(err) {
+				reject(err);
+			} else {
+				resolve(results);
+			}
+		});
+	});
+};
+
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+	on("task", {
+		// Run SQL query
+		sql(query, arguments) {
+			return sqlPromise;
+		},
+		// Run multiple SQL queries
+		sqlBulk(listData) {
+			const listPromises = [];
+			for(let i=0;i<listData.length;i++) {
+				const thisData = listData[i];
+				let query, args = [];
+				
+				console.log(thisData, typeof thisData);
+				if(typeof thisData == "string") {
+					query = thisData;
+				} else if(Array.isArray(thisData)) {
+					query = thisData[0];
+					if(thisData.length > 1) {
+						args = (typeof thisData[1] == "array") ? thisData[1] : [thisData[1]];
+					}
+				} else {
+					throw new Exception("Unknown data type for bulk SQL");
+				}
+				
+				listPromises.push(sqlPromise(query, args));
+			}
+			
+			return Promise.all(listPromises);
+		},
+	});
 }

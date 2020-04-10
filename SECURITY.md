@@ -23,7 +23,8 @@ endeavor to keep you informed of the progress towards a fix and full
 announcement, and may ask for additional information or guidance.
 
 Report security bugs in third-party modules to the person or team maintaining
-the module. Missing security patches will not be publicly acknowledged.
+the module. Missing security patches are appreciated, but will not result in 
+public acknowledgement.
 
 ## Disclosure Policy
 

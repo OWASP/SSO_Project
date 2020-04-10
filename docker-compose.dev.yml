@@ -13,13 +13,8 @@ services:
       MYSQL_DATABASE: owasp_sso
       MYSQL_USER: owasp_sso
       MYSQL_PASSWORD: insecure-default-password
-
-  # Database admin
-  database-admin:
-    image: adminer
-    restart: always
     ports:
-      - 8008:8080
+      - 3306:3306
   
   # Emulate SMTP
   smtp:

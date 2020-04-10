@@ -69,7 +69,6 @@ const routes = [
 				// Change from /two-factor to /two-factor/:id will not reload the component
 				// and there is no good way to just have the mounted hook re-run - ideas welcome
 				window.location.reload();
-				return;
 			}
 			
 			next();

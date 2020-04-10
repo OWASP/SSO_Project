@@ -10,22 +10,22 @@
 		>
 			<div
 				v-for="category in categories"
-				:key="category.name"
+				:key="category.key"
 				class="row accordion-row mb-1"
 			>
 				<div class="col-sm-12">
 					<button
-						:id="'title-' + category.name"
+						:id="'title-' + category.key"
 						type="button"
 						class="btn btn-block btn-sm btn-primary py-1 px-2 text-left"
-						@click="clickAccordion(category.name)"
+						@click="clickAccordion(category.key)"
 					>
 						{{ category.name }}
 					</button>
 					<div
-						:id="'about-' + category.name"
+						:id="'about-' + category.key"
 						class="collapse"
-						:class="{show: activeAccordion == category.name}"
+						:class="{show: activeAccordion == category.key}"
 						role="tabpanel"
 					>
 						<div class="py-1">
@@ -62,6 +62,7 @@ export default {
 			activeAccordion: "",
 			categories: [
 				{
+					key: "icons",
 					name: this.$t("about.icons"),
 					list: [
 						"Dave Gandy (FontAwesome - fontawesome.com)",
@@ -70,12 +71,14 @@ export default {
 						"simpleicons.org",
 					],
 				},{
+					key: "opensource",
 					name: this.$t("about.opensource"),
 					list: [
 						"Muhamad Nauval Azhar (github.com/nauvalazhar)",
 						"Ackermann Yuriy (github.com/herrjemand)",
 					],
 				},{
+					key: "security",
 					name: this.$t("about.security"),
 					banner: this.$t("about.security-banner"),
 					list: [],
