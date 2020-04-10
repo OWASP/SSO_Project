@@ -46,18 +46,19 @@ describe("About (View)", () => {
 		instanceData.categories[securityIndex].list = ["test"];
 		wrapper.setData(instanceData);
 		
-		const securityTitle = wrapper.get("#title-about\\.security").text();
-		expect(securityTitle).to.equal("about.security");
+		const securityTitle = wrapper.get("#title-security");
+		expect(securityTitle.text()).to.equal("about.security");
 		
 		wrapper.vm.clickAccordion("about.security");
+		securityTitle.trigger("click");
 		await wrapper.vm.$nextTick();
 		
 		expect(wrapper.vm.$data.activeAccordion).to.not.be.equal("");
 		
-		const bannerText = wrapper.get("div.show#about-about\\.security span.about-banner.badge").text();
+		const bannerText = wrapper.get("div.show#about-security span.about-banner.badge").text();
 		expect(bannerText).to.equal("about.security-banner");
 		
-		const listText = wrapper.get("div.show#about-about\\.security ul li").text();
+		const listText = wrapper.get("div.show#about-security ul li").text();
 		expect(listText).to.equal("test");
 	});
 });
