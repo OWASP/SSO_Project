@@ -1,0 +1,16 @@
+version: '3.7'
+
+# Used for e2e testing only
+services:
+  e2e:
+    image: "cypress/included:4.3.0"
+    entrypoint: ["/cypress/entrypoint.sh"]
+    volumes:
+      - ./cypress:/cypress
+      - ./cypress.json:/cypress.json
+      - ./package.json:/package.json
+    environment:
+      - CYPRESS_RECORD_KEY
+      - DBHOST=database
+      - FRONTENDHOST=frontend
+      - SMTPHOST=smtp

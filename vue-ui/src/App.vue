@@ -52,7 +52,7 @@
 							class="footer"
 							:style="{color: $root.ssoPage.branding.fontColor}"
 						>
-							{{ $root.ssoPage.branding.legalName }}<br>
+							<p>{{ $root.ssoPage.branding.legalName }}</p>
 							<a
 								:href="$root.ssoPage.branding.privacyPolicy"
 								target="_privacy"

@@ -1,36 +1,39 @@
 language: node_js
+node_js: 13
 stages:
   - lint
   - unit
+  - e2e
+services:
+  - docker
 #addons:
 #  chrome: stable
 jobs:
   include:
     - stage: lint
-      node_js: 13
       install: 
         - cd js-backend
         - npm install
       script:
         - npm run lint
     - stage: lint
-      node_js: 13
       install: 
         - cd vue-ui
         - npm install
       script:
         - npm run lint
     - stage: unit
-      node_js: 13
       install: 
         - cd vue-ui
         - npm install
       script:
         - npm run test:unit
     - stage: unit
-      node_js: 13
       install: 
         - cd js-backend
         - npm install
       script:
         - npm run test:unit
+    - stage: e2e
+      script:
+        - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.cypress.yml up --build --exit-code-from e2e

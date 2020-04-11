@@ -10,6 +10,7 @@ const localAuthFlow = require("./local-auth.js").localAuthFlow;
 
 class FlowLoader {
 	constructor(fido2Options, customPages, caMap, serverCrt, serverKey) {
+		this.fido2Options = fido2Options;
 		this.customPages = customPages;
 		this.authenticatorFlow = new authenticatorFlow(fido2Options);
 		this.authenticatorCertFlow = new authenticatorCertFlow(customPages, caMap);
@@ -29,6 +30,7 @@ class FlowLoader {
 		app.get("/default-page", (req, res, next) => {
 			const defaultPage = this.customPages["default"];
 			return res.status(200).json({
+				name: defaultPage.name,
 				branding: defaultPage.branding,
 			});
 		});
@@ -92,7 +94,7 @@ class FlowLoader {
 			max: 50,
 			message: "Too many certificate login requests, please try again later.",
 			headers: false,
-		}), this.isLoggedInBridge, this.authenticatorCertFlow.onCertLogin.bind(this.authenticatorCertFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
+		}), this.isLoggedInBridge.bind(this), this.authenticatorCertFlow.onCertLogin.bind(this.authenticatorCertFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
 		app.post("/cert/register", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.checkLabel.bind(this.authenticatorFlow), this.authenticatorCertFlow.onCertRegister.bind(this.authenticatorCertFlow));
 	}
 	
@@ -105,12 +107,21 @@ class FlowLoader {
 			if(authorizationBridge) {
 				MiddlewareHelper.checkAuthToken(authorizationBridge).then(authentication => {
 					req.user = authentication;
+					
+					// Bridge certificate header for localhost setup
+					if(req.body.certificate && this.fido2Options.rpId == "localhost") {
+						console.warn("Certificate bridge for testing used");
+						req.headers["x-tls-verified"] = "SUCCESS";
+						req.headers["x-tls-cert"] = req.body.certificate;
+					}
+					
 					next();
-				}).catch(() => {
-					return res.status(403).send("You need to be signed in 1");
+				}).catch(err => {
+					console.error("Token verification failed", err);
+					return res.status(403).send("You need to be signed in");
 				});
 			} else {
-				return res.status(403).send("You need to be signed in 2");
+				return res.status(403).send("You need to be signed in");
 			}
 		}
 	}

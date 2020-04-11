@@ -28,7 +28,7 @@ services:
   # You can test payloads like here: https://superuser.com/a/1229424/497745
   # It is not enabled by default, as the website does not fully work if the server does not exist.
   # You need to enable this manually in to websites.json
-  default-siem:
-    image: jumanjiman/rsyslog
-    hostname: default-siem
-    restart: always
+  #default-siem:
+  #  image: jumanjiman/rsyslog
+  #  hostname: default-siem
+  #  restart: always

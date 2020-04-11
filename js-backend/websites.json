@@ -1,5 +1,6 @@
 {
 	"default": {
+		"name": "OWASP SSO",
 		"branding": {
 			"backgroundColor": "#f7f9fb",
 			"fontColor": "#888",

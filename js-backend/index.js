@@ -65,7 +65,7 @@ if(!fs.existsSync(keyPath+"/server_key.pem")) {
 	const createServerCert = execFileSync("bash", [
 		"-c", "scripts/setup.bash '"+fido2Options.rpName+"'",
 	]);
-	console.log("Server keys have been generated", createServerCert);
+	console.log("Server keys have been generated");
 }
 
 
@@ -79,9 +79,11 @@ caMap["native"] = pki.createCaStore([ serverCrt.toString() ]);
 const caFolder = keyPath+"/ca";
 const caFiles = fs.readdirSync(caFolder);
 caFiles.forEach(caFile => {
-	const readCa = fs.readFileSync(caFolder+"/"+caFile);
-	caMap[caFile] = pki.createCaStore([ readCa.toString() ]);
-	caList.push(readCa);
+	if(caFile.endsWith(".pem")) {
+		const readCa = fs.readFileSync(caFolder+"/"+caFile);
+		caMap[caFile] = pki.createCaStore([ readCa.toString() ]);
+		caList.push(readCa);
+	}
 });
 console.log(caList.length + " CA loaded");
 bundleCAs(caList);
