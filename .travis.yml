@@ -6,8 +6,6 @@ stages:
   - e2e
 services:
   - docker
-#addons:
-#  chrome: stable
 jobs:
   include:
     - stage: lint
@@ -36,5 +34,7 @@ jobs:
         - npm run test:unit
     - stage: e2e
       script:
+        - docker --version
+        - docker-compose --version
         - chmod -R 775 .
         - npm run docker:e2e
