@@ -9,9 +9,11 @@ services:
       - ./cypress:/cypress
       - ./cypress.json:/cypress.json
       - ./package.json:/package.json
-      - ./.git:/.git
     environment:
       - CYPRESS_RECORD_KEY
       - DBHOST=database
       - FRONTENDHOST=frontend
       - SMTPHOST=smtp
+      - COMMIT_INFO_BRANCH=$TRAVIS_BRANCH
+      - COMMIT_INFO_MESSAGE=$TRAVIS_COMMIT_MESSAGE
+      - COMMIT_INFO_SHA=$TRAVIS_COMMIT

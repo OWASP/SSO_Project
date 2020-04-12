@@ -64,6 +64,7 @@ Cypress.Commands.add('authenticate', () => {
 	cy.get('#confirmEmail').click();
 	cy.get('.alert-success').should('be.visible');
 	
+	cy.wait(1000);
 	cy.getLastEmailBody().then(email => {
 		expect(email.link.endpoint).to.equal("two-factor");
 		cy.visit(email.link.path);
