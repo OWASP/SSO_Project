@@ -1,8 +1,8 @@
 language: node_js
 node_js: 13
 stages:
-  - lint
-  - unit
+  #- lint
+  #- unit
   - e2e
 services:
   - docker
@@ -36,5 +36,6 @@ jobs:
         - npm run test:unit
     - stage: e2e
       script:
-        - chmod 777 ./cypress/entrypoint.sh
+        - chmod -R 775 .
+        - source ./.env
         - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.cypress.yml up --build --exit-code-from e2e
