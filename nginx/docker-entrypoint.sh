@@ -2,7 +2,7 @@
 
 if [ -z "$DOMAIN" ]; then
 	echo "Domain not set, using localhost"
-	DOMAIN = "localhost"
+	DOMAIN="localhost"
 fi
 
 echo "Replace environment variables for $DOMAIN"
