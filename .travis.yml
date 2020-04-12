@@ -37,4 +37,4 @@ jobs:
     - stage: e2e
       script:
         - chmod -R 775 .
-        - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.cypress.yml up --build --exit-code-from e2e
+        - npm run docker:e2e

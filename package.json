@@ -7,7 +7,11 @@
 	"repository": "https://github.com/OWASP/SSO_Project.git",
 	"scripts": {
 		"cy:open": "cypress open",
-		"cy:run": "cypress run"
+		"cy:run": "cypress run",
+		"docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build",
+		"docker:prod": "docker-compose -f docker-compose.yml up --build",
+		"docker:e2e": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.cypress.yml up --build --exit-code-from e2e",
+		"docker:cleanup": "docker-compose down --remove-orphans"
 	},
 	"dependencies": {},
 	"devDependencies": {

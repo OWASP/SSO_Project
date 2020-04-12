@@ -47,9 +47,10 @@ You will need to restart the command line in such case
 
 #### Frontend [![Docker Automated build](https://img.shields.io/docker/automated/owaspsso/vue-ui.svg)](https://hub.docker.com/r/owaspsso/vue-ui) [![Docker Pulls](https://img.shields.io/docker/pulls/owaspsso/vue-ui.svg)](https://hub.docker.com/r/owaspsso/vue-ui) ![Docker Stars](https://img.shields.io/docker/stars/owaspsso/vue-ui.svg) [![Docker size](https://images.microbadger.com/badges/image/owaspsso/vue-ui.svg)](https://microbadger.com/images/owaspsso/vue-ui) [![Docker Version](https://images.microbadger.com/badges/version/owaspsso/vue-ui.svg)](https://microbadger.com/images/owaspsso/vue-ui)
 
-You can use the `docker-compose.yml` file to start a test environment via `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build`
-and a production-ready environment via `docker-compose -f docker-compose.yml up --build`.
-This environment requires to set the environment variables for all external services.
+You can start a development environment via `npm run docker:dev` and a production-ready environment via `npm run docker:prod`.
+To clean up all containers, run `npm run docker:cleanup`.
+
+The production environment requires to set the environment variables for all external services.
 
 ## Customization
 
