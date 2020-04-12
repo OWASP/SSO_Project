@@ -1,5 +1,4 @@
 const mysql = require("mysql2");
-const process = require("process");
 
 const pwUtilLib = require("./password.js").PwUtil;
 const UserLib = require("./user.js").User;
@@ -41,11 +40,3 @@ if(process.env.SMTPUSER && process.env.SMTPPASS) {
 	};
 }
 exports.Mailer = (new Mailer(MailerConfig));
-
-
-function sleep(seconds) {
-	console.log("start sleep for", seconds, "seconds");
-	var waitTill = new Date(new Date().getTime() + seconds * 1000);
-	while(waitTill > new Date()){}
-	console.log("finished sleeping");
-}

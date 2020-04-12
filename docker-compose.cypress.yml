@@ -9,6 +9,7 @@ services:
       - ./cypress:/cypress
       - ./cypress.json:/cypress.json
       - ./package.json:/package.json
+      - ./.git:/.git
     environment:
       - CYPRESS_RECORD_KEY
       - DBHOST=database
