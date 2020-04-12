@@ -25,7 +25,8 @@ COPY nginx/default.conf /etc/nginx/conf.d/default.template
 COPY --from=build-stage /crypto /etc/nginx/crypto
 
 COPY nginx/docker-entrypoint.sh /etc/nginx/docker-entrypoint.sh
-COPY --from=build-stage /app/dist /app/owasp_sso
+RUN chmod 777 /etc/nginx/docker-entrypoint.sh
 COPY nginx/security.txt /app/owasp_sso/.well-known/security.txt
+COPY --from=build-stage /app/dist /app/owasp_sso
 
 CMD ["/etc/nginx/docker-entrypoint.sh"]

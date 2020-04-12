@@ -36,4 +36,5 @@ jobs:
         - npm run test:unit
     - stage: e2e
       script:
+        - chmod 777 ./cypress/entrypoint.sh
         - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -f docker-compose.cypress.yml up --build --exit-code-from e2e
