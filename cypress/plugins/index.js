@@ -1,7 +1,9 @@
-const mysql = require("mysql2");
 const fs = require("fs");
 const os = require("os");
 const child_process = require("child_process");
+
+const mysql = require("mysql2");
+const CRI = require("chrome-remote-interface");
 
 const db = mysql.createConnection({
 	host: process.env.DBHOST || "localhost",
@@ -25,11 +27,17 @@ const sqlPromise = (query, arguments) => {
 // Dynamic baseUrl, so that it can be executed both locally and in CI without having to change things back & forth
 const frontendHost = process.env.FRONTENDHOST || "localhost";
 const mailHost = process.env.SMTPHOST || "localhost";
+let criPort = 0, criClient = null;
 
 module.exports = (on, config) => {
 	config.baseUrl = "https://"+frontendHost+"/#";
 	config.env.FRONTENDHOST = frontendHost;
 	config.env.MAILHOST = mailHost;
+	
+	on("before:browser:launch", (browser, args) => {
+		criPort = ensureRdpPort(args.args);
+		console.log("criPort is", criPort);
+	});
 	
 	on("task", {
 		// Run SQL query
@@ -104,6 +112,19 @@ module.exports = (on, config) => {
 				});
 			});
 		},
+		// Reset chrome remote interface for clean state (not sure if needed)
+		async resetCRI() {
+			if (criClient) {
+				await criClient.close();
+				criClient = null;
+			}
+			return Promise.resolve(true);
+		},
+		// Execute CRI command
+		async sendCRI(args) {
+			criClient = criClient || await CRI({ port: criPort });
+			return criClient.send(args.query, args.opts);
+		},
 	});
 	
 	return config;
@@ -120,4 +141,16 @@ function certInfoToMap(str) {
 	});
 	
 	return resultMap;
+}
+
+function ensureRdpPort(args) {
+    const existing = args.find(arg => arg.slice(0, 23) === '--remote-debugging-port')
+
+    if (existing) {
+	return Number(existing.split('=')[1])
+    }
+
+    const port = 40000 + Math.round(Math.random() * 25000)
+    args.push(`--remote-debugging-port=${port}`)
+    return port
 }

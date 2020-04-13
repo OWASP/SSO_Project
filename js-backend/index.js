@@ -2,7 +2,6 @@ require("dotenv").config();
 const https = require("https");
 const express = require("express");
 const syslogPro = require("syslog-pro");
-const rateLimit = require("express-rate-limit");
 const pki = require("node-forge").pki;
 
 const { execFileSync } = require("child_process");
@@ -95,13 +94,6 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 	
 	// Rate limitation middleware
 	app.set("trust proxy", "loopback, 172.16.0.0/12");
-	app.use(rateLimit({
-		// Generic limiter
-		windowMs: 5 * 60 * 1000,
-		max: 500,
-		message: "Too many generic requests, please try again later.",
-		headers: false,
-	}));
 	
 	// Security headers
 	app.disable("x-powered-by");
@@ -139,6 +131,7 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 	
 	const MiddlewareHelper = new (require("./utils/middleware.js").MiddlewareHelper)(User.db);
 	app.use(MiddlewareHelper.parseAuthHeader.bind(MiddlewareHelper));
+	app.use(MiddlewareHelper.rateLimit(5, 500, "Too many generic requests, please try again later."));
 	
 	// Flow loader to separate functionalities
 	const FlowLoader = require("./flows").FlowLoader;

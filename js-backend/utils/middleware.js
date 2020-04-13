@@ -1,5 +1,6 @@
 const crypto = require("crypto");
-const { User, JWT } = require("../utils");
+const rateLimit = require("express-rate-limit");
+const { User, JWT, Audit } = require("../utils");
 
 // This class is prone to circular dependancies (if part of utils) and missing context (https://stackoverflow.com/q/45643005/1424378) - beware
 class MiddlewareHelper {
@@ -142,6 +143,23 @@ class MiddlewareHelper {
 		}).catch(err => {
 			console.error(err);
 			return res.status(400).send(err.message);
+		});
+	}
+	
+	rateLimit(windowM, max, message) {
+		return rateLimit({
+			windowMs: windowM * 60 * 1000,
+			max,
+			message,
+			headers: false,
+			keyGenerator: req => {
+				return Audit.getIP(req);
+			},
+			skip: req => {
+				// Whitelist docker networks, where we don't get a real IP and every user has the same IP
+				const userIP = Audit.getIP(req);
+				return (userIP.startsWith("172.") || userIP.startsWith("192."));
+			},
 		});
 	}
 }

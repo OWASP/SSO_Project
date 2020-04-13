@@ -3,7 +3,7 @@ version: '3.7'
 # Used for e2e testing only
 services:
   e2e:
-    image: cypress/base:13.6.0
+    image: cypress/browsers:node13.6.0-chrome80-ff72
     entrypoint: ["/cypress/entrypoint.sh"]
     volumes:
       - ./cypress:/cypress

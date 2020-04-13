@@ -1,16 +1,7 @@
 describe("Authenticator Activity", () => {
 	beforeEach(() => {
 		cy.clearData();
-	});
-	
-	xit("Adds FIDO2 authenticator and can log in with it", () => {
-		cy.authenticate();
-		
-		cy.get("#add-authenticator-group select").select("fido");
-		cy.get("#add-authenticator-group input[type=text]").type("Test - Fido");
-		cy.get("#add-authenticator-group button[type=submit]").click();
-		
-		// Currently can not be tested: https://github.com/cypress-io/cypress/issues/6991
+		cy.task("resetCRI", {});
 	});
 	
 	it("Can add and remove an authenticator", () => {
@@ -30,6 +21,60 @@ describe("Authenticator Activity", () => {
 			cy.wait(1000);
 			expectAuthenticators(0);
 			cy.get(".data-logs").find(".accordion-row").should("have.length", beforeNum+2);
+		});
+	});
+	
+	it("Adds FIDO2 authenticator and can log in with it", () => {
+		// Set up virtual authenticator
+		cy.task("sendCRI", {
+			query: "WebAuthn.enable",
+			opts: {},
+		}).then(() => {
+			cy.task("sendCRI", {
+				query: "WebAuthn.addVirtualAuthenticator",
+				opts: {
+					options: {
+						protocol: "ctap2",
+						transport: "usb",
+						hasResidentKey: true,
+						hasUserVerification: true,
+						isUserVerified: true,
+					},
+				},
+			}).then(addResult => {
+				const credId = addResult.authenticatorId;
+				expect(credId).to.have.string("-").to.have.lengthOf(36);
+				//cy.log(["addResult", addResult, credId]);
+				
+				// Everything ready, now create a token
+				cy.authenticate();
+				expectAuthenticators(0);
+				
+				cy.get("#add-authenticator-group select").select("fido");
+				cy.get("#add-authenticator-group input[type=text]").type("Test - Fido");
+				cy.get("#add-authenticator-group button[type=submit]").click();
+				
+				cy.wait(1000);
+				expectAuthenticators(1);
+				
+				cy.task("sendCRI", {
+					query: "WebAuthn.getCredentials",
+					opts: addResult,
+				}).then(getCreds => {
+					expect(getCreds.credentials.length).to.equal(1);
+					
+					// Check if audit log contains added authenticator
+					const credHandle = getCreds.credentials[0].credentialId;
+					cy.get(".data-logs").contains("Test - Fido").contains(credHandle);
+					
+					// Now try to log in with this authenticator
+					cy.logout();
+					cy.login();
+					
+					cy.get("#confirmFido").click();
+					cy.isAuthenticated();
+				});
+			});
 		});
 	});
 	

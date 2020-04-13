@@ -1,4 +1,3 @@
-const rateLimit = require("express-rate-limit");
 const {User, Audit, Mailer} = require("../utils");
 const MiddlewareHelper = new (require("../utils/middleware.js").MiddlewareHelper)(User.db);
 
@@ -38,24 +37,14 @@ class FlowLoader {
 		app.get("/saml/FederationMetadata/2007-06/FederationMetadata.xml", this.ssoFlow.onSamlMeta.bind(this.ssoFlow));
 		
 		// Registration
-		app.post("/local/register", rateLimit({
-			windowMs: 1 * 60 * 1000,
-			max: 5,
-			message: "Too many registration requests, please try again later.",
-			headers: false,
-		}), MiddlewareHelper.antiTiming, this.localAuthFlow.onRegister.bind(this.localAuthFlow), MiddlewareHelper.showSuccess);
+		app.post("/local/register", MiddlewareHelper.rateLimit(1, 5, "Too many registration requests, please try again later."), MiddlewareHelper.antiTiming, this.localAuthFlow.onRegister.bind(this.localAuthFlow), MiddlewareHelper.showSuccess);
 		app.post("/local/activate", this.localAuthFlow.onActivate.bind(this.localAuthFlow), (req, res, next) => {
 			User.addUser(req.body.username, req.body.password).then(userId => {
 				req.user = {id: userId}; // skip 2fa
 				next();
 			});
 		}, MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
-		app.post("/local/change-request", rateLimit({
-			windowMs: 1 * 60 * 1000,
-			max: 5,
-			message: "Too many change requests, please try again later.",
-			headers: false,
-		}), MiddlewareHelper.antiTiming, this.localAuthFlow.onChangeRequest.bind(this.localAuthFlow), MiddlewareHelper.showSuccess);
+		app.post("/local/change-request", MiddlewareHelper.rateLimit(1, 5, "Too many change requests, please try again later."), MiddlewareHelper.antiTiming, this.localAuthFlow.onChangeRequest.bind(this.localAuthFlow), MiddlewareHelper.showSuccess);
 		app.post("/local/change", this.localAuthFlow.onChange.bind(this.localAuthFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
 		app.post("/local/session-clean", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), (req, res, next) => {
 			const token = req.user.token;
@@ -69,18 +58,8 @@ class FlowLoader {
 		}, MiddlewareHelper.showSuccess);
 		
 		// Local auth
-		app.post("/local/login", rateLimit({
-			windowMs: 5 * 60 * 1000,
-			max: 20,
-			message: "Too many login requests, please try again later.",
-			headers: false,
-		}), MiddlewareHelper.antiTiming, this.localAuthFlow.onLocalLogin.bind(this.localAuthFlow), MiddlewareHelper.createLoginToken.bind(MiddlewareHelper));
-		app.get("/local/email-auth", rateLimit({
-			windowMs: 5 * 60 * 1000,
-			max: 5,
-			message: "Too many email authentication requests, please try again later.",
-			headers: false,
-		}), MiddlewareHelper.isLoggedIn, this.localAuthFlow.onLocalEmailAuth.bind(this.localAuthFlow), MiddlewareHelper.showSuccess);
+		app.post("/local/login", MiddlewareHelper.rateLimit(5, 20, "Too many login requests, please try again later."), MiddlewareHelper.antiTiming, this.localAuthFlow.onLocalLogin.bind(this.localAuthFlow), MiddlewareHelper.createLoginToken.bind(MiddlewareHelper));
+		app.get("/local/email-auth", MiddlewareHelper.rateLimit(5, 5, "Too many email authentication requests, please try again later."), MiddlewareHelper.isLoggedIn, this.localAuthFlow.onLocalEmailAuth.bind(this.localAuthFlow), MiddlewareHelper.showSuccess);
 		
 		// FIDO2
 		app.get("/fido2/register", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.onFidoRegisterGet.bind(this.authenticatorFlow));
@@ -89,12 +68,7 @@ class FlowLoader {
 		app.post("/fido2/login", MiddlewareHelper.isLoggedIn, this.authenticatorFlow.onFidoLoginPost.bind(this.authenticatorFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
 		
 		// Client certificate
-		app.post("/cert/login", rateLimit({
-			windowMs: 5 * 60 * 1000,
-			max: 50,
-			message: "Too many certificate login requests, please try again later.",
-			headers: false,
-		}), this.isLoggedInBridge.bind(this), this.authenticatorCertFlow.onCertLogin.bind(this.authenticatorCertFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
+		app.post("/cert/login", MiddlewareHelper.rateLimit(5, 50, "Too many certificate login requests, please try again later."), this.isLoggedInBridge.bind(this), this.authenticatorCertFlow.onCertLogin.bind(this.authenticatorCertFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
 		app.post("/cert/register", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.checkLabel.bind(this.authenticatorFlow), this.authenticatorCertFlow.onCertRegister.bind(this.authenticatorCertFlow));
 	}
 	
