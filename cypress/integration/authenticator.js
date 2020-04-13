@@ -36,9 +36,10 @@ describe("Authenticator Activity", () => {
 					options: {
 						protocol: "ctap2",
 						transport: "usb",
-						hasResidentKey: true,
-						hasUserVerification: true,
-						isUserVerified: true,
+						hasResidentKey: false,
+						hasUserVerification: false,
+						isUserConsenting: true,
+						isUserVerified: false,
 					},
 				},
 			}).then(addResult => {
