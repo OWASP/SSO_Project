@@ -54,7 +54,7 @@ describe("Authenticator Activity", () => {
 				cy.get("#add-authenticator-group input[type=text]").type("Test - Fido");
 				cy.get("#add-authenticator-group button[type=submit]").click();
 				
-				cy.wait(1000);
+				cy.wait(3000);
 				expectAuthenticators(1);
 				
 				cy.task("sendCRI", {
