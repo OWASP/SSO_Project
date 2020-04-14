@@ -7,7 +7,7 @@ const samlp = require("samlp");
 // We can't mock MiddlewareHelper, but can catch the result using "res"
 
 const samlParseStub = sinon.stub(samlp, "parseRequest").callsArgWith(1, null, {
-	destination: "destination", // class overrides for localhost automatically
+	destination: "https://postman-echo.com/post?saml",
 });
 
 const SSOFlowClass = require("../../../flows/sso-flow.js").ssoFlow;
@@ -16,7 +16,6 @@ const SSOFlow = new SSOFlowClass(pages, fido2Options, "serverCrt", "serverKey");
 describe("SSO-Flow (Flow)", () => {
 	it("initializes correctly", () => {
 		expect(SSOFlow.ownJwtToken).to.equal("key");
-		expect(SSOFlow.hostname).to.equal("localhost");
 		expect(SSOFlow.serverCrt).to.equal("serverCrt");
 	});
 	
@@ -129,7 +128,7 @@ describe("SSO-Flow (Flow)", () => {
 		
 		SSOFlow.onSamlIn({
 			query: {
-				SAMLRequest: "SAMLRequest",
+				SAMLRequest: "fZLbcqowGEZfhck9iIgKGdFBBDy2KtSt3nQiRA5CQknw0Kcv1e1M977oZZIv%2Bf7MWr3BNc%2BEMy5ZQokBmpIMBEwCGiYkMsCb74gaGPR7DOVZAc2Kx2SNPyrMuFDfIwzeDwxQlQRSxBIGCcoxgzyAnrmYQ0WSYVFSTgOaAcFkDJe8LrIoYVWOSw%2BX5yTAb%2Bu5AWLOCwYbjYxGCZEYyjA70jLAUkBzIIzqyoQgfp%2FyGS0o4zkiIg5i%2Bh27bwy%2BRwLCZGSAd%2BWl7bqFQvKJbzmH4OZ6sxStWijpzK56YF5G8dDdNiNzejtbZTY9U3sVpnbksyNKo4Wed1PpIk1057MZhpt0r2ezvRUHrOCFfrqerOojuBzwC5ay6W2zKoZa4iEVXZwdS3WzXXbX9qE9LcbjrjLsHHFUjR1naWsLdGpVauzZs0x%2F13KabOeh2e7%2B2cSfF6Rtd1ei5iMWe0Vre5CX9n72Ohov%2BDXbbNEtcHfVIrIU2S2Olln%2FkrEKTwjjiHADKHKzJcqqqGi%2BokC1BVVFammdPRCWfxkME%2FIg%2BxuwwyPE4Nj3l%2BLy1fOBsHkaUgfAwwd4Ly9%2FiPD7s%2BhJH%2FSfAFEtlCyG%2BCziUMpv%2F1HvNX7U9B%2BrfyXsfwE%3D",
 				RelayState: "RelayState",
 			},
 		}, res, null);
