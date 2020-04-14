@@ -35,7 +35,7 @@ services:
       - SYSLOGHEARTBEAT
       - FALLBACKEMAILFROM
   
-  frontend:
+  frontend.localhost:
     depends_on:
       - backend # Nginx fails if backend is not available
     restart: always
@@ -60,7 +60,7 @@ services:
     
   certbot:
     depends_on:
-      - frontend
+      - frontend.localhost
     build:
       context: .
       dockerfile: certbot.dockerfile

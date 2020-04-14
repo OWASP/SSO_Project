@@ -26,6 +26,7 @@
 							v-model="email"
 							type="email"
 							class="form-control"
+							autocomplete="username"
 							required
 							autofocus
 						>
@@ -60,6 +61,7 @@
 							v-model="password"
 							type="password"
 							class="form-control"
+							autocomplete="current-password"
 						>
 						<span
 							v-if="errors.length"

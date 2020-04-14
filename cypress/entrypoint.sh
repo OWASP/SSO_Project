@@ -3,7 +3,7 @@ echo "Installing dependancies"
 npm install
 
 echo "Waiting on application to be ready"
-/cypress/wait-for-it.sh frontend:443 -t 600
+/cypress/wait-for-it.sh frontend.localhost:443 -t 600
 
 echo "Starting test"
 if [ -z "$CYPRESS_RECORD_KEY" ]; then

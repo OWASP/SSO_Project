@@ -1,6 +1,6 @@
 const base64url = require("base64-arraybuffer");
 const { User, Audit, JWT } = require("../utils");
-const { Fido2Lib } = require("fido2-lib");
+const { Fido2Lib } = require("fido2-library");
 
 class Authenticator {
 	constructor(fido2Options) {

@@ -22,7 +22,7 @@
 		"dotenv": "^8.2.0",
 		"express": "^4.17.1",
 		"express-rate-limit": "^5.1.1",
-		"fido2-lib": "^2.1.1",
+		"fido2-library": "^2.4.0",
 		"ip-country": "^1.0.2",
 		"jsonwebtoken": "^8.5.1",
 		"mysql2": "^1.7.0",

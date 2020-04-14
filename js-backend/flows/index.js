@@ -83,7 +83,7 @@ class FlowLoader {
 					req.user = authentication;
 					
 					// Bridge certificate header for localhost setup
-					if(req.body.certificate && this.fido2Options.rpId == "localhost") {
+					if(req.body.certificate && (this.fido2Options.rpId == "localhost" || this.fido2Options.rpId.endsWith(".localhost"))) {
 						console.warn("Certificate bridge for testing used");
 						req.headers["x-tls-verified"] = "SUCCESS";
 						req.headers["x-tls-cert"] = req.body.certificate;

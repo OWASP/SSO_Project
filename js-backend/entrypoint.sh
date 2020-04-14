@@ -9,5 +9,5 @@ else
 	/app/wait-for-it.sh database:3306 -t 600
 fi
 
-echo "Starting test"
+echo "Starting backend"
 npm run serve

@@ -43,6 +43,7 @@
 							v-model="password"
 							type="password"
 							class="form-control"
+							autocomplete="new-password"
 						>
 						<span
 							v-if="errors.length"
@@ -65,6 +66,7 @@
 							v-model="confirm"
 							type="password"
 							class="form-control"
+							autocomplete="new-password"
 						>
 						<span
 							v-if="errors.length"

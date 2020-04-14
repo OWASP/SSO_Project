@@ -28,21 +28,8 @@ Audit.prepareLoggers(customPages, packageList.version);
 const expressPort = process.env.BACKENDPORT || 3000;
 const frontendPort = process.env.FRONTENDPORT || 8080;
 const hostname = process.env.DOMAIN || "localhost";
-const disableLocalhostPatching = process.env.DISABLELOCALHOSTPATCHING || false;
 
 // Configure Fido2
-if(hostname == "localhost" && !disableLocalhostPatching) {
-	const utilsLocation = require.resolve("fido2-lib/lib/utils.js");
-	if(packageList.dependencies["fido2-lib"] == "^2.1.1" && fs.statSync(utilsLocation).size == 7054) {
-		// FIDO2-Lib does not natively support localhost and due to little maintenance this issue hasn't been fixed yet. See https://github.com/apowers313/fido2-lib/pull/19/files
-		// To increase usability, this script automatically patches this library if you want to use localhost
-		console.warn("Localhost was detected for FIDO2 library - patching fido2-lib now!");
-		
-		const oldContent = fs.readFileSync(utilsLocation, {encoding: "UTF-8"});
-		fs.writeFileSync(utilsLocation, oldContent.replace('if (originUrl.protocol !== "https:") {', 'if (originUrl.protocol !== "https:" && originUrl.hostname !== "localhost") {'));
-	}
-}
-
 const fido2Options = {
 	protocol: "https",
 	rpId: hostname,

@@ -39,7 +39,7 @@ describe("Authenticator Activity", () => {
 						hasResidentKey: false,
 						hasUserVerification: false,
 						isUserConsenting: true,
-						isUserVerified: false,
+						isUserVerified: true,
 					},
 				},
 			}).then(addResult => {

@@ -35,6 +35,8 @@ module.exports = (on, config) => {
 	config.env.MAILHOST = mailHost;
 	
 	on("before:browser:launch", (browser, args) => {
+		args = require('cypress-log-to-output').browserLaunchHandler(browser, args);
+		
 		criPort = ensureRdpPort(args.args);
 		console.log("criPort is", criPort);
 	});

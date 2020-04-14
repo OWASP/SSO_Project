@@ -17,6 +17,7 @@
 	"devDependencies": {
 		"chrome-remote-interface": "^0.28.1",
 		"cypress": "^4.3.0",
+		"cypress-log-to-output": "^1.0.8",
 		"mysql2": "^2.1.0"
 	}
 }
