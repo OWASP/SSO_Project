@@ -158,7 +158,9 @@ class MiddlewareHelper {
 			skip: req => {
 				// Whitelist docker networks, where we don't get a real IP and every user has the same IP
 				const userIP = Audit.getIP(req);
-				return (userIP.startsWith("172.") || userIP.startsWith("192."));
+				const skipIp = (userIP.startsWith("172.") || userIP.startsWith("192."));
+				//console.log("skip rate", skipIp);
+				return skipIp;
 			},
 		});
 	}

@@ -70,6 +70,10 @@ class ssoFlow {
 					flowType: "jwt",
 				},
 			};
+			if(thisPage.hasOwnProperty("terms")) {
+				req.returnExtra.page.terms = thisPage.terms;
+			}
+			
 			if(jwtInput && jwtInput.hasOwnProperty("sub")) {
 				if(!validator.isEmail(jwtInput.sub+"")) {
 					return res.status(400).send("Subject is not a valid email address");

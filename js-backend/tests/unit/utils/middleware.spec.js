@@ -34,6 +34,39 @@ describe("Middleware (Util)", () => {
 		}, 1500);
 	});
 	
+	it("can rate-limit connections", done => {
+		res.status.resetHistory();
+		res.send.resetHistory();
+		stubs.getIPStub.resetHistory();
+		
+		const maxRun = 13;
+		const limiter = Middleware.rateLimit(5, 13, "Limit reached");
+		
+		let successCounter = 0;
+		const queueList = [];
+		for(let i=0;i<20;i++) {
+			queueList.push(new Promise((resolve, reject) => {
+				const req = {};
+				limiter(req, res, () => {
+					successCounter++;
+					resolve();
+				});
+			}));
+		}
+		
+		Promise.all(queueList).then(() => {
+			expect.fail("Rate limitation was not enforced");
+		});
+		
+		setTimeout(() => {
+			expect(successCounter).to.equal(maxRun);
+			expect(res.status.calledWith(429)).to.equal(true);
+			expect(res.send.calledWith("Limit reached")).to.equal(true);
+			
+			done();
+		}, 500);
+	});
+	
 	it("can check the authorization header", done => {
 		expect(checkTokenStub.called).to.equal(false);
 		
@@ -53,6 +86,7 @@ describe("Middleware (Util)", () => {
 	});
 	
 	it("checks if the user is logged in", done => {
+		res.status.resetHistory();
 		Middleware.isLoggedIn({
 			// user not logged in
 		}, res, () => {

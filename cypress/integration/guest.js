@@ -9,6 +9,7 @@ describe("Guest Activity", () => {
 
 		cy.get("#email").type(Cypress.env("emailAddress"));
 		cy.get("#agree").check({force: true});
+		cy.get("#termsLink").should("have.attr", "href", "https://owasp.org/www-policy/operational/general-disclaimer");
 		cy.get(".btn").click();
 		cy.get(".alert-success").should("be.visible");
 

@@ -86,7 +86,7 @@
 				</div>
 
 				<div
-					v-if="!token"
+					v-if="!token && termsLink != '#'"
 					class="form-group"
 				>
 					<div class="custom-checkbox custom-control">
@@ -102,13 +102,17 @@
 								class="custom-control-input"
 								required
 							>
-							<!-- eslint-disable vue/no-v-html -->
 							<label
 								for="agree"
 								class="custom-control-label"
-								v-html="$t('register.toc-agree-label', { terms: '<a href=\'#\'>' + $t('register.terms') + '</a>' })"
-							></label>
-							<!-- eslint-enable -->
+							>
+								<a
+									id="termsLink"
+									:href="termsLink"
+									target="_toc"
+									rel="noopener noreferrer"
+								>{{ $t("register.toc-agree-label") }}</a>
+							</label>
 							<span
 								v-if="errors.length"
 								class="badge badge-danger"
@@ -166,6 +170,28 @@ export default {
 			success: null,
 			error: 0,
 		};
+	},
+	computed: {
+		termsLink() {
+			const termsObj = this.$root.ssoPage.terms || this.$root.defaultPage.terms;
+			if(!termsObj) {
+				return "#";
+			}
+			
+			const currentLocale = this.$root.$i18n.locale;
+			const fallbackLocale = this.$root.$i18n.fallbackLocale;
+			if(typeof termsObj == "object") {
+				if(termsObj.hasOwnProperty(currentLocale)) {
+					return termsObj[currentLocale];
+				} else if(termsObj.hasOwnProperty(fallbackLocale)) {
+					return termsObj[fallbackLocale];
+				} else {
+					return "#";
+				}
+			} else {
+				return termsObj;
+			}
+		},
 	},
 	methods: {
 		submit() {

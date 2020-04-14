@@ -31,6 +31,7 @@ class FlowLoader {
 			return res.status(200).json({
 				name: defaultPage.name,
 				branding: defaultPage.branding,
+				terms: defaultPage.terms,
 			});
 		});
 		app.get("/saml", this.ssoFlow.onSamlIn.bind(this.ssoFlow));

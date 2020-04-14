@@ -54,7 +54,6 @@ if(!fs.existsSync(keyPath+"/server_key.pem")) {
 	console.log("Server keys have been generated");
 }
 
-
 let serverInstance;
 const serverKey = fs.readFileSync(keyPath+"/server_key.pem");
 const serverCrt = fs.readFileSync(keyPath+"/server_cert.pem");
@@ -76,7 +75,7 @@ bundleCAs(caList);
 
 PwUtil.createRandomString(30).then(tempJwtToken => {
 	ownJwtToken = tempJwtToken;
-	if(hostname == "localhost") ownJwtToken = "hello-world";
+	if(hostname == "localhost") ownJwtToken = "hello-friend";
 	process.env.UNIQUEJWTTOKEN = ownJwtToken;
 	
 	// Rate limitation middleware
