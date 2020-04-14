@@ -45,7 +45,6 @@ describe("Authenticator Activity", () => {
 			}).then(addResult => {
 				const credId = addResult.authenticatorId;
 				expect(credId).to.have.string("-").to.have.lengthOf(36);
-				//cy.log(["addResult", addResult, credId]);
 				
 				// Everything ready, now create a token
 				cy.authenticate();

@@ -11,3 +11,4 @@ dist
 /cache/keys/*.pem
 /cypress/videos
 /cypress/screenshots
+/cypress/fixtures

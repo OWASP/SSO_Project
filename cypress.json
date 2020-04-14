@@ -1,6 +1,5 @@
 {
 	"projectId": "css7c8",
-	"defaultCommandTimeout": 10000,
 	"env": {
 		"basePassword": "OWASPSSOPass123",
 		"basePasswordHash": "$argon2id$v=19$m=200000,t=5,p=1$qFDmryXb3T8IGL08FpXzeg$28HdKkGqkKlm+dvN88xQ+CyJaYtcyeg8x+Glt6dXsAU",

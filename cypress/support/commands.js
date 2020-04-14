@@ -76,7 +76,7 @@ Cypress.Commands.add('authenticate', () => {
 
 // Assumes you're on /audit
 Cypress.Commands.add('logout', () => {
-	cy.get('.mt-4 > .btn-warning').click();
+	cy.get('#logout').click();
 	cy.isGuest();
 });
 
