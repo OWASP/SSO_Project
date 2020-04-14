@@ -87,8 +87,7 @@
 		"register": "Jetzt registrieren"
 	},
 	"register": {
-		"toc-agree-label": "Ich stimme den {terms} zu",
-		"terms": "AGBs",
+		"toc-agree-label": "I agree to the Terms and Conditions",
 		"fill-toc": "Sie müssen den AGBs zustimmen um diesen Dienst benutzen zu können",
 		"success": "Wenn die von Ihnen angegebene EMail - Adresse noch nicht registriert ist, werden Sie in Kürze eine EMail zur Vervollständigung der Registrierung erhalten!",
 		"400": "Ihr eingegebenes Passwort war nicht sicher genug oder sie haben während der Änderung das Netzwerk geändert.",
