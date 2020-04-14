@@ -87,8 +87,7 @@
 		"register": "Register Now"
 	},
 	"register": {
-		"toc-agree-label": "I agree to the {terms}",
-		"terms": "Terms and Conditions",
+		"toc-agree-label": "I agree to the Terms and Conditions",
 		"fill-toc": "You need to agree to use this service",
 		"success": "If the email address you entered is not already registered, please check your email inbox for a confirmation link!",
 		"400": "Your password was not sufficiently secure or you are resetting from a different network than you requested it from.",
