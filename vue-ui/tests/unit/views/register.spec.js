@@ -25,6 +25,10 @@ const baseOptions = {
 	},
 	mocks: {
 		$t: key => key,
+		$i18n: {
+			locale: "en",
+			fallbackLocale: "en",
+		},
 		$route: {
 			params: {
 				token: "",
@@ -38,6 +42,14 @@ const baseOptions = {
 		"router-link",
 	],
 	parentComponent: {
+		data() {
+			return {
+				ssoPage: {},
+				defaultPage: {
+					terms: "http://example.com",
+				},
+			};
+		},
 		methods: {
 			setLoginToken,
 			apiPost,

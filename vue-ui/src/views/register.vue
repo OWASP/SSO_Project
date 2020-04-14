@@ -178,8 +178,8 @@ export default {
 				return "#";
 			}
 			
-			const currentLocale = this.$root.$i18n.locale;
-			const fallbackLocale = this.$root.$i18n.fallbackLocale;
+			const currentLocale = this.$i18n.locale;
+			const fallbackLocale = this.$i18n.fallbackLocale;
 			if(typeof termsObj == "object") {
 				if(termsObj.hasOwnProperty(currentLocale)) {
 					return termsObj[currentLocale];
