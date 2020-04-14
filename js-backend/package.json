@@ -16,7 +16,7 @@
 		"test:unit": "mocha \"tests/unit/**/*.spec.js\" --timeout 2000 --exit"
 	},
 	"dependencies": {
-		"argon2": "^0.26.1",
+		"argon2": "^0.26.2",
 		"base64-arraybuffer": "^0.2.0",
 		"body-parser": "^1.19.0",
 		"dotenv": "^8.2.0",
@@ -39,7 +39,7 @@
 		"eslint": "^6.8.0",
 		"eslint-plugin-vue": "^6.2.2",
 		"mocha": "^7.1.1",
-		"sinon": "^9.0.1"
+		"sinon": "^9.0.2"
 	},
 	"eslintConfig": {
 		"root": true,
