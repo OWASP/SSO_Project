@@ -26,6 +26,7 @@
 							v-model="email"
 							type="email"
 							class="form-control"
+							autocomplete="username"
 							required
 							autofocus
 						>
@@ -44,6 +45,7 @@
 					>
 						{{ $t("general.password") }}
 						<router-link
+							id="goReset"
 							to="/reset-password"
 							class="float-right"
 						>
@@ -60,6 +62,7 @@
 							v-model="password"
 							type="password"
 							class="form-control"
+							autocomplete="current-password"
 						>
 						<span
 							v-if="errors.length"
@@ -81,7 +84,7 @@
 				</div>
 				<div class="mt-4 text-center">
 					{{ $t("login.no-account") }}
-					<router-link to="/register">
+					<router-link id="goRegister" to="/register">
 						{{ $t("login.register") }}
 					</router-link>
 				</div>
@@ -179,7 +182,7 @@ export default {
 				this.loading = false;
 				return;
 			}
-		
+
 			this.$root
 				.getMe()
 				.then(() => {

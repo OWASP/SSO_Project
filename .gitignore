@@ -7,3 +7,8 @@ dist
 /cache/database/*
 !/cache/database/.gitkeep
 /js-backend/keys/bundled-ca.pem
+/cypress/integration/examples
+/cache/keys/*.pem
+/cypress/videos
+/cypress/screenshots
+/cypress/fixtures

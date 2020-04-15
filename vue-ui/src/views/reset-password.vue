@@ -16,6 +16,7 @@
 							v-model="email"
 							type="email"
 							class="form-control"
+							autocomplete="username"
 							required
 							autofocus
 						>

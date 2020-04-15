@@ -7,7 +7,8 @@ services:
       context: .
       dockerfile: backend.dockerfile
     volumes:
-      - ./cache/ca.pem:/app/keys/bundled-ca.pem
+      - ./cache/keys:/app/keys
+      - ./cache/bundled-ca.pem:/app/keys/bundled-ca.pem
     environment:
       - DOMAIN
       - FRONTENDPORT=443
@@ -34,7 +35,7 @@ services:
       - SYSLOGHEARTBEAT
       - FALLBACKEMAILFROM
   
-  frontend:
+  frontend.localhost:
     depends_on:
       - backend # Nginx fails if backend is not available
     restart: always
@@ -53,13 +54,13 @@ services:
     volumes:
       - ./cache/certbot/conf:/etc/letsencrypt
       - ./cache/certbot/www:/var/www/certbot
-      - ./cache/ca.pem:/etc/nginx/crypto/ca.pem
+      - ./cache/bundled-ca.pem:/etc/nginx/crypto/ca.pem
     environment:
       - DOMAIN
     
   certbot:
     depends_on:
-      - frontend
+      - frontend.localhost
     build:
       context: .
       dockerfile: certbot.dockerfile

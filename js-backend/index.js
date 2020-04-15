@@ -2,7 +2,6 @@ require("dotenv").config();
 const https = require("https");
 const express = require("express");
 const syslogPro = require("syslog-pro");
-const rateLimit = require("express-rate-limit");
 const pki = require("node-forge").pki;
 
 const { execFileSync } = require("child_process");
@@ -29,21 +28,8 @@ Audit.prepareLoggers(customPages, packageList.version);
 const expressPort = process.env.BACKENDPORT || 3000;
 const frontendPort = process.env.FRONTENDPORT || 8080;
 const hostname = process.env.DOMAIN || "localhost";
-const disableLocalhostPatching = process.env.DISABLELOCALHOSTPATCHING || false;
 
 // Configure Fido2
-if(hostname == "localhost" && !disableLocalhostPatching) {
-	const utilsLocation = require.resolve("fido2-lib/lib/utils.js");
-	if(packageList.dependencies["fido2-lib"] == "^2.1.1" && fs.statSync(utilsLocation).size == 7054) {
-		// FIDO2-Lib does not natively support localhost and due to little maintenance this issue hasn't been fixed yet. See https://github.com/apowers313/fido2-lib/pull/19/files
-		// To increase usability, this script automatically patches this library if you want to use localhost
-		console.warn("Localhost was detected for FIDO2 library - patching fido2-lib now!");
-		
-		const oldContent = fs.readFileSync(utilsLocation, {encoding: "UTF-8"});
-		fs.writeFileSync(utilsLocation, oldContent.replace('if (originUrl.protocol !== "https:") {', 'if (originUrl.protocol !== "https:" && originUrl.hostname !== "localhost") {'));
-	}
-}
-
 const fido2Options = {
 	protocol: "https",
 	rpId: hostname,
@@ -65,9 +51,8 @@ if(!fs.existsSync(keyPath+"/server_key.pem")) {
 	const createServerCert = execFileSync("bash", [
 		"-c", "scripts/setup.bash '"+fido2Options.rpName+"'",
 	]);
-	console.log("Server keys have been generated", createServerCert);
+	console.log("Server keys have been generated");
 }
-
 
 let serverInstance;
 const serverKey = fs.readFileSync(keyPath+"/server_key.pem");
@@ -79,27 +64,22 @@ caMap["native"] = pki.createCaStore([ serverCrt.toString() ]);
 const caFolder = keyPath+"/ca";
 const caFiles = fs.readdirSync(caFolder);
 caFiles.forEach(caFile => {
-	const readCa = fs.readFileSync(caFolder+"/"+caFile);
-	caMap[caFile] = pki.createCaStore([ readCa.toString() ]);
-	caList.push(readCa);
+	if(caFile.endsWith(".pem")) {
+		const readCa = fs.readFileSync(caFolder+"/"+caFile);
+		caMap[caFile] = pki.createCaStore([ readCa.toString() ]);
+		caList.push(readCa);
+	}
 });
 console.log(caList.length + " CA loaded");
 bundleCAs(caList);
 
 PwUtil.createRandomString(30).then(tempJwtToken => {
 	ownJwtToken = tempJwtToken;
-	if(hostname == "localhost") ownJwtToken = "hello-world";
+	if(hostname == "localhost") ownJwtToken = "hello-friend";
 	process.env.UNIQUEJWTTOKEN = ownJwtToken;
 	
 	// Rate limitation middleware
 	app.set("trust proxy", "loopback, 172.16.0.0/12");
-	app.use(rateLimit({
-		// Generic limiter
-		windowMs: 5 * 60 * 1000,
-		max: 500,
-		message: "Too many generic requests, please try again later.",
-		headers: false,
-	}));
 	
 	// Security headers
 	app.disable("x-powered-by");
@@ -135,8 +115,9 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 	app.use(require("body-parser").urlencoded({ extended: true }));
 	app.use(express.json());
 	
-	const MiddlewareHelper = new (require("./utils/middleware.js").MiddlewareHelper)();
+	const MiddlewareHelper = new (require("./utils/middleware.js").MiddlewareHelper)(User.db);
 	app.use(MiddlewareHelper.parseAuthHeader.bind(MiddlewareHelper));
+	app.use(MiddlewareHelper.rateLimit(5, 500, "Too many generic requests, please try again later."));
 	
 	// Flow loader to separate functionalities
 	const FlowLoader = require("./flows").FlowLoader;

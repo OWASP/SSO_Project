@@ -64,6 +64,15 @@ const routes = [
 		meta: {
 			title: i18n.t("router.confirm"),
 		},
+		beforeEnter: (to, from, next) => {
+			if(from.name == "two-factor") {
+				// Change from /two-factor to /two-factor/:id will not reload the component
+				// and there is no good way to just have the mounted hook re-run - ideas welcome
+				window.location.reload();
+			}
+			
+			next();
+		},
 	},
 	{
 		path: "/audit",
@@ -103,7 +112,7 @@ const router = new VueRouter({
 	routes,
 });
 
-router.beforeEach(function(to, from, next) {
+router.beforeEach((to, from, next) => {
 	document.title = to.meta.title;
 	next();
 });

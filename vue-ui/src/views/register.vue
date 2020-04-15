@@ -20,6 +20,7 @@
 							v-model="email"
 							type="email"
 							class="form-control"
+							autocomplete="username"
 							required
 							autofocus
 						>
@@ -47,6 +48,7 @@
 							v-model="password"
 							type="password"
 							class="form-control"
+							autocomplete="new-password"
 						>
 						<span
 							v-if="errors.length"
@@ -72,6 +74,7 @@
 							v-model="confirm"
 							type="password"
 							class="form-control"
+							autocomplete="new-password"
 						>
 						<span
 							v-if="errors.length"
@@ -83,7 +86,7 @@
 				</div>
 
 				<div
-					v-if="!token"
+					v-if="!token && termsLink != '#'"
 					class="form-group"
 				>
 					<div class="custom-checkbox custom-control">
@@ -99,13 +102,17 @@
 								class="custom-control-input"
 								required
 							>
-							<!-- eslint-disable vue/no-v-html -->
 							<label
 								for="agree"
 								class="custom-control-label"
-								v-html="$t('register.toc-agree-label', { terms: '<a href=\'#\'>' + $t('register.terms') + '</a>' })"
-							></label>
-							<!-- eslint-enable -->
+							>
+								<a
+									id="termsLink"
+									:href="termsLink"
+									target="_toc"
+									rel="noopener noreferrer"
+								>{{ $t("register.toc-agree-label") }}</a>
+							</label>
 							<span
 								v-if="errors.length"
 								class="badge badge-danger"
@@ -141,7 +148,7 @@
 				</div>
 				<div class="mt-4 text-center">
 					{{ $t("register.already-account") }}
-					<router-link to="/">
+					<router-link id="goLogin" to="/">
 						{{ $t("register.switch-login") }}
 					</router-link>
 				</div>
@@ -163,6 +170,28 @@ export default {
 			success: null,
 			error: 0,
 		};
+	},
+	computed: {
+		termsLink() {
+			const termsObj = this.$root.ssoPage.terms || this.$root.defaultPage.terms;
+			if(!termsObj) {
+				return "#";
+			}
+			
+			const currentLocale = this.$i18n.locale;
+			const fallbackLocale = this.$i18n.fallbackLocale;
+			if(typeof termsObj == "object") {
+				if(termsObj.hasOwnProperty(currentLocale)) {
+					return termsObj[currentLocale];
+				} else if(termsObj.hasOwnProperty(fallbackLocale)) {
+					return termsObj[fallbackLocale];
+				} else {
+					return "#";
+				}
+			} else {
+				return termsObj;
+			}
+		},
 	},
 	methods: {
 		submit() {

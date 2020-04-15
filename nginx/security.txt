@@ -1,0 +1,4 @@
+Contact: https://mailhide.io/e/Wno7k
+Acknowledgments: https://github.com/OWASP/SSO_Project/blob/master/vue-ui/src/views/about.vue#L81
+Preferred-Languages: en,de
+Policy: https://github.com/OWASP/SSO_Project/blob/master/SECURITY.md

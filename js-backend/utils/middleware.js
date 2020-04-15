@@ -1,9 +1,10 @@
 const crypto = require("crypto");
-const { User, JWT } = require("../utils");
+const rateLimit = require("express-rate-limit");
+const { User, JWT, Audit } = require("../utils");
 
 // This class is prone to circular dependancies (if part of utils) and missing context (https://stackoverflow.com/q/45643005/1424378) - beware
 class MiddlewareHelper {
-	constructor() {
+	constructor(db) {
 		this.ownJwtToken = process.env.UNIQUEJWTTOKEN;
 		this.hostname = process.env.DOMAIN || "localhost";
 		this.frontendPort = process.env.FRONTENDPORT || 8080;
@@ -26,12 +27,15 @@ class MiddlewareHelper {
 		if(!req || !req.headers || !req.headers.authorization) return next();
 		const authHeader = req.headers.authorization;
 		if(authHeader.indexOf(" ") == -1) return next();
-		
+
 		const headerParts = authHeader.split(" ");
 		if(headerParts[0] != "Bearer") return next();
-		
+
 		this.checkAuthToken(headerParts[1]).then(authentication => {
-			req.user = authentication;
+			if(Number.isInteger(authentication.sub)) {
+				req.user = authentication;
+			}
+
 			next();
 		}).catch(() => {
 			next();
@@ -139,6 +143,25 @@ class MiddlewareHelper {
 		}).catch(err => {
 			console.error(err);
 			return res.status(400).send(err.message);
+		});
+	}
+	
+	rateLimit(windowM, max, message) {
+		return rateLimit({
+			windowMs: windowM * 60 * 1000,
+			max,
+			message,
+			headers: false,
+			keyGenerator: req => {
+				return Audit.getIP(req);
+			},
+			skip: req => {
+				// Whitelist docker networks, where we don't get a real IP and every user has the same IP
+				const userIP = Audit.getIP(req);
+				const skipIp = (userIP.startsWith("172.") || userIP.startsWith("192."));
+				//console.log("skip rate", skipIp);
+				return skipIp;
+			},
 		});
 	}
 }

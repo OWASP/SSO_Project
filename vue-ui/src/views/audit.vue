@@ -22,6 +22,7 @@
 					{{ $t("audit.wrong-account", { username: $root.ssoPage.username, website: $root.ssoPage.name }) }}
 				</div>
 				<button
+					id="logout"
 					type="button"
 					class="btn btn-warning"
 					@click="$root.logout"
@@ -34,6 +35,7 @@
 							(!$root.ssoPage.hasOwnProperty('username') ||
 								$root.ssoPage.username == $root.user.username)
 					"
+					id="flowLeaveButton"
 					type="button"
 					class="btn btn-primary float-right"
 					@click="flowOut"
@@ -45,6 +47,7 @@
 		
 		<form
 			v-if="$root.ssoPage && $root.ssoPage.pageId"
+			id="ssoFlowOutForm"
 			ref="flowOut"
 			:action="redirect"
 			method="POST"
@@ -97,7 +100,6 @@ export default {
 			jwtToken: "",
 			SAMLResponse: "",
 			RelayState: "",
-			
 		};
 	},
 	mounted() {
@@ -140,10 +142,12 @@ export default {
 						this.SAMLResponse = data.SAMLResponse;
 						this.RelayState = data.RelayState;
 					}
-						
-					this.$nextTick(() => {
-						this.$refs.flowOut.submit();
-					});
+					
+					if(!window.Cypress) {
+						this.$nextTick(() => {
+							this.$refs.flowOut.submit();
+						});
+					}
 				});
 		},
 	},

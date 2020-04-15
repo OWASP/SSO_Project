@@ -1,5 +1,6 @@
 {
 	"default": {
+		"name": "OWASP SSO",
 		"branding": {
 			"backgroundColor": "#f7f9fb",
 			"fontColor": "#888",
@@ -7,10 +8,11 @@
 			"privacyPolicy": "https://owasp.org/www-policy/operational/privacy",
 			"imprint": "https://owasp.org/contact/",
 			"logo": "https://owasp.org/assets/images/logo.png"
-		}
+		},
+		"terms": "https://owasp.org/www-policy/operational/general-disclaimer"
 	},
 	"1": {
-		"jwt": "hello-world",
+		"jwt": "hello-friend",
 		"signedRequestsOnly": false,
 		"name": "E Corp",
 		"redirect": "https://postman-echo.com/post",

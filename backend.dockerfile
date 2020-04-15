@@ -4,18 +4,21 @@ WORKDIR /app
 
 # Packages first for caching
 COPY js-backend/package.json /app/package.json
-RUN npm install
+RUN npm install --only=prod
 
 # Now application
 COPY js-backend /app
 
 # Run JS from alpine image
 FROM node:lts-alpine as production-stage
+
 RUN apk update && apk add bash openssl && \
 	mkdir -p /app/keys && \
 	touch /app/keys/bundled-ca.pem
 WORKDIR /app
+COPY ./cypress/wait-for-it.sh /app/wait-for-it.sh
 COPY --from=build-stage /app /app
+RUN chmod -R 775 /app/*.sh
 
 EXPOSE 3000
-CMD ["npm", "run", "serve"]
+CMD ["/app/entrypoint.sh"]

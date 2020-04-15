@@ -5,11 +5,11 @@ class Mailer {
 		this.transport = nodemailer.createTransport(config);
 		this.transport.verify(err => {
 			if(err) {
-				console.error("SMTP server not available", err);
+				console.error("SMTP server not available", err.message);
 			}
 		});
 		
-		this.emailFrom = process.env.SMTPUSER || process.env.FALLBACKEMAILFROM;
+		this.emailFrom = process.env.SMTPUSER || process.env.FALLBACKEMAILFROM || "sso@owasp.org";
 	}
 	sendMail(data, callback) {
 		if(!data.hasOwnProperty("from")) {

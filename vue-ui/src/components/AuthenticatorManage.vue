@@ -63,7 +63,7 @@
 				{{ authenticator.label }}
 				<a
 					href="#"
-					class="text-danger float-right"
+					class="text-danger float-right remove-authenticator"
 					:title="$t('authenticator.remove')"
 					@click="
 						removeAuthenticator(authenticator.type, authenticator.userHandle)
@@ -200,10 +200,15 @@ export default {
 						const url = window.URL.createObjectURL(new Blob([response.data]));
 						const link = document.createElement("a");
 						link.href = url;
+						link.target = "_blank";
+						link.id = "download-cert-tmp";
 						link.setAttribute("download", this.$root.user.username + ".p12");
 						document.body.appendChild(link);
-						link.click();
-						link.remove();
+						
+						if(!window.Cypress) {
+							link.click();
+							link.remove();
+						}
 						
 						this.$emit("reload");
 					});

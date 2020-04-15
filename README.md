@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.com/OWASP/SSO_Project.svg?branch=master)](https://travis-ci.com/OWASP/SSO_Project)
 [![Maintainability](https://api.codeclimate.com/v1/badges/ed0dcb586f3143886687/maintainability)](https://codeclimate.com/github/OWASP/SSO_Project/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/ed0dcb586f3143886687/test_coverage)](https://codeclimate.com/github/OWASP/SSO_Project/test_coverage)
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/OWASP/SSO_Project)](https://codeclimate.com/github/OWASP/SSO_Project/trends/technical_debt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
@@ -44,11 +43,14 @@ You will need to restart the command line in such case
 
 ### Docker Container
 
-You can use the `docker-compose.yml` file to start a test environment via `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build`
-and a production-ready environment via `docker-compose -f docker-compose.yml up --build`.
-This environment requires to set the environment variables for all external services.
+#### Backend [![Docker Automated build](https://img.shields.io/docker/automated/owaspsso/js-backend.svg)](https://hub.docker.com/r/owaspsso/js-backend) [![Docker Pulls](https://img.shields.io/docker/pulls/owaspsso/js-backend.svg)](https://hub.docker.com/r/owaspsso/js-backend) ![Docker Stars](https://img.shields.io/docker/stars/owaspsso/js-backend.svg) [![Docker size](https://images.microbadger.com/badges/image/owaspsso/js-backend.svg)](https://microbadger.com/images/owaspsso/js-backend) [![Docker Version](https://images.microbadger.com/badges/version/owaspsso/js-backend.svg)](https://microbadger.com/images/owaspsso/js-backend)
 
-In the future, all components will be available to be directly pulled from the registry.
+#### Frontend [![Docker Automated build](https://img.shields.io/docker/automated/owaspsso/vue-ui.svg)](https://hub.docker.com/r/owaspsso/vue-ui) [![Docker Pulls](https://img.shields.io/docker/pulls/owaspsso/vue-ui.svg)](https://hub.docker.com/r/owaspsso/vue-ui) ![Docker Stars](https://img.shields.io/docker/stars/owaspsso/vue-ui.svg) [![Docker size](https://images.microbadger.com/badges/image/owaspsso/vue-ui.svg)](https://microbadger.com/images/owaspsso/vue-ui) [![Docker Version](https://images.microbadger.com/badges/version/owaspsso/vue-ui.svg)](https://microbadger.com/images/owaspsso/vue-ui)
+
+You can start a development environment via `npm run docker:dev` and a production-ready environment via `npm run docker:prod`.
+To clean up all containers, run `npm run docker:cleanup`.
+
+The production environment requires to set the environment variables for all external services.
 
 ## Customization
 
@@ -61,6 +63,7 @@ Below you find a sample configuration.
 ```javascript
 {
 	"default": { // Default behavior of the website, if no SSO flow is used
+		name: "OWASP SSO", // Name of default page, internal identifier
 		"branding": { // Allows branding the login page
 			"backgroundColor": "#f7f9fb", // Page background color
 			"fontColor": "#888", // Color of the text below the login box
@@ -69,6 +72,8 @@ Below you find a sample configuration.
 			"imprint": "https://owasp.org/contact/", // Link to legal imprint, optional
 			"logo": "https://owasp.org/assets/images/logo.png" // Link to logo
 		},
+		"terms": ""https://owasp.org/www-policy/operational/general-disclaimer", // Link to terms & conditions, Optional
+		// If you want to use multi-language terms, you can fill terms with an object like this: {"en": "english-link", "de": "german-link"}
 		"syslog": { // Configure a syslog server that will receive audit logs in CEF format, optional
 			"target": "default-siem", // IP or hostname
 			"protocol": "tcp" // Protocol
@@ -140,9 +145,6 @@ A demo will be provided in the future.
 > guaranteed uptime! Guaranteed stern looks if you break it!
 
 ## Node.js version compatibility
-
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/cpu/OWASP/SSO_Project)
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/os/OWASP/SSO_Project)
 
 OWASP SSO officially supports the [node.js](http://nodejs.org) in line with the
 official [node.js LTS schedule](https://github.com/nodejs/LTS).

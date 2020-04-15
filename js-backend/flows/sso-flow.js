@@ -1,6 +1,7 @@
 const validator = require("validator");
 const url = require("url");
 const { Audit, User, JWT } = require("../utils");
+const Middleware = new (require("../utils/middleware.js").MiddlewareHelper)();
 
 const samlp = require("samlp");
 const PassportProfileMapper = require(require.resolve("samlp/lib/claims/PassportProfileMapper.js"));
@@ -20,10 +21,8 @@ class ssoFlow {
 		this.fido2Options = fido2Options;
 		this.serverCrt = serverCrt;
 		this.serverKey = serverKey;
-		this.hostname = process.env.DOMAIN || "localhost";
 	}
 
-	// Flow to be redone - cant do redirects etc, but should instead just offer data about specific page IDs, which are managed by the client
 	// Then for the flow out, the client just requests an "outgoing" token for a page
 	// Test eg via http://jwtbuilder.jamiekurtz.com/
 	async onFlowIn(req, res, next) {
@@ -34,7 +33,6 @@ class ssoFlow {
 		} else if(!this.customPages.hasOwnProperty(pageId)) {
 			return res.status(404).send("Website ID not found");
 		}
-		
 		const thisPage = this.customPages[pageId];
 		let jwtInput;
 		
@@ -43,7 +41,7 @@ class ssoFlow {
 		}
 		if(dataIn) {
 			try {
-				jwtInput = JWT.verify(dataIn, thisPage.jwt, {
+				jwtInput = await JWT.verify(dataIn, thisPage.jwt, {
 					maxAge: JWT.age().SHORT,
 					issuer: thisPage.name,
 				});
@@ -71,6 +69,9 @@ class ssoFlow {
 					flowType: "jwt",
 				},
 			};
+			if(thisPage.hasOwnProperty("terms")) {
+				req.returnExtra.page.terms = thisPage.terms;
+			}
 			
 			if(jwtInput && jwtInput.hasOwnProperty("sub")) {
 				if(!validator.isEmail(jwtInput.sub+"")) {
@@ -85,7 +86,7 @@ class ssoFlow {
 					return Audit.add(req, "page", "request", thisPage.name);
 				}).then(() => {
 					// Artificially log in as this user
-					createLoginToken(req, res, next);
+					Middleware.createLoginToken(req, res, next);
 				}).catch(err => {
 					console.error(err);
 					
@@ -98,7 +99,7 @@ class ssoFlow {
 						
 						return Audit.add(req, "page", "registration", thisPage.name);
 					}).then(() => {
-						createLoginToken(req, res, next);
+						Middleware.createLoginToken(req, res, next);
 					}).catch(err => {
 						console.error(err);
 						res.status(500).send("Creating user automatically failed");
@@ -133,14 +134,12 @@ class ssoFlow {
 					sub: req.user.username,
 					aud: thisPage.name,
 				}, thisPage.jwt, JWT.age().SHORT).then(jwtData => {
-					Audit.add(req, "page", "login", thisPage.name).then(() => {
-						const returnObj = {
-							redirect: thisPage.redirect,
-							token: jwtData,
-						};
-						
-						res.status(200).json(returnObj);
-					});
+					const returnObj = {
+						redirect: thisPage.redirect,
+						token: jwtData,
+					};
+					
+					res.status(200).json(returnObj);
 				});
 			} else if(jwtRequest.hasOwnProperty("saml")) {
 				req.query.SAMLRequest = jwtRequest.saml.request;
@@ -178,14 +177,10 @@ class ssoFlow {
 
 	// SAML
 	// Test flow: https://samltest.id/start-idp-test/
-	// Test payload: https://localhost:8080/#/in/saml?SAMLRequest=fZJbc6owFIX%2FCpN3EAEVMmIHEfDaqlCP%2BtKJELkUEkqCl%2F76Uj3O9JyHPmay9l4r%2BVb%2F6VLkwglXLKXEBG1JBgImIY1SEpvgNXBFHTwN%2BgwVeQmtmidkjT9qzLjQzBEGbxcmqCsCKWIpgwQVmEEeQt9azKEiybCsKKchzYFgMYYr3hjZlLC6wJWPq1Ma4tf13AQJ5yWDrVZO45RIDOWYHWkVYimkBRBGjWVKEL%2BlfEhDSjhlVEJNLvlb1%2FqOA4TJyARvynPH80qFFJPAdg%2Fh1fNnGVqpKO3OLkZonUfJ0Nu2Y2t6PdlVPj1RZxVlThywI8rihVH0MuksTQz3sx1Fm2xv5LO9nYSs5KXxfnm364%2FwfMDPWMqn182qHOqpjzR0dncsM6xO1Vs7h860HI97yrB7xHE9dt2loy%2FQu1prie%2FMcuNNL2i6nUdWp%2Fdnk3yekb7dXYhWjFjil%2Br2IC%2Bd%2FexlNF7wS77Zomvo7epFbCuyVx5tq3klYzWeEMYR4SZQ5LYqypqo6IGiQE2FmiKpencPhOXf%2Fx%2Bm5E71N1iHu4jBcRAsxeWLHwBh82hHIwD3LsCbefWjBL%2BvRQ%2FyYPCAd4MmRvgk4kgqrv8R77d%2B2Azup38LOPgC&RelayState=123
+	// Test payload: https://localhost/#/in/saml?SAMLRequest=fZLbcqowGEZfhck9iIgKGdFBBDy2KtSt3nQiRA5CQknw0Kcv1e1M977oZZIv%2Bf7MWr3BNc%2BEMy5ZQokBmpIMBEwCGiYkMsCb74gaGPR7DOVZAc2Kx2SNPyrMuFDfIwzeDwxQlQRSxBIGCcoxgzyAnrmYQ0WSYVFSTgOaAcFkDJe8LrIoYVWOSw%2BX5yTAb%2Bu5AWLOCwYbjYxGCZEYyjA70jLAUkBzIIzqyoQgfp%2FyGS0o4zkiIg5i%2Bh27bwy%2BRwLCZGSAd%2BWl7bqFQvKJbzmH4OZ6sxStWijpzK56YF5G8dDdNiNzejtbZTY9U3sVpnbksyNKo4Wed1PpIk1057MZhpt0r2ezvRUHrOCFfrqerOojuBzwC5ay6W2zKoZa4iEVXZwdS3WzXXbX9qE9LcbjrjLsHHFUjR1naWsLdGpVauzZs0x%2F13KabOeh2e7%2B2cSfF6Rtd1ei5iMWe0Vre5CX9n72Ohov%2BDXbbNEtcHfVIrIU2S2Olln%2FkrEKTwjjiHADKHKzJcqqqGi%2BokC1BVVFammdPRCWfxkME%2FIg%2BxuwwyPE4Nj3l%2BLy1fOBsHkaUgfAwwd4Ly9%2FiPD7s%2BhJH%2FSfAFEtlCyG%2BCziUMpv%2F1HvNX7U9B%2BrfyXsfwE%3D&SAMLRelay=saml-relay
 	// Create own: https://www.samltool.com/sign_authn.php
 	onSamlIn(req, res, next) {
 		samlp.parseRequest(req, (err, samlData) => {
-			if(this.hostname == "localhost") {
-				samlData.destination = this.customPages["1"].redirect;
-			}
-			
 			if(err) {
 				console.error(err);
 				return res.status(400).send("Invalid SAML request");

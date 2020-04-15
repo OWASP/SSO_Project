@@ -50,6 +50,7 @@ new Vue({
 				logo: "about:blank",
 			},
 		},
+		defaultPage: fallbackPage,
 	},
 	async beforeMount() {
 		const users = this.listLoginToken();
@@ -57,26 +58,28 @@ new Vue({
 			this.useLoginToken(users[0]);
 		}
 		
+		// Load default settings of the page (needed especially for terms & conditions)
+		let defaultLoad = sessionStorage.getItem("default-page");
+		if(!defaultLoad) {
+			const defaultPage = await this.apiGet("/default-page");
+			sessionStorage.setItem("default-page", JSON.stringify(defaultPage.data));
+			defaultLoad = defaultPage.data;
+		} else {
+			defaultLoad = JSON.parse(defaultLoad);
+		}
+		this.defaultPage = defaultLoad;
+		
+		// Load info about SSO page
 		const pageLoad = localStorage.getItem("sso-request");
 		if(pageLoad) {
 			this.ssoPage = JSON.parse(pageLoad);
 			this.axios.defaults.headers.common["X-SSO-Token"] = this.ssoPage.token;
 		} else if(this.ssoPage.name == "") {
-			let defaultLoad = sessionStorage.getItem("default-page");
-			
-			if(!defaultLoad) {
-				// First visit, doesn't have default styling of SSO yet
-				const defaultPage = await this.apiGet("/default-page");
-				sessionStorage.setItem("default-page", JSON.stringify(defaultPage.data));
-				defaultLoad = defaultPage.data;
-			} else {
-				defaultLoad = JSON.parse(defaultLoad);
-			}
 			this.ssoPage = defaultLoad;
 		}
 		
 		if(!this.ssoPage || !this.ssoPage.name || this.ssoPage.name == "") {
-			this.ssoPage = fallbackPage;
+			this.ssoPage = this.defaultPage;
 		}
 		
 		document.body.style.backgroundColor = this.ssoPage.branding.backgroundColor;

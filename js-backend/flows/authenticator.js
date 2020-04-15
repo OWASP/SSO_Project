@@ -1,6 +1,6 @@
 const base64url = require("base64-arraybuffer");
 const { User, Audit, JWT } = require("../utils");
-const { Fido2Lib } = require("fido2-lib");
+const { Fido2Lib } = require("fido2-library");
 
 class Authenticator {
 	constructor(fido2Options) {
@@ -72,7 +72,6 @@ class Authenticator {
 			};
 			
 			return Audit.add(req, "authenticator", "add", label + " ("+credId+")");
-			
 		}).then(() => {
 			return User.addAuthenticator("fido2", req.user.username, label, {
 				userCounter: req.fido2.counter,
@@ -165,6 +164,7 @@ class Authenticator {
 		}).then(() => {
 			next();
 		}).catch(err => {
+			console.error(err);
 			return res.status(400).send(err.message);
 		});
 	}

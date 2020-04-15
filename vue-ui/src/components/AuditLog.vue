@@ -101,6 +101,7 @@
 					role="group"
 				>
 					<button
+						id="loadMoreAudit"
 						class="btn btn-info py-1 px-2"
 						type="button"
 						@click="loadMoreAudit"
@@ -108,6 +109,7 @@
 						{{ $t("audit-log.load-more") }}
 					</button>
 					<button
+						id="closeSessions"
 						class="btn btn-warning py-1 px-2"
 						type="button"
 						@click="closeSessions"
@@ -122,13 +124,6 @@
 <script>
 export default {
 	name: "AuditLog",
-	filters: {
-		capitalize: function(value) {
-			if (!value) return "";
-			value = value.toString();
-			return value.charAt(0).toUpperCase() + value.slice(1);
-		},
-	},
 	components: {
 		"country-flag": () => import("vue-country-flag"),
 	},
@@ -186,7 +181,7 @@ export default {
 			return this.loadAudits();
 		},
 		clickAccordion(newId) {
-			this.activeAccordion = (this.activeAccordion == newId) ? "" : newId;
+			this.activeAccordion = (this.activeAccordion === newId) ? "" : newId;
 		},
 	},
 };

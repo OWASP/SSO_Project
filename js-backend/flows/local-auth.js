@@ -52,31 +52,6 @@ class LocalAuth {
 		});
 	}
 
-	onEmailConfirm(req, res, next) {
-		// Inbound email verification
-		const token = req.query.token;
-		const action = req.query.action;
-		
-		Audit.add(req, action, "email", null).then(aID => {
-			switch(action) {
-				default:
-					return res.status(400).send("Invalid action");
-				case "registration":
-					return res.redirect(303, "/registration-finish.html?" + token);
-				case "change":
-					return res.redirect(303, "/password-change.html?" + token);
-				case "login":
-					return User.resolveEmailActivation(token, Audit.getIP(req), action).then(confirmation => {
-						next();
-					}).catch(err => {
-						res.status(400).send(err);
-					});
-			}
-		}).catch(err => {
-			res.status(500).send(err);
-		});
-	}
-
 	onRegister(req, res, next) {
 		const email = req.body.email;
 		
@@ -124,7 +99,6 @@ class LocalAuth {
 			return User.resolveEmailActivation(token, Audit.getIP(req), "registration");
 		}).then(confirmation => {
 			req.body.username = confirmation.username;
-			req.body.password = password;
 			
 			next();
 		}).catch(err => {
@@ -158,6 +132,27 @@ class LocalAuth {
 		}).catch(err => {
 			console.error(err);
 			res.status(400).send(err);
+		});
+	}
+	
+	onEmailConfirm(req, res, next) {
+		// Inbound email verification
+		const token = req.query.token;
+		const action = req.query.action;
+
+		Audit.add(req, action, "email", null).then(aID => {
+			switch(action) {
+				default:
+					return res.status(400).send("Invalid action");
+				case "login":
+					return User.resolveEmailActivation(token, Audit.getIP(req), action).then(confirmation => {
+						next();
+					}).catch(err => {
+						res.status(400).send(err);
+					});
+			}
+		}).catch(err => {
+			res.status(500).send(err);
 		});
 	}
 }

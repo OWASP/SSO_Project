@@ -1,0 +1,19 @@
+version: '3.7'
+
+# Used for e2e testing only
+services:
+  e2e:
+    image: cypress/browsers:node13.6.0-chrome80-ff72
+    entrypoint: ["/cypress/entrypoint.sh"]
+    volumes:
+      - ./cypress:/cypress
+      - ./cypress.json:/cypress.json
+      - ./package.json:/package.json
+    environment:
+      - CYPRESS_RECORD_KEY
+      - DBHOST=database
+      - FRONTENDHOST=frontend.localhost
+      - SMTPHOST=smtp
+      - COMMIT_INFO_BRANCH=$TRAVIS_BRANCH
+      - COMMIT_INFO_MESSAGE=$TRAVIS_COMMIT_MESSAGE
+      - COMMIT_INFO_SHA=$TRAVIS_COMMIT

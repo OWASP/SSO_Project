@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [ -z "$DOMAIN" ]; then
+	echo "Domain not set, using localhost"
+	DOMAIN="localhost"
+fi
+
 echo "Replace environment variables for $DOMAIN"
 envsubst '${DOMAIN}' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf
 

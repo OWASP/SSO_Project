@@ -56,7 +56,7 @@ class Audit {
 			});
 			
 			Promise.all(scheduledPromises).then(results => {
-				resolve(results[0].insertId);
+				resolve(results[0]);
 			}).catch(err => {
 				console.error(err);
 				reject(err.message);
