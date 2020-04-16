@@ -19,10 +19,10 @@ for(let i=0;i<10;i++) {
 	(i<5) ? page1.push(dummyItem) : page2.push(dummyItem);
 }
 
-apiGet.withArgs("/audit?page=0").resolves({
+apiGet.withArgs("/audit/logs?page=0").resolves({
 	data: page1,
 });
-apiGet.withArgs("/audit?page=1").resolves({
+apiGet.withArgs("/audit/logs?page=1").resolves({
 	data: page2,
 });
 apiPost.resolves({});
@@ -73,7 +73,7 @@ describe("AuditLog (Component)", () => {
 	
 	it("loads log entries", async () => {
 		expect(wrapper.vm.$data.auditLogs).to.be.an("array").and.has.lengthOf(5);
-		expect(apiGet.calledWith("/audit?page=0")).to.equal(true);
+		expect(apiGet.calledWith("/audit/logs?page=0")).to.equal(true);
 		expect(wrapper.emitted("reload")).to.equal(undefined);
 		
 		wrapper.get("#loadMoreAudit").trigger("click");
@@ -84,12 +84,22 @@ describe("AuditLog (Component)", () => {
 	});
 	
 	it("closes session", async () => {
-		expect(apiPost.called).to.equal(false);
+		apiPost.resetHistory();
 		
 		wrapper.get("#closeSessions").trigger("click");
 		await wrapper.vm.$nextTick();
 		
 		expect(apiPost.calledWith("/local/session-clean")).to.equal(true);
 		expect(wrapper.vm.$data.auditLogs).to.be.an("array").and.has.lengthOf.most(5);
+	});
+	
+	it("reports suspicious log entry", async () => {
+		apiPost.resetHistory();
+		
+		wrapper.get(".report-log").trigger("click");
+		await wrapper.vm.$nextTick();
+		
+		expect(apiPost.calledWith("/local/session-clean")).to.equal(true);
+		expect(apiPost.calledWith("/audit/report")).to.equal(true);
 	});
 });

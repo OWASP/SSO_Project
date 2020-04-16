@@ -148,7 +148,10 @@
 				</div>
 				<div class="mt-4 text-center">
 					{{ $t("register.already-account") }}
-					<router-link id="goLogin" to="/">
+					<router-link
+						id="goLogin"
+						to="/"
+					>
 						{{ $t("register.switch-login") }}
 					</router-link>
 				</div>

@@ -24,7 +24,6 @@ services:
       - ISSUERNAME
       - FIDO2FACTOR
       - FIDO2TIMEOUT
-      - DISABLELOCALHOSTPATCHING
       - PWNEDPASSFAILSAFE
       - PWHISTORY
       - ARGON2TYPE
@@ -33,7 +32,7 @@ services:
       - ARGON2MEMORY
       - AUDITPAGELENGTH
       - SYSLOGHEARTBEAT
-      - FALLBACKEMAILFROM
+      - SMTPFROM
   
   frontend.localhost:
     depends_on:

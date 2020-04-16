@@ -15,9 +15,9 @@ describe("User Activity", () => {
 		}
 		cy.task("sql", "INSERT INTO audit (ip, country, object, action, user) VALUES "+(insertValues.join(",\n"))+";");
 		
-		cy.get(".data-logs").find(".accordion-row").should("have.length", 5);
+		cy.get(".data-logs .accordion-row").should("have.length", 5);
 		cy.get("#loadMoreAudit").click();
-		cy.get(".data-logs").find(".accordion-row").should("have.length", 10);
+		cy.get(".data-logs .accordion-row").should("have.length", 10);
 		
 		cy.get(".data-logs .accordion-row:last").click();
 		cy.get(".audit-logs").scrollTo("bottom");
@@ -25,24 +25,27 @@ describe("User Activity", () => {
 		cy.get(".flag.flag-us").should("be.visible");
 	});
 	
+	it("can report suspicious events", () => {
+		cy.expectLogIncrease(0);
+
+		cy.get(".data-logs .accordion-row:first").click();
+		cy.get(".data-logs .accordion-row:first .report-log").click();
+		
+		cy.expectLogIncrease(2);
+	});
+	
 	it("Can log out other sessions", () => {
 		cy.task("sql", "INSERT INTO userSessions (userId, token) VALUES (1, 'other-token')");
 		cy.task("sql", "SELECT * FROM userSessions WHERE userId = 1").should("have.length", 2);
 		
-		// Also check if the audit log reloads on an activity
-		cy.get(".data-logs").find(".accordion-row").then(beforeRows => {
-			const beforeNum = beforeRows.length;
-			
-			cy.get("#closeSessions").click();
-			
-			cy.wait(2000);
-			cy.get(".data-logs").find(".accordion-row").then(afterRows => {
-				const afterNum = afterRows.length;
-				
-				expect(afterNum).to.equal(beforeNum+1);
-				
-				cy.task("sql", "SELECT * FROM userSessions WHERE userId = 1").should("have.length", 1);
-			});
-		});
+		cy.expectLogIncrease(0);
+		cy.get("#closeSessions").click();
+		
+		cy.expectLogIncrease(1);
+		cy.task("sql", "SELECT * FROM userSessions WHERE userId = 1").should("have.length", 1);
 	});
 });
+
+function expectLogs(num) {
+	cy.get(".data-logs").find(".accordion-row").should("have.length", num);
+}

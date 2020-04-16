@@ -8,20 +8,16 @@ describe("Authenticator Activity", () => {
 		// Counting is time sensitive and doesn't wait automatically, so we need to wait sometimes
 		cy.authenticate();
 		expectAuthenticators(0);
-		cy.get(".data-logs").find(".accordion-row").then(beforeRows => {
-			const beforeNum = beforeRows.length;
-			
-			addCertificate();
-			
-			cy.wait(3000);
-			expectAuthenticators(1);
-			cy.get(".data-logs").find(".accordion-row").should("have.length", beforeNum+1);
-			
-			cy.get(".remove-authenticator").click();
-			cy.wait(1000);
-			expectAuthenticators(0);
-			cy.get(".data-logs").find(".accordion-row").should("have.length", beforeNum+2);
-		});
+		
+		cy.expectLogIncrease(0);
+		addCertificate();
+		
+		expectAuthenticators(1);
+		cy.expectLogIncrease(1);
+		
+		cy.get(".remove-authenticator").click();
+		expectAuthenticators(0);
+		cy.expectLogIncrease(2);
 	});
 	
 	it("Adds FIDO2 authenticator and can log in with it", () => {
@@ -54,7 +50,6 @@ describe("Authenticator Activity", () => {
 				cy.get("#add-authenticator-group input[type=text]").type("Test - Fido");
 				cy.get("#add-authenticator-group button[type=submit]").click();
 				
-				cy.wait(3000);
 				expectAuthenticators(1);
 				
 				cy.task("sendCRI", {
@@ -149,5 +144,5 @@ function addCertificate() {
 }
 
 function expectAuthenticators(num) {
-	cy.get("#authenticatorManage").find(".list-group-item").should("have.length", num);
+	cy.get("#authenticatorManage .list-group-item").should("have.length", num);
 }
