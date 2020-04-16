@@ -6,6 +6,7 @@ const ssoFlow = require("./sso-flow.js").ssoFlow;
 const authenticatorFlow = require("./authenticator.js").authenticatorFlow;
 const authenticatorCertFlow = require("./authenticator-cert.js").authenticatorCertFlow;
 const localAuthFlow = require("./local-auth.js").localAuthFlow;
+const auditFlow = require("./audit.js").auditFlow;
 
 class FlowLoader {
 	constructor(fido2Options, customPages, caMap, serverCrt, serverKey) {
@@ -15,6 +16,7 @@ class FlowLoader {
 		this.authenticatorCertFlow = new authenticatorCertFlow(customPages, caMap);
 		this.localAuthFlow = new localAuthFlow();
 		this.ssoFlow = new ssoFlow(customPages, fido2Options, serverCrt, serverKey);
+		this.auditFlow = new auditFlow();
 	}
 	
 	addRoutes(app) {
@@ -71,6 +73,11 @@ class FlowLoader {
 		// Client certificate
 		app.post("/cert/login", MiddlewareHelper.rateLimit(5, 50, "Too many certificate login requests, please try again later."), this.isLoggedInBridge.bind(this), this.authenticatorCertFlow.onCertLogin.bind(this.authenticatorCertFlow), MiddlewareHelper.createAuthToken.bind(MiddlewareHelper));
 		app.post("/cert/register", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.authenticatorFlow.checkLabel.bind(this.authenticatorFlow), this.authenticatorCertFlow.onCertRegister.bind(this.authenticatorCertFlow));
+	
+		// Audit
+		app.get("/me", MiddlewareHelper.isLoggedIn, this.auditFlow.getMe);
+		app.get("/audit/logs", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.auditFlow.getAuditLogs);
+		app.post("/audit/report", MiddlewareHelper.isAuthenticated.bind(MiddlewareHelper), this.auditFlow.reportAuditLog, MiddlewareHelper.showSuccess);
 	}
 	
 	// Client certificate is not used via REST normally, so we need a bridge for a POST request

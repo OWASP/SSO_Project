@@ -81,9 +81,9 @@
 									{{ $t("audit-log.messages." + log.object + "-" + log.action, { attribute: log.attribute1 }) }}
 									{{ $t("audit-log.meta", { date: (new Date(log.created).toLocaleString($i18n.locale)), IP: log.ip }) }}
 									<a
-										href="#"
-										class="btn btn-link text-danger float-right"
+										class="btn btn-link text-danger float-right report-log"
 										:title="$t('audit-log.report')"
+										@click="reportLog(log.id)"
 									>
 										<svg><use xlink:href="#icon-flag" /></svg>
 									</a>
@@ -112,7 +112,7 @@
 						id="closeSessions"
 						class="btn btn-warning py-1 px-2"
 						type="button"
-						@click="closeSessions"
+						@click="closeSessionsBtn"
 					>
 						{{ $t("audit-log.close-sessions") }}
 					</button>
@@ -140,20 +140,19 @@ export default {
 	},
 	methods: {
 		closeSessions() {
-			this.$root.apiPost("/local/session-clean", {
+			return this.$root.apiPost("/local/session-clean", {
 				session: this.$root.user.session,
-			})
-				.then(() => {
-					return this.reloadAudits();
-				})
-				.catch(() => {
-					// todo
-				});
+			});
+		},
+		closeSessionsBtn() {
+			this.closeSessions().then(() => {
+				return this.reloadAudits();
+			});
 		},
 		loadAudits() {
 			this.loading = true;
 			return new Promise((resolve, reject) => {
-				this.$root.apiGet("/audit?page=" + this.auditPage)
+				this.$root.apiGet("/audit/logs?page=" + this.auditPage)
 					.then(response => {
 						if (this.auditPage == 0) this.auditLogs = [];
 						this.auditLogs = this.auditLogs.concat(response.data);
@@ -182,6 +181,14 @@ export default {
 		},
 		clickAccordion(newId) {
 			this.activeAccordion = (this.activeAccordion === newId) ? "" : newId;
+		},
+		reportLog(logId) {
+			Promise.all([
+				this.closeSessions(),
+				this.$root.apiPost("/audit/report", { id: logId }),
+			]).then(() => {
+				return this.reloadAudits();
+			});
 		},
 	},
 };

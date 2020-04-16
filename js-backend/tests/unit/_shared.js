@@ -46,6 +46,7 @@ module.exports = {
 			username: "username",
 		}),
 		addAuthStub: process.env.DONTMOCKUSER ? null : sinon.stub(User, "addAuthenticator").resolves(),
+		validateSessionStub: process.env.DONTMOCKUSER ? null : sinon.stub(User, "validateSession"),
 		mailStub: process.env.DONTMOCKMAILER ? null : sinon.stub(Mailer, "sendMail").callsArgWith(1, null),
 		checkPassStub: process.env.DONTMOCKPWUTIL ? null : sinon.stub(PwUtil, "checkPassword").resolves(),
 		jwtSignStub: process.env.DONTMOCKJWT ? null : sinon.stub(JWT, "sign").resolves("jwt"),

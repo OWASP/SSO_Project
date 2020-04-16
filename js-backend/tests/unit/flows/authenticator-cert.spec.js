@@ -118,7 +118,6 @@ describe("Authenticator-Cert (Flow)", () => {
 		
 		certReq.user.username = "JamesCullum@users.noreply.github.com";
 		AuthCert.onCertLogin(certReq, res, () => {
-			console.log("onCertLogin");
 			expect(getAuthStub.calledWith(1)).to.equal(true);
 			expect(pkiVerifyStub.called).to.equal(true);
 			expect(stubs.auditAddStub.called).to.equal(true);

@@ -104,7 +104,7 @@ describe("Middleware (Util)", () => {
 	});
 	
 	it("checks if the user is authenticated", done => {
-		const validateSessionStub = sinon.stub(User, "validateSession");
+		stubs.validateSessionStub.resetHistory();
 		res.status.resetHistory();
 		
 		// Check login
@@ -119,7 +119,7 @@ describe("Middleware (Util)", () => {
 		
 		// Session deletion for wrong user
 		const deleteSessionStub = sinon.stub(User, "deleteSession").resolves({});
-		validateSessionStub.resolves({ userId: 2 });
+		stubs.validateSessionStub.resolves({ userId: 2 });
 		Middleware.isAuthenticated({
 			user: {
 				id: 1, // login token, but not authorized
@@ -134,14 +134,14 @@ describe("Middleware (Util)", () => {
 			expect(deleteSessionStub.calledWith("token")).to.equal(true);
 			
 			// All clear
-			validateSessionStub.resolves({ userId: 1 });
+			stubs.validateSessionStub.resolves({ userId: 1 });
 			Middleware.isAuthenticated({
 				user: {
 					id: 1, // login token, but not authorized
 					token: "token",
 				},
 			}, res, () => {
-				expect(validateSessionStub.calledWith("token")).to.equal(true);
+				expect(stubs.validateSessionStub.calledWith("token")).to.equal(true);
 				done();
 			});
 		}, 10);

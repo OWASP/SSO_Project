@@ -47,6 +47,11 @@ Cypress.Commands.add('isGuest', () => {
 	cy.url().should('match', /#\/$/);
 });
 
+// Expect number of audit logs
+Cypress.Commands.add('expectLogIncrease', num => {
+	cy.get(".data-logs .accordion-row").should("have.length", Cypress.env("logLogCount") + num);
+});
+
 // Shortcut to log in (-> showing 2fa screen)
 Cypress.Commands.add('login', () => {
 	cy.registerUser(); // If we need a login, we will need the user as well

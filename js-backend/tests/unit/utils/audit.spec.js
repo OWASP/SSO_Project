@@ -59,8 +59,13 @@ describe("Audit (Util)", () => {
 		expect(insertId).to.equal("insertId");
 	});
 	
-	it("gets an entry", async () => {
-		const results = await Audit.get("userId", "offset", "length");
+	it("gets a list of entries", async () => {
+		const results = await Audit.getList("userId", "offset", "length");
+		expect(results.insertId).to.equal("insertId");
+	});
+	
+	it("gets one entry", async () => {
+		const results = await Audit.get(1);
 		expect(results.insertId).to.equal("insertId");
 	});
 	

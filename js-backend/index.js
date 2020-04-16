@@ -124,46 +124,6 @@ PwUtil.createRandomString(30).then(tempJwtToken => {
 	const flowLoader = new FlowLoader(fido2Options, customPages, caMap, serverCrt, serverKey);
 	flowLoader.addRoutes(app);
 	
-	// -- Endpoints
-	// General
-	/*app.get("/logout", (req, res, next) => {
-		if(req.user && req.user.token) {
-			User.deleteSession(req.user.token).then(() => {})
-		}
-		
-		next()
-	}, showSuccess)*/
-	app.get("/me", MiddlewareHelper.isLoggedIn, (req, res) => {
-		User.findUserById(req.user.id).then(userData => {
-			const {password, last_login, created, ...publicAttributes} = userData;
-			publicAttributes.authenticators.forEach(v => {
-				delete v.userCounter;
-				delete v.userKey;
-			});
-			const token = req.user.token;
-			
-			if(token) {
-				User.validateSession(token).then(() => {
-					publicAttributes.isAuthenticated = true;
-					res.json(publicAttributes);
-				});
-			} else {
-				publicAttributes.isAuthenticated = false;
-				res.json(publicAttributes);
-			}
-		});
-	});
-	app.get("/audit", MiddlewareHelper.isAuthenticated, (req, res) => {
-		const currentPage = parseInt(req.query.page) || 0;
-		const pageSize = process.env.AUDITPAGELENGTH || 5;
-		
-		Audit.get(req.user.id, currentPage*pageSize, pageSize).then(results => {
-			res.json(results);
-		}).catch(err => {
-			res.status(500).send(err);
-		});
-	});
-	
 	// Start webserver
 	if(hostname == "localhost") {
 		console.log("Starting API webserver on https://localhost:"+expressPort);

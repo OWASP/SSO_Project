@@ -63,9 +63,17 @@ class Audit {
 			});
 		});
 	}
-	get(userId, offset, length) {
+	getList(userId, offset, length) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("SELECT * FROM audit where user = ? ORDER BY created DESC LIMIT ?, ?", [userId, offset, length], (err, results) => {
+				if(err) return reject(err.message);
+				resolve(results);
+			});
+		});
+	}
+	get(id) {
+		return new Promise((resolve, reject) => {
+			this.db.execute("SELECT * FROM audit where id = ?", [id], (err, results) => {
 				if(err) return reject(err.message);
 				resolve(results);
 			});
