@@ -41,7 +41,8 @@
 			"authenticator-add": "Gerät hinzugefügt",
 			"authenticator-remove": "Gerät entfernt",
 			"authenticator-login": "Verifizierung per Gerät",
-			"session-clean": "Sitzungen beendet"
+			"session-clean": "Sitzungen beendet",
+			"session-report": "Aktivität gemeldet"
 		},
 		"messages": {
 			"page-registration": "Registriert durch {attribute}",
@@ -52,7 +53,8 @@
 			"authenticator-add": "Zweiter Faktor {attribute} hinzugefügt",
 			"authenticator-remove": "Zweiter Faktor {attribute} entfernt",
 			"authenticator-login": "Anmeldung verifiziert durch den zweiten Faktor {attribute}",
-			"session-clean": "Alle Sitzungen auf anderen Geräten wurden beendet"
+			"session-clean": "Alle Sitzungen auf anderen Geräten wurden beendet",
+			"session-report": "Verdächtige Aktivität #{attribute} gemeldet"
 		}
 	},
 	"authenticator": {

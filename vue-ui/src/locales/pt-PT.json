@@ -41,7 +41,8 @@
 			"authenticator-add": "Authenticator added",
 			"authenticator-remove": "Authenticator removed",
 			"authenticator-login": "Authenticator confirmation",
-			"session-clean": "Sessions closed"
+			"session-clean": "Sessions closed",
+			"session-report": "Activity reported"
 		},
 		"messages": {
 			"page-registration": "Registered by page {attribute}",
@@ -52,7 +53,8 @@
 			"authenticator-add": "Device {attribute} added",
 			"authenticator-remove": "Device {attribute} removed",
 			"authenticator-login": "Logged in using {attribute}",
-			"session-clean": "Other sessions closed"
+			"session-clean": "Other sessions closed",
+			"session-report": "Reported suspicious activity ID #{attribute}"
 		}
 	},
 	"authenticator": {
