@@ -61,7 +61,7 @@
 		"add": "Zweiten Faktor hinzufügen",
 		"review": "Zweiten Faktor prüfen",
 		"remove": "Zweiten Faktor entfernen",
-		"hint": "Do you want to speed up your next login? Give this device a name and add it to your account.",
+		"hint": "Möchtest du deinen nächsten Login beschleunigen? Gib diesem Gerät einen Namen und füge ihn deinem Konto hinzu.",
 		"fido2-title": "FIDO2 Gerät",
 		"cert-title": "Gerät - Zertifikat",
 		"choose-type-title": "Wählen Sie die Art von zweitem Faktor, den Sie hinzufügen möchten",
