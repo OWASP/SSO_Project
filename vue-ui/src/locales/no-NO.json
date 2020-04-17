@@ -1,114 +1,115 @@
 {
 	"general": {
-		"privacy": "Privacy",
-		"imprint": "Imprint",
-		"about": "About",
-		"loading": "Loading...",
-		"email-address": "EMail Address",
-		"password": "Password"
+		"privacy": "Personvern",
+		"imprint": "Avtrykk",
+		"about": "Om",
+		"loading": "Laster...",
+		"email-address": "E-post Adresse",
+		"password": "Passord"
 	},
 	"router": {
-		"login": "Login",
-		"register": "Register",
-		"reset-password": "Reset password",
-		"change-password": "Change password",
-		"confirm": "Confirm your identity",
-		"review": "Review Activity",
-		"about": "About this page"
+		"login": "Innlogging",
+		"register": "Registrer",
+		"reset-password": "Tilbakestill passord",
+		"change-password": "Endre passord",
+		"confirm": "Bekreft din identitet",
+		"review": "Gjennomgang aktivitet",
+		"about": "Om denne siden"
 	},
 	"about": {
-		"icons": "Icons",
-		"opensource": "Open Source Components",
-		"security": "Security Reports",
-		"security-banner": "To be listed here, find and report important security vulnerabilities"
+		"icons": "Ikoner",
+		"opensource": "Komponenter for åpen kilde",
+		"security": "Sikkerhetsrapporter",
+		"security-banner": "Finn og rapporter viktige sikkerhetssårbarheter om å være listet her,"
 	},
 	"audit": {
-		"wrong-account": "Please log into your account {username} to continue to {website}",
-		"logout": "Log out",
-		"continue-page": "Continue to {website}"
+		"wrong-account": "Vennligst logg inn på din konto {username} å fortsette til {website}",
+		"logout": "Logg ut",
+		"continue-page": "Fortsett til {website}"
 	},
 	"audit-log": {
-		"load-more": "Load more",
-		"close-sessions": "Close sessions",
-		"report": "This wasn't me - report suspicious event",
-		"meta": "by IP {IP} at {date}",
+		"load-more": "Last mer",
+		"close-sessions": "Lukk økter",
+		"report": "Dette var ikke meg - rapporter mistenkelig hendelse",
+		"meta": "av IP {IP} ved {date}",
 		"titles": {
-			"page-registration": "Page registration",
-			"page-request": "Login request",
-			"page-login": "Logged into page",
-			"login-email": "EMail confirmation",
-			"login-password": "User login",
-			"authenticator-add": "Authenticator added",
-			"authenticator-remove": "Authenticator removed",
-			"authenticator-login": "Authenticator confirmation",
-			"session-clean": "Sessions closed",
-			"session-report": "Activity reported"
+			"page-registration": "Sidens registrering",
+			"page-request": "Logg inn forespørsel",
+			"page-login": "Logget på side",
+			"login-email": "E-post bekreftelse",
+			"login-password": "Bruker innlogging",
+			"authenticator-add": "Autentisering lagt til",
+			"authenticator-remove": "Autentisering fjernet",
+			"authenticator-login": "Bekreftelse på autentisering",
+			"session-clean": "Økter stengt",
+			"session-report": "Aktivitet rapportert"
 		},
 		"messages": {
-			"page-registration": "Registered by page {attribute}",
-			"page-request": "Login request from {attribute}",
-			"page-login": "Logged in to {attribute}",
-			"login-email": "Login via EMail confirmation",
-			"login-password": "Login via password",
-			"authenticator-add": "Device {attribute} added",
-			"authenticator-remove": "Device {attribute} removed",
-			"authenticator-login": "Logged in using {attribute}",
-			"session-clean": "Other sessions closed",
-			"session-report": "Reported suspicious activity #{attribute}"
+			"page-registration": "Registrert av side {attribute}",
+			"page-request": "Innloggingsforespørsel fra {attribute}",
+			"page-login": "Logget inn til {attribute}",
+			"login-email": "Logg inn via EMail bekreftelse",
+			"login-password": "Logg inn med passord",
+			"authenticator-add": "Enhet {attribute} lagt til",
+			"authenticator-remove": "Enhet {attribute} er fjernet",
+			"authenticator-login": "Logget inn med {attribute}",
+			"session-clean": "Andre sesjoner avsluttet",
+			"session-report": "Rapportert mistenkelig aktivitet #{attribute}"
 		}
 	},
 	"authenticator": {
-		"add": "Add authenticator",
-		"review": "Review authenticators",
-		"remove": "Remove this authenticator",
+		"add": "Legg til autentifikator",
+		"review": "Gjennomgå godkjennere",
+		"remove": "Fjern denne autentifikatoren",
+		"hint": "Vil du fremskynde din neste innlogging? Gi enheten et navn og legg den til i kontoen din.",
 		"fido2-title": "FIDO2 Token",
-		"cert-title": "Device Certificate",
-		"choose-type-title": "Choose the type of authenticator you want to add",
-		"choose": "Choose...",
-		"choose-cert": "Certificate",
-		"fill-choose": "Please select a type",
-		"label": "Label",
-		"label-title": "Enter a name for this authenticator",
-		"fill-label": "Please enter a name",
-		"submit-title": "Fill out details and click here to add an authenticator"
+		"cert-title": "Enhetens sertifikat",
+		"choose-type-title": "Velg type autentisering som du vil legge til",
+		"choose": "Velg...",
+		"choose-cert": "Sertifikat",
+		"fill-choose": "Vennligst velg en type",
+		"label": "Etikett",
+		"label-title": "Angi et navn for denne autentifikatoren",
+		"fill-label": "Vennligst skriv inn et navn",
+		"submit-title": "Fyll ut detaljer og klikk her for å legge til en autentifikator"
 	},
 	"change-password": {
-		"token": "E-Mail Token",
-		"fill-token": "Enter the full confirmation token that you received via email",
-		"confirm-password": "Confirm Password",
-		"fill-confirmation": "The passwords do not match",
-		"submit": "Apply Changes"
+		"token": "E-post Token",
+		"fill-token": "Skriv inn hele bekreftelseskoden du mottok via e-post",
+		"confirm-password": "Bekreft passord",
+		"fill-confirmation": "Passordene samsvarer ikke",
+		"submit": "Bruk endringer"
 	},
 	"login": {
-		"404": "Username or password invalid",
-		"fill-email": "Please provide a valid email address",
-		"reset-password": "Forgot Password?",
-		"fill-password": "Password policy: Minimum 8 characters",
-		"login": "Login",
-		"no-account": "Don't have an account?",
-		"register": "Register Now"
+		"404": "Brukernavn eller passord ugyldig",
+		"fill-email": "Oppgi en gyldig e-postadresse",
+		"reset-password": "Glemt passord?",
+		"fill-password": "Passord: Minimum 8 tegn",
+		"login": "Innlogging",
+		"no-account": "Har du ikke en konto?",
+		"register": "Registrer deg nå"
 	},
 	"register": {
-		"toc-agree-label": "I agree to the Terms and Conditions",
-		"fill-toc": "You need to agree to use this service",
-		"success": "If the email address you entered is not already registered, please check your email inbox for a confirmation link!",
-		"400": "Your password was not sufficiently secure or you are resetting from a different network than you requested it from.",
-		"register": "Register",
-		"already-account": "Already have an account?",
-		"switch-login": "Back to login"
+		"toc-agree-label": "Jeg godtar vilkårene og betingelsene",
+		"fill-toc": "Du må godta å bruke denne tjenesten",
+		"success": "Hvis e-postadressen du skrev inn ikke allerede er registrert, vennligst sjekk e-posten din for en bekreftelseslenke!",
+		"400": "Passordet var ikke tilstrekkelig sikker, eller du tilbakestiller fra et annet nettverk enn du ba om det fra.",
+		"register": "Registrer",
+		"already-account": "Har du allerede en konto?",
+		"switch-login": "Tilbake til innlogging"
 	},
 	"reset-password": {
-		"error": "An error occured - please try again later!",
-		"success": "If the email address you entered is known, please check your email inbox for a password reset link!",
-		"reset-password": "Reset password",
-		"remember-password": "Remember you password?"
+		"error": "En feil oppstod - vennligst prøv igjen senere!",
+		"success": "Hvis e-postadressen du skrev inn er kjent, kan du sjekke innboksen i e-posten din for en lenke for nullstilling av passord!",
+		"reset-password": "Tilbakestill passord",
+		"remember-password": "Husker du passord?"
 	},
 	"confirm": {
 		"fido2": "FIDO2",
-		"email": "EMail",
-		"success": "Please check your email inbox for an authentication link. You can close this window now.",
-		"400": "Email token invalid",
-		"401": "Invalid FIDO2 authenticator",
-		"wrong-account": "Wrong account?"
+		"email": "Epost",
+		"success": "Sjekk innboksen din for en autentiseringslenke. Du kan lukke dette vinduet nå.",
+		"400": "E-post token ugyldig",
+		"401": "Ugyldig FIDO2-godkjenner",
+		"wrong-account": "Feil konto?"
 	}
 }
