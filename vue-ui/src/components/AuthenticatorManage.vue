@@ -8,6 +8,13 @@
 		>
 			<defs>
 				<symbol
+					id="icon-stopwatch"
+					viewBox="0 0 32 32"
+				>
+					<credit>"stopwatch" by Keyamoon (IcoMoon - icomoon.io)</credit>
+					<path d="M16 6.038v-2.038h4v-2c0-1.105-0.895-2-2-2h-6c-1.105 0-2 0.895-2 2v2h4v2.038c-6.712 0.511-12 6.119-12 12.962 0 7.18 5.82 13 13 13s13-5.82 13-13c0-6.843-5.288-12.451-12-12.962zM22.071 26.071c-1.889 1.889-4.4 2.929-7.071 2.929s-5.182-1.040-7.071-2.929c-1.889-1.889-2.929-4.4-2.929-7.071s1.040-5.182 2.929-7.071c1.814-1.814 4.201-2.844 6.754-2.923l-0.677 9.813c-0.058 0.822 0.389 1.181 0.995 1.181s1.053-0.36 0.995-1.181l-0.677-9.813c2.552 0.079 4.94 1.11 6.754 2.923 1.889 1.889 2.929 4.4 2.929 7.071s-1.040 5.182-2.929 7.071z" />
+				</symbol>
+				<symbol
 					id="icon-bin2"
 					viewBox="0 0 32 32"
 				>
@@ -38,6 +45,16 @@
 		<h4 class="card-title mb-2">
 			{{ $root.user.authenticators.length ? $t("authenticator.review") : $t("authenticator.add") }}
 		</h4>
+		<div
+			v-if="!$root.user.authenticators.length"
+			id="help-setup"
+			class="alert alert-info mb-0"
+		>
+			<svg>
+				<use xlink:href="#icon-stopwatch" />
+			</svg>
+			<span>{{ $t("authenticator.hint") }}</span>
+		</div>
 		<div class="list-group">
 			<div
 				v-for="authenticator in $root.user.authenticators"
@@ -82,7 +99,7 @@
 						id="add-authenticator-group"
 						class="input-group"
 					>
-						<div class="input-group-prepend col-sm-3">
+						<div class="input-group-prepend col-sm-4 p-0">
 							<ValidationProvider
 								v-slot="{ errors }"
 								rules="required"
@@ -99,7 +116,9 @@
 									>
 										{{ $t("authenticator.choose") }}
 									</option>
-									<option value="cert">
+									<option
+										value="cert"
+									>
 										{{ $t("authenticator.choose-cert") }}
 									</option>
 									<option
@@ -120,7 +139,7 @@
 						<ValidationProvider
 							v-slot="{ errors }"
 							name="label"
-							class="form-control col-sm-7"
+							class="form-control col-sm-6"
 						>
 							<input
 								v-model="createLabel"
@@ -162,7 +181,7 @@ export default {
 	name: "AuthenticatorManage",
 	data() {
 		return {
-			createType: null,
+			createType: window.PublicKeyCredential ? "fido" : "cert",
 			createLabel: "",
 			fidoError: 0,
 			tempToken: "",
@@ -304,5 +323,16 @@ a.text-danger > svg {
 #add-authenticator-group button {
 	margin-left: -0.5em;
 	border-radius: 0.25rem;
+}
+
+#help-setup {
+	display: flex;
+	flex-direction: row;
+}
+
+#help-setup svg {
+	margin-right: 10px;
+	align-self: center;
+	font-size: 5em;
 }
 </style>
