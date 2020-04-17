@@ -54,7 +54,7 @@
 			"authenticator-remove": "Zweiter Faktor {attribute} entfernt",
 			"authenticator-login": "Anmeldung verifiziert durch den zweiten Faktor {attribute}",
 			"session-clean": "Alle Sitzungen auf anderen Geräten wurden beendet",
-			"session-report": "Reported suspicious activity #{attribute}"
+			"session-report": "Verdächtige Aktivität #{attribute} gemeldet"
 		}
 	},
 	"authenticator": {
