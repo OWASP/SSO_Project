@@ -56,6 +56,7 @@ services:
       - ./cache/bundled-ca.pem:/etc/nginx/crypto/ca.pem
     environment:
       - DOMAIN
+      - TRUSTEDPROXYIP
     
   certbot:
     depends_on:

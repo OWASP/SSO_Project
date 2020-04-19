@@ -2,11 +2,17 @@
 
 if [ -z "$DOMAIN" ]; then
 	echo "Domain not set, using localhost"
-	DOMAIN="localhost"
+	export DOMAIN="localhost"
 fi
 
-echo "Replace environment variables for $DOMAIN"
-envsubst '${DOMAIN}' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf
+if [ -z "$TRUSTEDPROXYIP" ]; then
+	echo "Trusted proxy IP not set, using localhost"
+	export TRUSTEDPROXYIP="127.0.0.1"
+fi
+
+echo "Replace environment variables for $DOMAIN & $TRUSTEDPROXYIP"
+envsubst '${DOMAIN} ${TRUSTEDPROXYIP}' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf
+#cat /etc/nginx/conf.d/default.conf
 
 echo "Check default certificates"
 if [ -d "/etc/letsencrypt/live/$DOMAIN" ]; then
