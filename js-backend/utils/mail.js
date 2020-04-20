@@ -13,7 +13,7 @@ class Mailer {
 	}
 	sendMail(data, callback) {
 		if(!data.hasOwnProperty("from")) {
-			data.from = "OWASP Single Sign-On <"+this.emailFrom+">";
+			data.from = "Single Sign-On <"+this.emailFrom+">";
 		}
 		if(!data.hasOwnProperty("html")) {
 			data.html = data.text;

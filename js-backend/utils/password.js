@@ -2,8 +2,6 @@ const crypto = require("crypto");
 const argon2 = require("argon2");
 const https = require("https");
 const url = require("url");
-const passwordValidator = require("password-validator"), passwordSchema = new passwordValidator();
-passwordSchema.is().min(8).is().max(100).has().digits().has().letters();
 
 const isFailSafe = process.env.PWNEDPASSFAILSAFE ? (process.env.PWNEDPASSFAILSAFE==1) : false;
 
@@ -14,7 +12,7 @@ class PwUtil {
 	checkPassword(userId, password) {
 		return new Promise((resolve, reject) => {
 			// Check password policy
-			if(!passwordSchema.validate(password)) return reject("Password does not match password policy");
+			if(password.length < 8 || password.length > 100) return reject("Password does not match password policy");
 			
 			this.checkPwnedPasswords(password, isFailSafe).then(() => {
 				// Check for older passwords

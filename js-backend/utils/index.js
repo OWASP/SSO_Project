@@ -29,7 +29,7 @@ const MailerConfig = {
 	secureConnection: false, // Disable SSL
 	tls: {
 		rejectUnauthorized: isSMTPSecure,
-		tls:{
+		tls: {
 			minVersion: "TLSv1.2",
 		},
 	},

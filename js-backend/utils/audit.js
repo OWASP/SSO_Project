@@ -115,6 +115,16 @@ class Audit {
 		return cefMessage.send();
 	}
 	getIP(req) {
+		const forwardedFor = req.headers["x-forwarded-for"];
+		if(forwardedFor) {
+			if(forwardedFor.indexOf(",") != -1) {
+				return ((forwardedFor.split(","))[0]).trim();
+			} else {
+				return forwardedFor;
+			}
+		} else {
+			return req.connection.remoteAddress;
+		}
 		return req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 	}
 }
