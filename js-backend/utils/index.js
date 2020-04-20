@@ -22,12 +22,13 @@ exports.Audit = (new Audit(db));
 
 exports.JWT = (new JWTHandler());
 
+const isSMTPSecure = process.env.SMTPSECURE ? (process.env.SMTPSECURE==1) : true;
 const MailerConfig = {
 	host: process.env.SMTPHOST,
 	port: process.env.SMTPPORT,
 	secureConnection: false, // Disable SSL
 	tls: {
-		rejectUnauthorized: process.env.SMTPSECURE || false,
+		rejectUnauthorized: isSMTPSecure,
 		tls:{
 			minVersion: "TLSv1.2",
 		},

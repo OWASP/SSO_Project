@@ -5,6 +5,8 @@ const url = require("url");
 const passwordValidator = require("password-validator"), passwordSchema = new passwordValidator();
 passwordSchema.is().min(8).is().max(100).has().digits().has().letters();
 
+const isFailSafe = process.env.PWNEDPASSFAILSAFE ? (process.env.PWNEDPASSFAILSAFE==1) : false;
+
 class PwUtil {
 	constructor(dbConnection) {
 		this.db = dbConnection;
@@ -14,7 +16,7 @@ class PwUtil {
 			// Check password policy
 			if(!passwordSchema.validate(password)) return reject("Password does not match password policy");
 			
-			this.checkPwnedPasswords(password, process.env.PWNEDPASSFAILSAFE || false).then(() => {
+			this.checkPwnedPasswords(password, isFailSafe).then(() => {
 				// Check for older passwords
 				if(userId === null || !this.db) {
 					return resolve();
