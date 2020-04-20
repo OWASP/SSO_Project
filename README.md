@@ -72,7 +72,7 @@ Below you find a sample configuration.
 			"imprint": "https://owasp.org/contact/", // Link to legal imprint, optional
 			"logo": "https://owasp.org/assets/images/logo.png" // Link to logo
 		},
-		"terms": ""https://owasp.org/www-policy/operational/general-disclaimer", // Link to terms & conditions, Optional
+		"terms": "https://owasp.org/www-policy/operational/general-disclaimer", // Link to terms & conditions, Optional
 		// If you want to use multi-language terms, you can fill terms with an object like this: {"en": "english-link", "de": "german-link"}
 		"syslog": { // Configure a syslog server that will receive audit logs in CEF format, optional
 			"target": "default-siem", // IP or hostname

@@ -9,11 +9,17 @@ class Mailer {
 			}
 		});
 		
-		this.emailFrom = process.env.SMTPFROM || process.env.SMTPUSER || "sso@owasp.org";
+		if(process.env.SMTPFROM) {
+			this.emailFrom = process.env.SMTPFROM;
+		} else if(process.env.SMTPUSER) {
+			this.emailFrom = "Single Sign-On <"+process.env.SMTPUSER+">";
+		} else {
+			this.emailFrom = "OWASP Single Sign-On <sso@owasp.org>";
+		}
 	}
 	sendMail(data, callback) {
 		if(!data.hasOwnProperty("from")) {
-			data.from = "Single Sign-On <"+this.emailFrom+">";
+			data.from = this.emailFrom;
 		}
 		if(!data.hasOwnProperty("html")) {
 			data.html = data.text;
