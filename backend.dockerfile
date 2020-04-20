@@ -18,7 +18,8 @@ RUN apk update && apk add bash openssl && \
 WORKDIR /app
 COPY ./cypress/wait-for-it.sh /app/wait-for-it.sh
 COPY --from=build-stage /app /app
-RUN chmod -R 775 /app/**/*.sh
+RUN chmod -R 775 /app/*.sh && \
+	chmod -R 775 /app/scripts/*.bash
 
 EXPOSE 3000
 CMD ["/app/entrypoint.sh"]
