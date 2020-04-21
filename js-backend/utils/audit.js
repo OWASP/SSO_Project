@@ -35,7 +35,7 @@ class Audit {
 			const userId = req.user ? req.user.id : null;
 			const ip = this.getIP(req);
 			const ipInfo = ipCountry.lookup(ip);
-			const country = ipInfo ? ipInfo.country : null;
+			const country = ipInfo ? ipInfo.country.iso_code : null;
 			
 			const loggers = [];
 			if(this.customPages["default"].hasOwnProperty("syslog")) {

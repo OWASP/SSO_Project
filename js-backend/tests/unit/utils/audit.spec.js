@@ -80,5 +80,8 @@ describe("Audit (Util)", () => {
 		
 		baseItem.headers["x-forwarded-for"] = "::1";
 		expect(Audit.getIP(baseItem)).to.equal("::1");
+		
+		baseItem.headers["x-forwarded-for"] = "::1,::2";
+		expect(Audit.getIP(baseItem)).to.equal("::1");
 	});
 });
