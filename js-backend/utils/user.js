@@ -17,7 +17,7 @@ class User {
 			const actionId = actionMap[action];
 		
 			this.db.execute("SELECT * FROM users WHERE username = ?", [username], (err, results) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				if(results.length && action == "registration") {
 					return reject("Email address already registered");
 				} else if(!results.length && action != "registration") {
@@ -26,7 +26,7 @@ class User {
 				
 				this.pwUtil.createRandomString(30).then(token => {
 					this.db.execute("INSERT INTO emailConfirm (username, token, request_ip, action) VALUES (?, ?, ?, ?)", [username, token, ip, actionId], err => {
-						if(err) return reject(err.message);
+						if(err) return reject(err);
 						
 						resolve(token);
 					});
@@ -40,7 +40,7 @@ class User {
 			const actionId = actionMap[action];
 			
 			this.db.execute("SELECT * FROM emailConfirm WHERE token = ? AND action = ?", [token, actionId], (err, results) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				if(!results.length) return reject("Token not found");
 				const confirmation = results.pop();
 			
@@ -66,7 +66,7 @@ class User {
 	manualInvalidateToken(id) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("DELETE FROM emailConfirm WHERE id = ?", [id], (err) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				resolve();
 			});
 		});
@@ -75,7 +75,7 @@ class User {
 		return new Promise((resolve, reject) => {
 			if(password == null) {
 				this.db.execute("INSERT INTO users (username, created) VALUES (?, NOW())", [username], (err, result) => {
-					if(err) return reject(err.message);
+					if(err) return reject(err);
 					
 					const userId = result.insertId;
 					resolve(userId);
@@ -83,12 +83,12 @@ class User {
 			} else {
 				this.pwUtil.checkPassword(null, password).then(() => {
 					this.db.execute("INSERT INTO users (username, created) VALUES (?, NOW())", [username], (err, result) => {
-						if(err) return reject(err.message);
+						if(err) return reject(err);
 						
 						const userId = result.insertId;
 						this.pwUtil.hashPassword(password).then(hash => {
 							this.db.execute("INSERT INTO passwords (userId, password) VALUES(?, ?)", [userId, hash], (err) => {
-								if(err) return reject(err.message);
+								if(err) return reject(err);
 								
 								resolve(userId);
 							});
@@ -103,7 +103,7 @@ class User {
 
 			this.pwUtil.hashPassword(newPassword).then(hash => {
 				this.db.execute("INSERT INTO passwords (userId, password) VALUES(?, ?)", [userId, hash], (err) => {
-					if(err) return reject(err.message);
+					if(err) return reject(err);
 					
 					resolve(userId);
 				});
@@ -119,7 +119,7 @@ class User {
 	findUserByAttribute(attributeName, attributeVal) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("SELECT * FROM users WHERE "+attributeName+" = ?", [attributeVal], (err, results) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				if(!results.length) return reject("User not found");
 				
 				const user = results.pop();
@@ -140,7 +140,7 @@ class User {
 	updateLoginTime(userId) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("UPDATE users SET last_login = NOW() WHERE id = ?", [userId], (err) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				resolve();
 			});
 		});
@@ -149,7 +149,7 @@ class User {
 		return new Promise((resolve, reject) => {
 			this.pwUtil.createRandomString(30).then(token => {
 				this.db.execute("INSERT INTO userSessions (userId, token, added) VALUES (?, ?, NOW())", [userId, token], (err, result) => {
-					if(err) return reject(err.message);
+					if(err) return reject(err);
 					resolve(token);
 				});
 			}).catch(reject);
@@ -159,12 +159,12 @@ class User {
 		return new Promise((resolve, reject) => {
 			if(!token) return reject("Token empty");
 			this.db.execute("SELECT * FROM userSessions WHERE token = ?", [token], (err, results) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				if(!results.length) return reject("Token not known");
 				
 				const result = results.pop();
 				this.db.execute("UPDATE userSessions SET last_seen = NOW() WHERE id = ?", [result.id], err => {
-					if(err) return reject(err.message);
+					if(err) return reject(err);
 					resolve(result);
 				});
 			});
@@ -173,7 +173,7 @@ class User {
 	cleanSession(userId, surviveToken) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("DELETE FROM userSessions WHERE userId = ? AND token != ?", [userId, surviveToken], e => {
-				if(e) return reject(e.message);
+				if(e) return reject(e);
 				resolve();
 			});
 		});
@@ -188,7 +188,7 @@ class User {
 	findPasswordByUser(userId) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("SELECT password FROM passwords WHERE userId = ? ORDER BY created DESC LIMIT 1", [userId], (err, results) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				if(!results.length) return resolve(null);
 				const passwordObj = results.pop();
 				resolve(passwordObj.password);
@@ -201,7 +201,7 @@ class User {
 			
 			this.findUserByName(username).then(user => {
 				this.db.execute("INSERT INTO authenticators (userId, label, handle, counter, publicKey, type) VALUES (?,?,?,?,?, ?)", [user.id, label, userHandle, userCounter, userKey, type], (err) => {
-					if(err) return reject(err.message);
+					if(err) return reject(err);
 					return resolve();
 				});
 			}).catch(reject);
@@ -210,7 +210,7 @@ class User {
 	removeAuthenticator(type, userId, handle) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("DELETE FROM authenticators WHERE userId = ? AND handle = ? and type = ?", [userId, handle, type], e => {
-				if(e) return reject(e.message);
+				if(e) return reject(e);
 				resolve();
 			});
 		});
@@ -218,7 +218,7 @@ class User {
 	updateAuthenticatorCounter(type, handle, newCounter) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("UPDATE authenticators SET counter = ? WHERE handle = ? AND type = ?", [newCounter, handle, type], (err) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				return resolve();
 			});
 		});
@@ -226,7 +226,7 @@ class User {
 	findAuthenticatorByUser(userId) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("SELECT * FROM authenticators WHERE userId = ?", [userId], (err, results) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				
 				const handleList = [];
 				for(let i=0;i<results.length;i++) {

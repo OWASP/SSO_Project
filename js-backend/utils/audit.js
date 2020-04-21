@@ -59,14 +59,14 @@ class Audit {
 				resolve(results[0]);
 			}).catch(err => {
 				console.error(err);
-				reject(err.message);
+				reject(err);
 			});
 		});
 	}
 	getList(userId, offset, length) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("SELECT * FROM audit where user = ? ORDER BY created DESC LIMIT ?, ?", [userId, offset, length], (err, results) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				resolve(results);
 			});
 		});
@@ -74,7 +74,7 @@ class Audit {
 	get(id) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("SELECT * FROM audit where id = ?", [id], (err, results) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				resolve(results);
 			});
 		});
@@ -82,7 +82,7 @@ class Audit {
 	databaseAdd(userId, ip, country, object, action, attribute) {
 		return new Promise((resolve, reject) => {
 			this.db.execute("INSERT INTO audit (user, ip, country, object, action, attribute1) VALUES (?, ?, ?, ?, ?, ?)", [userId, ip, country, object, action, attribute], (err, result) => {
-				if(err) return reject(err.message);
+				if(err) return reject(err);
 				resolve(result.insertId);
 			});
 		});
@@ -116,16 +116,20 @@ class Audit {
 	}
 	getIP(req) {
 		const forwardedFor = req.headers["x-forwarded-for"];
-		if(forwardedFor) {
+		const clientIP = req.connection.remoteAddress;
+		const trustEnv = process.env.TRUSTEDPROXYIP;
+		
+		const isTrustedProxy = (trustEnv == "all" || trustEnv == clientIP);
+		
+		if(forwardedFor && isTrustedProxy) {
 			if(forwardedFor.indexOf(",") != -1) {
 				return ((forwardedFor.split(","))[0]).trim();
 			} else {
 				return forwardedFor;
 			}
 		} else {
-			return req.connection.remoteAddress;
+			return clientIP;
 		}
-		return req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 	}
 }
 
