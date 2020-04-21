@@ -117,11 +117,8 @@ class Audit {
 	getIP(req) {
 		const forwardedFor = req.headers["x-forwarded-for"];
 		const clientIP = req.connection.remoteAddress;
-		const trustEnv = process.env.TRUSTEDPROXYIP;
 		
-		const isTrustedProxy = (trustEnv == "all" || trustEnv == clientIP);
-		
-		if(forwardedFor && isTrustedProxy) {
+		if(forwardedFor) {
 			if(forwardedFor.indexOf(",") != -1) {
 				return ((forwardedFor.split(","))[0]).trim();
 			} else {
