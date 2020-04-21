@@ -32,6 +32,7 @@ class CertAuthenticator {
 				}
 				const rawCertBinary = Buffer.from(rawCertB64[1], "base64");
 				const sha256sum = crypto.createHash("sha256").update(rawCertBinary).digest("hex");
+				const certEmail = rawCertParsed.subject.getField("E");
 				
 				cert = {
 					raw: rawCertBinary,
@@ -39,7 +40,7 @@ class CertAuthenticator {
 					valid_to: rawCertParsed.validity.notAfter,
 					fingerprint256: sha256sum.toUpperCase().replace(/(.{2})(?!$)/g, "$1:"),
 					subject: {
-						emailAddress: rawCertParsed.subject.getField("E").value,
+						emailAddress: certEmail ? certEmail.value : null,
 						CN: rawCertParsed.subject.getField("CN").value,
 					},
 				};
