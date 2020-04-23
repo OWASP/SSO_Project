@@ -158,8 +158,9 @@ class CertAuthenticator {
 				// If its not the native CA, it must be a custom one
 				this.checkCustomCa(req, res, next);
 			} else {
-				return res.status(403).send("Certificate rejected");
+				res.status(403).send("Certificate rejected");
 			}
+			return;
 		}
 		
 		// Verify fingerprint matches account

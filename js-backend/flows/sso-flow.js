@@ -59,7 +59,7 @@ class ssoFlow {
 		if(jwtInput && jwtInput.hasOwnProperty("sub")) {
 			jwtObj.sub = jwtInput.sub;
 		}
-		JWT.sign(jwtObj, this.ownJwtToken, JWT.age().MEDIUM).then(jwtData => {
+		JWT.sign(jwtObj, this.ownJwtToken, JWT.age().LONG).then(jwtData => {
 			req.returnExtra = {
 				page: {
 					pageId,
