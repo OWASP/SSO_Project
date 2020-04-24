@@ -233,7 +233,7 @@ class ssoFlow {
 			issuer: this.fido2Options.rpName,
 			cert: this.serverCrt,
 			profileMapper: PassportProfileMapper,
-		});
+		})(req, res, next);
 	}
 
 	// Middleware for SSO Token
