@@ -145,12 +145,16 @@ class ssoFlow {
 				req.query.RelayState = jwtRequest.saml.relay;
 				
 				samlp.parseRequest(req, (err, samlData) => {
+					if(!samlData.hasOwnProperty("assertionConsumerServiceURL")) {
+						samlData.assertionConsumerServiceURL = thisPage.redirect;
+					}
+					
 					samlp.auth({
 						issuer: this.fido2Options.rpName,
 						cert: this.serverCrt,
 						key: this.serverKey,
 						getPostURL: (audience, ream, req, callback) => {
-							return callback(null, samlData.destination);
+							return callback(null, samlData.assertionConsumerServiceURL);
 						},
 						getUserFromRequest: (req) => {
 							return {
@@ -162,7 +166,7 @@ class ssoFlow {
 							const returnObj = {
 								SAMLResponse: response.toString("base64"),
 								RelayState: req.query.RelayState,
-								redirect: samlData.destination,
+								redirect: samlData.assertionConsumerServiceURL,
 							};
 							
 							res.status(200).json(returnObj);
