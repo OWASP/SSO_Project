@@ -193,17 +193,17 @@ class ssoFlow {
 				return res.status(400).send("Destination parameter missing");
 			}
 			
-			const reqIssuer = samlData.issuer;
+			const reqConsumer = samlData.assertionConsumerServiceURL;
 			let pageId = false;
 			for (let thisPageId of Object.keys(this.customPages)) {
 				const thisPage = this.customPages[thisPageId];
-				if(thisPage.samlIssuer == reqIssuer) {
+				if(thisPage.samlAllowedConsumers.includes(reqConsumer)) {
 					pageId = thisPageId;
 					break;
 				}
 			}
 			if(!pageId) {
-				return res.status(404).send("No website matches to the requested destination host");
+				return res.status(404).send("No configured website matches the request");
 			}
 			const thisPage = this.customPages[pageId];
 			

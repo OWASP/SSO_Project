@@ -16,11 +16,11 @@ describe("SSO Flow", () => {
 	});
 	
 	it("Loads branding from SAML flow", () => {
-		cy.visit("/in/saml?SAMLRequest=fZJbc6owFIX%2FCpN3EPEGGdFBRLy2KtSjvnRijFwKSUqCaH%2F9sXqc6Xnp485eyVqZb3X7lzxTzqQQCaM2qGs6UAjF7JjQyAZv4Ug1Qb%2FXFSjPOHRKGdM1%2BSyJkMrtHhXwvrBBWVDIkEgEpCgnAkoMA2cxh4amQ14wyTDLgOIIQQp5M3IZFWVOioAU5wSTt%2FXcBrGUXMBaLWNRQjWBMiJOrMBEwywHyvBmmVAk7ymfUs6EzBFVCY7Zt%2Bx%2B0P%2BOBJTJ0AbvxkvL97lB80nojg746gezFK0aKGnPLhZ2qmE88Lf1yJlez26RTc%2FMWx1TLwrFCaXRwso7qVZpE2v0VT8eN%2BneymZ7N8aCS259XD7c8hNXB%2FJCtGx63az4wEwC1ETVaCdSy2kVnbV3aE35eNwxBu0TicrxaLT0zAX6aJTNOPBmmfVu5izZzo9Oq%2FNnE39VyNzuLrSZD0Uc8Mb2oC%2B9%2Fex1OF7IS7bZoiv2d%2BUicg3d5yfXuf1SiJJMqJCIShsYer2h6k3VMEPDgM0GbBpaw2zvgbL8x2CQ0AfZ34AdHiIBx2G4VJevQQiUzbMhNwF49AHezYsfRfj9WfSkD3pPgFVVaUTFrOBqKdAdIaEykdfJsFv74dF7TP83sPcX&RelayState=hello-relay");
+		cy.visit("/in/saml?SAMLRequest=fZJZc6owGIb%2FCpN7EMEFMqKDuC8VhVr1xokhsggJJcGlv75WjzM9N71M8n55knmfVueapdKZFDxm1AJVRQUSoZgFMQ0t8O4PZAN02i2OsjSHdikiuiKfJeFCus9RDh8HFigLChniMYcUZYRDgaFnz2dQU1SYF0wwzFIg2ZyTQtxBDqO8zEjhkeIcY%2FK%2BmlkgEiLnsFLJGRcZojLBEVMwyx4bnR8OkHp3cEyReLz1NRDGIioPj%2Bjiw%2Fbciuct9m7BEoIFkMY9C%2By1t%2FpwmGs0G%2FvO4IBvQ2%2BaoKWO4sb0amL70ou6w001tCe3s1OkkzPrL4OkH%2Fr8iJJwbmbNRLkoY3PwVQ2CdbIz0%2BnOiTDPRW6erien%2FMSXA3kjSjq5rZd514g9VEOXwZYnpl0vmqv%2BoT7JR6Om1m0cSViOBgO3b8zRSS9rkdefpubeyFi8mQV2vfmxjr4uyNhsr7SW9Xjk5frmoLr93XTRG83FNV1v0A0Pt%2BU8dDR1mB8d%2B%2F5LzksyplwgKiygqVVdVmuyZviaBms6rGmKbjR2QHL%2FddGN6bPhv4o7PEMcjnzfld2F5wNp%2FTLlHgBPL%2BADXvwS4u9r0csC0H5ViO5iqXJAzjIJlOymcJQSfmQFJj%2B1tiq%2FMO3n6n8Z298%3D&RelayState=hello-relay");
 		cy.authenticate();
 		checkBranding();
 		
-		cy.get("#ssoFlowOutForm").should("have.attr", "action", "https://login.salesforce.com");
+		cy.get("#ssoFlowOutForm").should("have.attr", "action", "https://postman-echo.com/post?saml");
 		cy.get("#ssoFlowOutForm input[name=SAMLResponse]").invoke("val").then(value => {
 			expect(value).to.have.string("=");
 		});
