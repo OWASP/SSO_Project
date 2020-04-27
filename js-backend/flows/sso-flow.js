@@ -189,7 +189,7 @@ class ssoFlow {
 				return res.status(400).send("Invalid SAML request");
 			}
 			
-			if(!samlData.destination) {
+			if(!samlData.assertionConsumerServiceURL) {
 				return res.status(400).send("Destination parameter missing");
 			}
 			
@@ -197,7 +197,7 @@ class ssoFlow {
 			let pageId = false;
 			for (let thisPageId of Object.keys(this.customPages)) {
 				const thisPage = this.customPages[thisPageId];
-				if(thisPage.samlAllowedConsumers.includes(reqConsumer)) {
+				if(thisPage.hasOwnProperty("samlAllowedConsumers") && thisPage.samlAllowedConsumers.includes(reqConsumer)) {
 					pageId = thisPageId;
 					break;
 				}

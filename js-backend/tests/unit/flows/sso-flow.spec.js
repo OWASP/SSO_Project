@@ -7,7 +7,7 @@ const samlp = require("samlp");
 // We can't mock MiddlewareHelper, but can catch the result using "res"
 
 const samlParseStub = sinon.stub(samlp, "parseRequest").callsArgWith(1, null, {
-	destination: "https://postman-echo.com/post?saml",
+	assertionConsumerServiceURL: "https://postman-echo.com/post?saml",
 });
 
 const SSOFlowClass = require("../../../flows/sso-flow.js").ssoFlow;
