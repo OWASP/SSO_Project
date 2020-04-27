@@ -20,7 +20,7 @@ describe("SSO Flow", () => {
 		cy.authenticate();
 		checkBranding();
 		
-		cy.get("#ssoFlowOutForm").should("have.attr", "action", "https://postman-echo.com/post?saml");
+		cy.get("#ssoFlowOutForm").should("have.attr", "action", "https://login.salesforce.com");
 		cy.get("#ssoFlowOutForm input[name=SAMLResponse]").invoke("val").then(value => {
 			expect(value).to.have.string("=");
 		});
