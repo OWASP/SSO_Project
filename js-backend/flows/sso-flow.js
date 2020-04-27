@@ -230,7 +230,7 @@ class ssoFlow {
 			cert: this.serverCrt,
 			profileMapper: PassportProfileMapper,
 			endpointPath: "/#/in/saml",
-		});
+		})(req, res, next);
 	}
 
 	// Middleware for SSO Token
