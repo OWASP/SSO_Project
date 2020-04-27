@@ -16,6 +16,7 @@
 		"signedRequestsOnly": false,
 		"name": "E Corp",
 		"redirect": "https://postman-echo.com/post",
+		"samlIssuer": "https://www.e-corp-usa.com/entityID",
 		"branding": {
 			"backgroundColor": "#fff",
 			"fontColor": "#254799",

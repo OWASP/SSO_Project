@@ -37,7 +37,7 @@
 		"chai": "^4.2.0",
 		"eslint": "^6.8.0",
 		"eslint-plugin-vue": "^6.2.2",
-		"mocha": "^7.1.1",
+		"mocha": "^7.1.2",
 		"sinon": "^9.0.2"
 	},
 	"eslintConfig": {

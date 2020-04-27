@@ -85,6 +85,7 @@ Below you find a sample configuration.
 		"signedRequestsOnly": false, // If set to true, only signed login requests are allowed
 		"name": "E Corp", // Short name of the company
 		"redirect": "https://postman-echo.com/post", // URL to redirect to
+		"samlIssuer": "https://www.e-corp-usa.com/entityID", // SAML issuer field to recognize
 		"branding": { // Allows branding the login page
 			"backgroundColor": "#fff", // Page background color
 			"fontColor": "#254799", // Color of the text below the login box

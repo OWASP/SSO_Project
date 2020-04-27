@@ -1,5 +1,4 @@
 const validator = require("validator");
-const url = require("url");
 const { Audit, User, JWT } = require("../utils");
 const Middleware = new (require("../utils/middleware.js").MiddlewareHelper)();
 
@@ -190,14 +189,11 @@ class ssoFlow {
 				return res.status(400).send("Destination parameter missing");
 			}
 			
-			const issUrl = url.parse(samlData.destination);
+			const reqIssuer = samlData.issuer;
 			let pageId = false;
 			for (let thisPageId of Object.keys(this.customPages)) {
 				const thisPage = this.customPages[thisPageId];
-				// Question for the future - what happens if two pages have the same hostname? Eg one company wants to have two pages redirect to the same destination.
-				// I don't see a good way to identify the source website more uniquely in SAML standard requests
-				// The ID would be possible but appears to be used for other purposes
-				if(url.parse(thisPage.redirect).hostname == issUrl.hostname) {
+				if(thisPage.samlIssuer == reqIssuer) {
 					pageId = thisPageId;
 					break;
 				}
@@ -233,6 +229,7 @@ class ssoFlow {
 			issuer: this.fido2Options.rpName,
 			cert: this.serverCrt,
 			profileMapper: PassportProfileMapper,
+			endpointPath: "/#/in/saml",
 		});
 	}
 
