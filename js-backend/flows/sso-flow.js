@@ -153,6 +153,7 @@ class ssoFlow {
 						issuer: this.fido2Options.rpName,
 						cert: this.serverCrt,
 						key: this.serverKey,
+						destination: samlData.assertionConsumerServiceURL,
 						getPostURL: (audience, ream, req, callback) => {
 							return callback(null, samlData.assertionConsumerServiceURL);
 						},
