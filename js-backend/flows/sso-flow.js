@@ -233,7 +233,7 @@ class ssoFlow {
 			issuer: this.fido2Options.rpName,
 			cert: this.serverCrt,
 			profileMapper: PassportProfileMapper,
-			endpointPath: "/#/in/saml",
+			redirectEndpointPath: "/#/in/saml",
 		})(req, res, next);
 	}
 

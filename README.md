@@ -85,7 +85,6 @@ Below you find a sample configuration.
 		"signedRequestsOnly": false, // If set to true, only signed login requests are allowed
 		"name": "E Corp", // Short name of the company
 		"redirect": "https://postman-echo.com/post", // URL to redirect to
-		"samlIssuer": "https://www.e-corp-usa.com/entityID", // SAML issuer field to recognize
 		"samlAllowedConsumers": [ // List of allowed AssertionConsumerServiceURL values
 			"https://postman-echo.com/post?saml"
 		],
