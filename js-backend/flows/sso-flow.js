@@ -114,6 +114,10 @@ class ssoFlow {
 
 	onFlowOut(req, res, next) {
 		const jwtRequest = req.ssoRequest;
+		if(!jwtRequest) {
+			return res.status(400).send("No SSO request forwarded");
+		}
+		
 		const pageId = jwtRequest.pageId;
 		const thisPage = this.customPages[pageId];
 		
