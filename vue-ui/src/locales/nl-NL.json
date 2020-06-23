@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Log in op uw account {username} om door te gaan met {website}",
 		"logout": "Log uit",
-		"continue-page": "Ga verder naar {website}"
+		"continue-page": "Ga verder naar {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Meer laden",
@@ -87,7 +88,8 @@
 		"fill-password": "Wachtwoordbeleid: minimaal 8 tekens",
 		"login": "Aanmelden",
 		"no-account": "Nog geen account?",
-		"register": "Registreer nu"
+		"register": "Registreer nu",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Ik ga akkoord met de algemene voorwaarden",
