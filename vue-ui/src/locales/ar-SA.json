@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "الرجاء تسجيل الدخول إلى حسابك {username} للاستمرار إلى {website}",
 		"logout": "تسجيل الخروج",
-		"continue-page": "المتابعة إلى {website}"
+		"continue-page": "المتابعة إلى {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "تحميل المزيد",
@@ -87,7 +88,8 @@
 		"fill-password": "سياسة كلمة المرور: الحد الأدنى 8 أحرف",
 		"login": "تسجيل الدخول",
 		"no-account": "ليس لديك حساب؟",
-		"register": "تسجيل الآن"
+		"register": "تسجيل الآن",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "أوافق على الأحكام والشروط",
