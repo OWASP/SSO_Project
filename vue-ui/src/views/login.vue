@@ -3,33 +3,34 @@
 		<h4 class="card-title">
 		{{ $t("router.login") }}
 	</h4>
-		<div
-			v-if="availableUsers.length > 1"
-			class="mb-4 row"
-			id="resume-session"
-		>
-			<div
-				v-for="(item, index) in availableUsers"
-				:key="index"
-				class="col-sm-3"
-			>
-				<a
-					href="#"
-					:title="$t('login.resume', { email: item.email })"
-					@click="resumeSession(item.email)"
-				>
-					<img
-						class="rounded-circle img-fluid"
-						:alt="item.email"
-						:src="'https://www.gravatar.com/avatar/' + item.hash"
-					>
-				</a>
-			</div>
-		</div>
 		<ValidationObserver
 			v-if="!loading"
 			v-slot="{ invalid }"
 		>
+			<div
+				v-if="availableUsers.length > 0"
+				id="resume-session"
+				class="mb-4 row"
+			>
+				<div
+					v-for="(item, index) in availableUsers"
+					:key="index"
+					class="col-sm-3"
+				>
+					<a
+						href="#"
+						:title="$t('login.resume', { email: item.email })"
+						@click="resumeSession(item.email)"
+					>
+						<img
+							class="rounded-circle img-fluid"
+							:alt="item.email"
+							:src="'https://www.gravatar.com/avatar/' + item.hash"
+						>
+					</a>
+				</div>
+			</div>
+		
 			<form @submit.prevent="submit">
 				<div
 					v-if="error == 404"
@@ -165,15 +166,14 @@ export default {
 		return {
 			email: "",
 			password: "",
-			loading: true,
+			loading: false,
 			error: 0,
 			certTimeout: null,
 			availableUsers: [],
+			certSubmitted: false,
 		};
 	},
 	beforeMount() {
-		this.routeUser();
-		
 		this.availableUsers = [];
 		this.$root.listLoginToken().forEach(email => {
 			this.availableUsers.push({
@@ -181,6 +181,8 @@ export default {
 				email: email,
 			});
 		});
+		
+		this.loading = false;
 	},
 	mounted() {
 		window.addEventListener("message", event => {
@@ -190,8 +192,6 @@ export default {
 				this.$root.setLoginToken(event.data.username, event.data);
 				
 				this.$router.push("/audit");
-			} else {
-				console.warn("Received unknown message", event.data);
 			}
 		}, false);
 	},
@@ -224,6 +224,7 @@ export default {
 				.getMe()
 				.then(() => {
 					this.$refs.certForm.submit();
+					this.certSubmitted = true;
 				})
 				.catch(() => {
 					this.loading = false;
@@ -233,7 +234,7 @@ export default {
 		certFrameLoad() {
 			// If the certificate login fails, there will be no message posted and it can't proceed
 			// This is why we here need to detect when the page has finished loading and there was no message
-			if(this.$root.user.id) {
+			if(this.$root.user.id && this.certSubmitted) {
 				this.certTimeout = setTimeout(() => {
 					this.$router.push(
 						this.$root.user.isAuthenticated ? "/audit" : "/two-factor"
@@ -242,6 +243,7 @@ export default {
 			}
 		},
 		resumeSession(email) {
+			this.loading = true;
 			this.$root.useLoginToken(email);
 			this.routeUser();
 		},

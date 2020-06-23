@@ -44,6 +44,20 @@ describe("User Activity", () => {
 		cy.expectLogIncrease(1);
 		cy.task("sql", "SELECT * FROM userSessions WHERE userId = 1").should("have.length", 1);
 	});
+	
+	it("Can log into two accounts and resume a session", () => {
+		cy.visit("/");
+		cy.get("#resume-session a").should("have.length", 1);
+		
+		Cypress.env("emailAddress", "2_" + Cypress.env("emailAddress"));
+		cy.authenticate();
+		
+		cy.visit("/");
+		cy.get("#resume-session a").should("have.length", 2);
+		
+		cy.get("#resume-session a:first").click();
+		cy.isAuthenticated();
+	});
 });
 
 function expectLogs(num) {

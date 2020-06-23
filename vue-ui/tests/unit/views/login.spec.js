@@ -9,6 +9,7 @@ const setLoginToken = sinon.spy(),
 	routerPush = sinon.spy(),
 	apiPost = sinon.stub(),
 	getMe = sinon.stub(),
+	useLoginToken = sinon.spy(),
 	listLoginToken = sinon.stub();
 
 apiPost.resolves({
@@ -44,6 +45,7 @@ const baseOptions = {
 	parentComponent: {
 		methods: {
 			listLoginToken,
+			useLoginToken,
 			setLoginToken,
 			apiPost,
 			getMe,
@@ -63,7 +65,7 @@ baseOptions.parentComponent.data = () => {
 };
 
 describe("Login (View)", () => {
-	it("only shows login to guest users", async () => {
+	it("only shows login to guest users", () => {
 		expect(getMe.called).to.equal(false);
 		expect(apiPost.called).to.equal(false);
 		expect(wrapper.vm.$data.loading).to.equal(false);
@@ -71,14 +73,14 @@ describe("Login (View)", () => {
 	});
 	
 	it("can resume a logged in session", async () => {
-		// todo
-		setLoginToken.resetHistory();
+		expect(useLoginToken.called).to.equal(false);
+		
 		wrapper.get("#resume-session a").trigger("click");
-		expect(setLoginToken.calledWith("email1")).to.equal(true);
+		await wrapper.vm.$nextTick();
+		expect(useLoginToken.calledWith("email1")).to.equal(true);
 	});
 	
 	it("forwards login attempts", async () => {
-		setLoginToken.resetHistory();
 		expect(apiPost.called).to.equal(false);
 		expect(setLoginToken.called).to.equal(false);
 		

@@ -53,9 +53,9 @@ new Vue({
 		defaultPage: fallbackPage,
 	},
 	async beforeMount() {
-		const users = this.listLoginToken();
-		if(users.length == 1) {
-			this.useLoginToken(users[0]);
+		const activeUser = this.getActiveUser();
+		if(activeUser) {
+			this.useLoginToken(activeUser);
 		}
 		
 		// Load default settings of the page (needed especially for terms & conditions)
@@ -111,16 +111,22 @@ new Vue({
 		listLoginToken() {
 			return JSON.parse(localStorage.getItem("users")) || [];
 		},
+		getActiveUser() {
+			return localStorage.getItem("active-user");
+		},
 		removeLoginToken(email) {
 			const currentUsers = this.listLoginToken().filter(x => x != email);
 			localStorage.setItem("users", JSON.stringify(currentUsers));
-			
+			if(this.getActiveUser() == email) {
+				localStorage.removeItem("active-user");
+			}
 			return localStorage.removeItem(email);
 		},
 		getLoginTokenData(email) {
 			return JSON.parse(localStorage.getItem(email));
 		},
 		useLoginToken(email) {
+			localStorage.setItem("active-user", email);
 			this.authToken = this.getLoginTokenData(email);
 			this.axios.defaults.headers.common["Authorization"] = "Bearer "+this.authToken.token;
 		},

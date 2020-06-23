@@ -43,8 +43,8 @@ module.exports = (on, config) => {
 	
 	on("task", {
 		// Run SQL query
-		sql(query, arguments) {
-			return sqlPromise(query, arguments);
+		sql(query) {
+			return sqlPromise(query);
 		},
 		// Run multiple SQL queries
 		sqlBulk(listData) {
@@ -58,12 +58,11 @@ module.exports = (on, config) => {
 				} else if(Array.isArray(thisData)) {
 					query = thisData[0];
 					if(thisData.length > 1) {
-						args = (typeof thisData[1] == "array") ? thisData[1] : [thisData[1]];
+						args = Array.isArray(thisData[1]) ? thisData[1] : [thisData[1]];
 					}
 				} else {
 					throw new Exception("Unknown data type for bulk SQL");
 				}
-				
 				listPromises.push(sqlPromise(query, args));
 			}
 			

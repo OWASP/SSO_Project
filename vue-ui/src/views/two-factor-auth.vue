@@ -139,7 +139,22 @@ export default {
 	},
 	methods: {
 		initTwoFa() {
-			if (!this.$root.user.id && this.fidoAvailable) {
+			if (this.$route.params.token) {
+				this.$root.apiGet("/email-confirm", {
+					token: this.$route.params.token,
+					action: "login",
+				})
+					.then(token => {
+						this.$root.setLoginToken(token.data.username, token.data);
+					
+						this.$router.push("/audit");
+					})
+					.catch(err => {
+						console.error(err);
+						this.emailError = err.response.status;
+						this.loading = false;
+					});
+			} else if (!this.$root.user.id && this.fidoAvailable) {
 				this.$root
 					.getMe()
 					.then(() => {
@@ -150,25 +165,7 @@ export default {
 						if (this.$root.user.isAuthenticated) {
 							return this.$router.push("/audit");
 						}
-
-						if (this.$route.params.token) {
-							this.$root.apiGet("/email-confirm", {
-								token: this.$route.params.token,
-								action: "login",
-							})
-								.then(token => {
-									this.$root.setLoginToken(token.data.username, token.data);
-								
-									this.$router.push("/audit");
-								})
-								.catch(err => {
-									console.error(err);
-									this.emailError = err.response.status;
-									this.loading = false;
-								});
-						} else {
-							this.loading = false;
-						}
+						this.loading = false;
 					})
 					.catch(() => {
 						this.$root.logout();
