@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Для продовження {website} увійдіть до вашого облікового запису {username}",
 		"logout": "Вийти з системи",
-		"continue-page": "Перейти до {website}"
+		"continue-page": "Перейти до {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Завантажити ще",
@@ -87,7 +88,8 @@
 		"fill-password": "Політика паролів: мінімум 8 символів",
 		"login": "Логін",
 		"no-account": "Ще не зареєстровані?",
-		"register": "Зареєструватися"
+		"register": "Зареєструватися",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Я згоден з правилами і умовами",
