@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Por favor, faça login na sua conta {username} para continuar em {website}",
 		"logout": "Efetuar logout",
-		"continue-page": "Continuar para {website}"
+		"continue-page": "Continuar para {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Carregue mais",
@@ -87,7 +88,8 @@
 		"fill-password": "Política de senha: mínimo de 8 caracteres",
 		"login": "Conectar-se",
 		"no-account": "Não possui uma conta?",
-		"register": "Registre-se Agora"
+		"register": "Registre-se Agora",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Eu concordo com os termos e condições",
