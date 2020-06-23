@@ -8,7 +8,8 @@ import "@/plugins/vee-validate";
 const setLoginToken = sinon.spy(),
 	routerPush = sinon.spy(),
 	apiPost = sinon.stub(),
-	getMe = sinon.stub();
+	getMe = sinon.stub(),
+	listLoginToken = sinon.stub();
 
 apiPost.resolves({
 	data: {
@@ -17,6 +18,7 @@ apiPost.resolves({
 	},
 });
 getMe.resolves({});
+listLoginToken.returns(["email1", "email2"]);
 
 const baseOptions = {
 	data() {
@@ -41,6 +43,7 @@ const baseOptions = {
 	],
 	parentComponent: {
 		methods: {
+			listLoginToken,
 			setLoginToken,
 			apiPost,
 			getMe,
@@ -64,9 +67,18 @@ describe("Login (View)", () => {
 		expect(getMe.called).to.equal(false);
 		expect(apiPost.called).to.equal(false);
 		expect(wrapper.vm.$data.loading).to.equal(false);
+		expect(listLoginToken.called).to.equal(true);
+	});
+	
+	it("can resume a logged in session", async () => {
+		// todo
+		setLoginToken.resetHistory();
+		wrapper.get("#resume-session a").trigger("click");
+		expect(setLoginToken.calledWith("email1")).to.equal(true);
 	});
 	
 	it("forwards login attempts", async () => {
+		setLoginToken.resetHistory();
 		expect(apiPost.called).to.equal(false);
 		expect(setLoginToken.called).to.equal(false);
 		

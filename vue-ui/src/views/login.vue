@@ -6,6 +6,7 @@
 		<div
 			v-if="availableUsers.length > 1"
 			class="mb-4 row"
+			id="resume-session"
 		>
 			<div
 				v-for="(item, index) in availableUsers"
