@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Пожалуйста, войдите в свою учётную запись {username} , чтобы перейти к {website}",
 		"logout": "Выйти",
-		"continue-page": "Перейти к {website}"
+		"continue-page": "Перейти к {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Загрузить еще",
@@ -87,7 +88,8 @@
 		"fill-password": "Политика паролей: минимум 8 символов",
 		"login": "Логин",
 		"no-account": "У вас нет учетной записи?",
-		"register": "Зарегистрироваться"
+		"register": "Зарегистрироваться",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Я согласен с Условиями использования",
