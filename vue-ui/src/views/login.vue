@@ -3,6 +3,28 @@
 		<h4 class="card-title">
 		{{ $t("router.login") }}
 	</h4>
+		<div
+			v-if="availableUsers.length > 1"
+			class="mb-4 row"
+		>
+			<div
+				v-for="(item, index) in availableUsers"
+				:key="index"
+				class="col-sm-3"
+			>
+				<a
+					href="#"
+					:title="$t('login.resume', { email: item.email })"
+					@click="resumeSession(item.email)"
+				>
+					<img
+						class="rounded-circle img-fluid"
+						:alt="item.email"
+						:src="'https://www.gravatar.com/avatar/' + item.hash"
+					>
+				</a>
+			</div>
+		</div>
 		<ValidationObserver
 			v-if="!loading"
 			v-slot="{ invalid }"
@@ -134,6 +156,8 @@
 </template>
 
 <script>
+const md5 = require("md5");
+
 export default {
 	name: "Login",
 	data() {
@@ -143,10 +167,19 @@ export default {
 			loading: true,
 			error: 0,
 			certTimeout: null,
+			availableUsers: [],
 		};
 	},
 	beforeMount() {
 		this.routeUser();
+		
+		this.availableUsers = [];
+		this.$root.listLoginToken().forEach(email => {
+			this.availableUsers.push({
+				hash: md5(email),
+				email: email,
+			});
+		});
 	},
 	mounted() {
 		window.addEventListener("message", event => {
@@ -206,6 +239,10 @@ export default {
 					);
 				}, 1000);
 			}
+		},
+		resumeSession(email) {
+			this.$root.useLoginToken(email);
+			this.routeUser();
 		},
 	},
 };

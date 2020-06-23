@@ -44,7 +44,7 @@ class MiddlewareHelper {
 
 	checkAuthToken(token) {
 		return JWT.verify(token, this.ownJwtToken, {
-			maxAge: JWT.age().SHORT,
+			maxAge: JWT.age().LONG,
 		});
 	}
 

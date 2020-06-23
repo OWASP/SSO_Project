@@ -248,7 +248,7 @@ class ssoFlow {
 		const ssoToken = req.headers["x-sso-token"];
 		
 		JWT.verify(ssoToken, this.ownJwtToken, {
-			maxAge: JWT.age().MEDIUM,
+			maxAge: JWT.age().LONG,
 		}).then(jwtRequest => {
 			if(!jwtRequest.pageId) return next();
 			req.ssoRequest = jwtRequest;

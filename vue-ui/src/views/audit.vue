@@ -21,6 +21,14 @@
 				>
 					{{ $t("audit.wrong-account", { username: $root.ssoPage.username, website: $root.ssoPage.name }) }}
 				</div>
+				<div
+					v-if="
+						$root.ssoPage && ssoOutError
+					"
+					class="alert alert-danger"
+				>
+					{{ $t("audit.sso-out-error", { website: $root.ssoPage.name }) }}
+				</div>
 				<button
 					id="logout"
 					type="button"
@@ -31,7 +39,7 @@
 				</button>
 				<button
 					v-if="
-						$root.ssoPage && $root.ssoPage.pageId && 
+						!ssoOutError && $root.ssoPage && $root.ssoPage.pageId && 
 							(!$root.ssoPage.hasOwnProperty('username') ||
 								$root.ssoPage.username == $root.user.username)
 					"
@@ -96,6 +104,7 @@ export default {
 		return {
 			loading: true,
 			redirect: null,
+			ssoOutError: false,
 			
 			jwtToken: "",
 			SAMLResponse: "",
@@ -148,6 +157,9 @@ export default {
 							this.$refs.flowOut.submit();
 						});
 					}
+				}).catch(err => {
+					this.loading = true;
+					this.ssoOutError = true;
 				});
 		},
 	},
