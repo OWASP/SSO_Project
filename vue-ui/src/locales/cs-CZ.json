@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Pro pokračování v {website} se prosím přihlaste do svého účtu {username}",
 		"logout": "Odhlásit se",
-		"continue-page": "Pokračovat na {website}"
+		"continue-page": "Pokračovat na {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Načíst více",
@@ -87,7 +88,8 @@
 		"fill-password": "Zásady hesel: minimálně 8 znaků",
 		"login": "Přihlásit se",
 		"no-account": "Nemáte účet?",
-		"register": "Zaregistrovat se nyní"
+		"register": "Zaregistrovat se nyní",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Souhlasím s obchodními podmínkami",
