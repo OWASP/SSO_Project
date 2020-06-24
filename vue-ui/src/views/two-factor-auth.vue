@@ -139,7 +139,7 @@ export default {
 	},
 	methods: {
 		initTwoFa() {
-			if (this.$route.params.token) {
+			if (this.$route && this.$route.params && this.$route.params.token) {
 				this.$root.apiGet("/email-confirm", {
 					token: this.$route.params.token,
 					action: "login",

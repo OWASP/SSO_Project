@@ -26,6 +26,7 @@ const baseOptions = {
 		return {
 			email: "email",
 			password: "password",
+			certSubmitted: true,
 		};
 	},
 	mocks: {
@@ -96,23 +97,26 @@ describe("Login (View)", () => {
 	});
 	
 	it("attempts a cert login after a successful login", done => {
+		expect(getMe.called).to.equal(false);
+
 		window.HTMLFormElement.prototype.submit = () => {
+			expect(getMe.called).to.equal(true);
+			
 			done();
 		};
 		
 		const loggedinWrapper = mount(Login, baseOptions);
 		loggedinWrapper.vm.$nextTick().then(() => {
-			expect(getMe.called).to.equal(true);
+			loggedinWrapper.vm.routeUser();
 		});
 	});
 	
 	it("falls back to two-factor if certificate times out", done => {
+		routerPush.resetHistory();
 		window.HTMLFormElement.prototype.submit = () => {};
 		
 		const loggedinWrapper = mount(Login, baseOptions);
 		loggedinWrapper.vm.$nextTick().then(() => {
-			expect(routerPush.called).to.equal(false);
-			
 			loggedinWrapper.vm.certFrameLoad();
 			setTimeout(() => {
 				expect(routerPush.calledWith("/two-factor")).to.equal(true);

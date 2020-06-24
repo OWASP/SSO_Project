@@ -102,7 +102,6 @@ describe("Two-Factor-Auth (View)", () => {
 	});
 	
 	it("automatically activates email token", async () => {
-		getMe.resetHistory();
 		apiGet.resetHistory();
 		setLoginToken.resetHistory();
 		routerPush.resetHistory();
@@ -126,7 +125,6 @@ describe("Two-Factor-Auth (View)", () => {
 		const confirmWrapper = shallowMount(TwoFA, baseOptions);
 		await confirmWrapper.vm.$nextTick();
 		
-		expect(getMe.called).to.equal(true);
 		expect(apiGet.calledWith("/email-confirm")).to.equal(true);
 		expect(setLoginToken.calledWith("username")).to.equal(true);
 		expect(routerPush.calledWith("/audit")).to.equal(true);
