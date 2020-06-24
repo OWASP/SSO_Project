@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Bitte wechseln Sie zum Konto {username} um sich bei {website} anmelden zu können",
 		"logout": "Abmelden",
-		"continue-page": "Anmelden bei {website}"
+		"continue-page": "Anmelden bei {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Mehr anzeigen",
@@ -87,7 +88,8 @@
 		"fill-password": "Das Passwort muss aus mindestens 8 Zeichen bestehen",
 		"login": "Anmelden",
 		"no-account": "Noch kein Konto?",
-		"register": "Jetzt registrieren"
+		"register": "Jetzt registrieren",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Ich stimme den Nutzungsbedingungen zu",

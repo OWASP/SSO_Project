@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Accedi al tuo account {username} per continuare a {website}",
 		"logout": "Esci dal gioco",
-		"continue-page": "Continua su {website}"
+		"continue-page": "Continua su {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Carica di più",
@@ -87,7 +88,8 @@
 		"fill-password": "Criteri password: minimo 8 caratteri",
 		"login": "Login",
 		"no-account": "Non hai un account?",
-		"register": "Registrati ora"
+		"register": "Registrati ora",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Accetto i Termini e le Condizioni",

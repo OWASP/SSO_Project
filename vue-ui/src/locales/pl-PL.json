@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Zaloguj się na swoje konto {username} , aby przejść do {website}",
 		"logout": "Wyloguj się",
-		"continue-page": "Przejdź do {website}"
+		"continue-page": "Przejdź do {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Załaduj więcej",
@@ -87,7 +88,8 @@
 		"fill-password": "Zasady hasła: co najmniej 8 znaków",
 		"login": "Logowanie",
 		"no-account": "Nie masz konta?",
-		"register": "Zarejestruj się"
+		"register": "Zarejestruj się",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Akceptuję Regulamin",

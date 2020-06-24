@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "Te rugăm să te autentifici în contul tău {username} pentru a continua la {website}",
 		"logout": "Deconectare",
-		"continue-page": "Continuă la {website}"
+		"continue-page": "Continuă la {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "Încarcă mai mult",
@@ -87,7 +88,8 @@
 		"fill-password": "Politica parolei: minimum 8 caractere",
 		"login": "Autentificare",
 		"no-account": "Nu ai un cont?",
-		"register": "Înregistrează-te acum"
+		"register": "Înregistrează-te acum",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "Sunt de acord cu Termenii și Condițiile",

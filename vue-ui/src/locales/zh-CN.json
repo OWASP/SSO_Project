@@ -25,7 +25,8 @@
 	"audit": {
 		"wrong-account": "请登录到您的帐户 {username} 并继续到 {website}",
 		"logout": "注销",
-		"continue-page": "继续至 {website}"
+		"continue-page": "继续至 {website}",
+		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
 	},
 	"audit-log": {
 		"load-more": "加载更多",
@@ -87,7 +88,8 @@
 		"fill-password": "密码策略：至少 8 个字符",
 		"login": "登录",
 		"no-account": "没有账户？",
-		"register": "立即注册"
+		"register": "立即注册",
+		"resume": "Resume session as {email}"
 	},
 	"register": {
 		"toc-agree-label": "我同意条款和条件",
