@@ -126,8 +126,10 @@ new Vue({
 			return JSON.parse(localStorage.getItem(email));
 		},
 		useLoginToken(email) {
+			const getToken = this.getLoginTokenData(email);
+			if(!getToken) return;
 			localStorage.setItem("active-user", email);
-			this.authToken = this.getLoginTokenData(email);
+			this.authToken = getToken;
 			this.axios.defaults.headers.common["Authorization"] = "Bearer "+this.authToken.token;
 		},
 		signOutToken() {

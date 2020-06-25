@@ -131,6 +131,10 @@ class ssoFlow {
 			return res.status(400).send("Invalid session JWT");
 		}
 		
+		if(req.query.check) {
+			return res.status(200).send("success");
+		}
+		
 		Audit.add(req, "page", "login", thisPage.name).then(() => {
 			if(jwtRequest.jwt) {
 				JWT.sign({
