@@ -158,7 +158,7 @@ export default {
 						});
 					}
 				}).catch(err => {
-					this.loading = true;
+					this.loading = false;
 					this.ssoOutError = true;
 				});
 		},
