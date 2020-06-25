@@ -1,117 +1,117 @@
 {
 	"general": {
-		"privacy": "Privacy",
-		"imprint": "Imprint",
+		"privacy": "プライバシー",
+		"imprint": "インプリント",
 		"about": "About",
-		"loading": "Loading...",
-		"email-address": "EMail Address",
-		"password": "Password"
+		"loading": "読み込み中...",
+		"email-address": "Emailアドレス",
+		"password": "パスワード"
 	},
 	"router": {
-		"login": "Login",
-		"register": "Register",
-		"reset-password": "Reset password",
-		"change-password": "Change password",
-		"confirm": "Confirm your identity",
-		"review": "Review Activity",
-		"about": "About this page"
+		"login": "ログイン",
+		"register": "登録",
+		"reset-password": "パスワードのリセット",
+		"change-password": "パスワードの変更",
+		"confirm": "本人確認を行う",
+		"review": "アクティビティを確認",
+		"about": "このページについて"
 	},
 	"about": {
-		"icons": "Icons",
-		"opensource": "Open Source Components",
-		"security": "Security Reports",
-		"security-banner": "To be listed here, find and report important security vulnerabilities"
+		"icons": "アイコン",
+		"opensource": "オープンソースコンポーネント",
+		"security": "セキュリティレポート",
+		"security-banner": "ここにリストされるには、重要なセキュリティ脆弱性を見つけて報告してください"
 	},
 	"audit": {
-		"wrong-account": "Please log into your account {username} to continue to {website}",
-		"logout": "Log out",
-		"continue-page": "Continue to {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"wrong-account": "{username} アカウントにログインして {website} に進んでください",
+		"logout": "ログアウト",
+		"continue-page": "{website} に進む",
+		"sso-out-error": "{website}へのログインエラーが発生しました。ページを再読み込みするか、このページから別のサインインを試みてください！"
 	},
 	"audit-log": {
-		"load-more": "Load more",
-		"close-sessions": "Close sessions",
-		"report": "This wasn't me - report suspicious event",
+		"load-more": "さらに読み込む",
+		"close-sessions": "セッションを閉じる",
+		"report": "不審なイベントを報告する",
 		"meta": "by IP {IP} at {date}",
 		"titles": {
-			"page-registration": "Page registration",
-			"page-request": "Login request",
-			"page-login": "Logged into page",
-			"login-email": "EMail confirmation",
-			"login-password": "User login",
-			"authenticator-add": "Authenticator added",
-			"authenticator-remove": "Authenticator removed",
-			"authenticator-login": "Authenticator confirmation",
-			"session-clean": "Sessions closed",
-			"session-report": "Activity reported"
+			"page-registration": "ページ登録",
+			"page-request": "ログインリクエスト",
+			"page-login": "ログインしています",
+			"login-email": "Emailの確認",
+			"login-password": "ユーザーログイン",
+			"authenticator-add": "認証システムが追加されました",
+			"authenticator-remove": "認証システムが削除されました",
+			"authenticator-login": "認証システムの確認",
+			"session-clean": "セッションが閉じられました",
+			"session-report": "アクティビティの報告"
 		},
 		"messages": {
-			"page-registration": "Registered by page {attribute}",
-			"page-request": "Login request from {attribute}",
-			"page-login": "Logged in to {attribute}",
-			"login-email": "Login via EMail confirmation",
-			"login-password": "Login via password",
-			"authenticator-add": "Device {attribute} added",
-			"authenticator-remove": "Device {attribute} removed",
-			"authenticator-login": "Logged in using {attribute}",
-			"session-clean": "Other sessions closed",
-			"session-report": "Reported suspicious activity #{attribute}"
+			"page-registration": "{attribute}ページで登録",
+			"page-request": "{attribute} からのログインリクエスト",
+			"page-login": "{attribute} にログインしました",
+			"login-email": "Emailでログインする",
+			"login-password": "パスワードでログイン",
+			"authenticator-add": "デバイス {attribute} が追加されました",
+			"authenticator-remove": "デバイス {attribute} を削除しました",
+			"authenticator-login": "{attribute} を使用してログインしました",
+			"session-clean": "その他のセッションは終了しました",
+			"session-report": "不審なアクティビティ #{attribute} を報告しました"
 		}
 	},
 	"authenticator": {
-		"add": "Add authenticator",
-		"review": "Review authenticators",
-		"remove": "Remove this authenticator",
-		"hint": "Do you want to speed up your next login? Give this device a name and add it to your account.",
-		"fido2-title": "FIDO2 Token",
-		"cert-title": "Device Certificate",
-		"choose-type-title": "Choose the type of authenticator you want to add",
-		"choose": "Choose...",
-		"choose-cert": "Certificate",
-		"fill-choose": "Please select a type",
-		"label": "Label",
-		"label-title": "Enter a name for this authenticator",
-		"fill-label": "Please enter a name",
-		"submit-title": "Fill out details and click here to add an authenticator"
+		"add": "認証システムを追加",
+		"review": "認証システムの確認",
+		"remove": "この認証システムを削除する",
+		"hint": "次のログインをスピードアップしますか？このデバイスに名前を付けてアカウントに追加してください。",
+		"fido2-title": "FIDO2トークン",
+		"cert-title": "デバイス証明書",
+		"choose-type-title": "追加する認証システムの種類を選択してください",
+		"choose": "選択...",
+		"choose-cert": "証明書",
+		"fill-choose": "種類を選択してください",
+		"label": "ラベル",
+		"label-title": "この認証システムの名前を入力してください",
+		"fill-label": "名前を入力してください",
+		"submit-title": "詳細を記入し、ここをクリックして認証を追加"
 	},
 	"change-password": {
-		"token": "E-Mail Token",
-		"fill-token": "Enter the full confirmation token that you received via email",
-		"confirm-password": "Confirm Password",
-		"fill-confirmation": "The passwords do not match",
-		"submit": "Apply Changes"
+		"token": "メールトークン",
+		"fill-token": "メールで受け取った完全な確認トークンを入力してください",
+		"confirm-password": "パスワードの確認",
+		"fill-confirmation": "パスワードが一致しません",
+		"submit": "変更を適用"
 	},
 	"login": {
-		"404": "Username or password invalid",
-		"fill-email": "Please provide a valid email address",
-		"reset-password": "Forgot Password?",
-		"fill-password": "Password policy: Minimum 8 characters",
-		"login": "Login",
-		"no-account": "Don't have an account?",
-		"register": "Register Now",
-		"resume": "Resume session as {email}"
+		"404": "ユーザー名またはパスワードが無効です",
+		"fill-email": "有効なメールアドレスを入力してください",
+		"reset-password": "パスワードをお忘れですか？",
+		"fill-password": "パスワードポリシー：最低8文字",
+		"login": "ログイン",
+		"no-account": "アカウントをお持ちでないですか？",
+		"register": "今すぐ登録",
+		"resume": "セッションを {email} として再開"
 	},
 	"register": {
-		"toc-agree-label": "I agree to the Terms and Conditions",
-		"fill-toc": "You need to agree to use this service",
-		"success": "If the email address you entered is not already registered, please check your email inbox for a confirmation link!",
-		"400": "Your password was not sufficiently secure or you are resetting from a different network than you requested it from.",
-		"register": "Register",
-		"already-account": "Already have an account?",
-		"switch-login": "Back to login"
+		"toc-agree-label": "利用規約に同意します",
+		"fill-toc": "このサービスの使用に同意する必要があります",
+		"success": "入力したメールアドレスがまだ登録されていない場合は、メールの受信トレイに確認してください。",
+		"400": "パスワードが十分に安全でなかったか、リクエストされたネットワークとは異なるネットワークからリセットしています。",
+		"register": "登録",
+		"already-account": "既にアカウントをお持ちですか？",
+		"switch-login": "ログインに戻る"
 	},
 	"reset-password": {
-		"error": "An error occured - please try again later!",
-		"success": "If the email address you entered is known, please check your email inbox for a password reset link!",
-		"reset-password": "Reset password",
-		"remember-password": "Remember you password?"
+		"error": "エラーが発生しました。後でもう一度お試しください！",
+		"success": "入力したメールアドレスがわかっている場合は、メールの受信トレイにパスワードリセットリンクがないか確認してください!",
+		"reset-password": "パスワードのリセット",
+		"remember-password": "パスワードを覚えていますか？"
 	},
 	"confirm": {
 		"fido2": "FIDO2",
-		"email": "EMail",
-		"success": "Please check your email inbox for an authentication link. You can close this window now.",
-		"400": "Email token invalid",
-		"401": "Invalid FIDO2 authenticator",
-		"wrong-account": "Wrong account?"
+		"email": "Email",
+		"success": "メールの受信トレイに認証リンクがないか確認してください。このウィンドウを閉じることができます。",
+		"400": "メールトークンが無効です",
+		"401": "無効なFIDO2認証器",
+		"wrong-account": "間違ったアカウントですか？"
 	}
 }
