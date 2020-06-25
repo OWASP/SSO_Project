@@ -131,7 +131,7 @@ class ssoFlow {
 			return res.status(400).send("Invalid session JWT");
 		}
 		
-		if(req.query.check) {
+		if(req.query && req.query.check) {
 			return res.status(200).send("success");
 		}
 		
