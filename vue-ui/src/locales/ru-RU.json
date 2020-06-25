@@ -26,7 +26,7 @@
 		"wrong-account": "Пожалуйста, войдите в свою учётную запись {username} , чтобы перейти к {website}",
 		"logout": "Выйти",
 		"continue-page": "Перейти к {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"sso-out-error": "Произошла ошибка при входе в {website}. Попробуйте перезагрузить страницу или попробовать другой вход с этой страницы!"
 	},
 	"audit-log": {
 		"load-more": "Загрузить еще",
@@ -89,7 +89,7 @@
 		"login": "Логин",
 		"no-account": "У вас нет учетной записи?",
 		"register": "Зарегистрироваться",
-		"resume": "Resume session as {email}"
+		"resume": "Возобновить сессию как {email}"
 	},
 	"register": {
 		"toc-agree-label": "Я согласен с Условиями использования",
