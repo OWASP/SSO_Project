@@ -26,7 +26,7 @@
 		"wrong-account": "请登录到您的帐户 {username} 并继续到 {website}",
 		"logout": "注销",
 		"continue-page": "继续至 {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"sso-out-error": "登录到 {website}时发生错误。尝试重新加载页面或尝试从此页面登录！"
 	},
 	"audit-log": {
 		"load-more": "加载更多",
@@ -89,7 +89,7 @@
 		"login": "登录",
 		"no-account": "没有账户？",
 		"register": "立即注册",
-		"resume": "Resume session as {email}"
+		"resume": "恢复会话为 {email}"
 	},
 	"register": {
 		"toc-agree-label": "我同意条款和条件",
