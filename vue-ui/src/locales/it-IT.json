@@ -26,7 +26,7 @@
 		"wrong-account": "Accedi al tuo account {username} per continuare a {website}",
 		"logout": "Esci dal gioco",
 		"continue-page": "Continua su {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"sso-out-error": "Incontrato un errore di accesso in {website}. Prova a ricaricare la pagina o prova un altro accesso da questa pagina!"
 	},
 	"audit-log": {
 		"load-more": "Carica di più",
@@ -89,7 +89,7 @@
 		"login": "Login",
 		"no-account": "Non hai un account?",
 		"register": "Registrati ora",
-		"resume": "Resume session as {email}"
+		"resume": "Riprendi la sessione come {email}"
 	},
 	"register": {
 		"toc-agree-label": "Accetto i Termini e le Condizioni",
