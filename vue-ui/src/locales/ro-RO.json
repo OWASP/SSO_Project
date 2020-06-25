@@ -26,7 +26,7 @@
 		"wrong-account": "Te rugăm să te autentifici în contul tău {username} pentru a continua la {website}",
 		"logout": "Deconectare",
 		"continue-page": "Continuă la {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"sso-out-error": "S-a răspuns la o eroare de conectare în {website}. Încercați să reîncărcați pagina sau încercați să vă conectați de pe această pagină!"
 	},
 	"audit-log": {
 		"load-more": "Încarcă mai mult",
@@ -89,7 +89,7 @@
 		"login": "Autentificare",
 		"no-account": "Nu ai un cont?",
 		"register": "Înregistrează-te acum",
-		"resume": "Resume session as {email}"
+		"resume": "Reluați sesiunea ca {email}"
 	},
 	"register": {
 		"toc-agree-label": "Sunt de acord cu Termenii și Condițiile",
