@@ -26,7 +26,7 @@
 		"wrong-account": "Logga in på ditt konto {username} för att fortsätta till {website}",
 		"logout": "Logga ut",
 		"continue-page": "Fortsätt till {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"sso-out-error": "Motverkat ett fel vid inloggning till {website}. Försök att ladda om sidan eller försök med en annan inloggning från denna sida!"
 	},
 	"audit-log": {
 		"load-more": "Ladda mer",
@@ -89,7 +89,7 @@
 		"login": "Inloggning",
 		"no-account": "Har du inget konto?",
 		"register": "Registrera dig nu",
-		"resume": "Resume session as {email}"
+		"resume": "Återuppta sessionen som {email}"
 	},
 	"register": {
 		"toc-agree-label": "Jag godkänner de allmänna villkoren",

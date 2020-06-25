@@ -26,7 +26,7 @@
 		"wrong-account": "Log in op uw account {username} om door te gaan met {website}",
 		"logout": "Log uit",
 		"continue-page": "Ga verder naar {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"sso-out-error": "Er is een fout opgetreden bij het inloggen op {website}. Probeer de pagina te herladen of probeer een andere aanmelding vanaf deze pagina!"
 	},
 	"audit-log": {
 		"load-more": "Meer laden",
@@ -89,7 +89,7 @@
 		"login": "Aanmelden",
 		"no-account": "Nog geen account?",
 		"register": "Registreer nu",
-		"resume": "Resume session as {email}"
+		"resume": "Hervat sessie als {email}"
 	},
 	"register": {
 		"toc-agree-label": "Ik ga akkoord met de algemene voorwaarden",

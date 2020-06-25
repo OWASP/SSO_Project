@@ -26,7 +26,7 @@
 		"wrong-account": "Por favor, faça login na sua conta {username} para continuar em {website}",
 		"logout": "Efetuar logout",
 		"continue-page": "Continuar para {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"sso-out-error": "Ocorreu um erro ao entrar em {website}. Tente recarregar a página ou tente fazer outro login desta página!"
 	},
 	"audit-log": {
 		"load-more": "Carregue mais",
@@ -89,7 +89,7 @@
 		"login": "Conectar-se",
 		"no-account": "Não possui uma conta?",
 		"register": "Registre-se Agora",
-		"resume": "Resume session as {email}"
+		"resume": "Retomar a sessão como {email}"
 	},
 	"register": {
 		"toc-agree-label": "Eu concordo com os termos e condições",
