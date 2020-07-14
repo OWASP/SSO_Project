@@ -49,18 +49,18 @@ class Audit {
 				}
 			}
 			
-			const scheduledPromises = [
-				this.databaseAdd(userId, ip, country, object, action, attribute),
-			];
-			loggers.forEach(syslogItem => {
-				scheduledPromises.push(this.cefSend(syslogItem, {userName, userId, ip, country, object, action, attribute}));
-			});
-			
-			Promise.all(scheduledPromises).then(results => {
-				resolve(results[0]);
-			}).catch(err => {
-				console.error(err);
-				reject(err);
+			this.databaseAdd(userId, ip, country, object, action, attribute).then(auditId => {
+				const scheduledPromises = [];
+				loggers.forEach(syslogItem => {
+					scheduledPromises.push(this.cefSend(syslogItem, {userName, userId, auditId, ip, country, object, action, attribute}));
+				});
+				
+				Promise.all(scheduledPromises).then(results => {
+					resolve(auditId);
+				}).catch(err => {
+					console.error(err);
+					reject(err);
+				});
 			});
 		});
 	}
