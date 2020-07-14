@@ -104,6 +104,8 @@ class Audit {
 		});
 	}
 	cefSend(syslogDst, attributes) {
+		const currentDate = new Date();
+		attributes.time = currentDate.toISOString();
 		const cefMessage = new syslogPro.CEF({
 			deviceVendor: "OWASP Foundation",
 			deviceProduct: "OWASP SSO",
