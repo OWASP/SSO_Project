@@ -33,6 +33,7 @@ class Audit {
 	add(req, object, action, attribute) {
 		return new Promise((resolve, reject) => {
 			const userId = req.user ? req.user.id : null;
+			const userName = req.user && req.user.username ? req.user.username : null;
 			const ip = this.getIP(req);
 			const ipInfo = ipCountry.lookup(ip);
 			const country = (ipInfo && ipInfo.country) ? ipInfo.country.iso_code : null;
@@ -52,7 +53,7 @@ class Audit {
 				this.databaseAdd(userId, ip, country, object, action, attribute),
 			];
 			loggers.forEach(syslogItem => {
-				scheduledPromises.push(this.cefSend(syslogItem, {userId, ip, country, object, action, attribute}));
+				scheduledPromises.push(this.cefSend(syslogItem, {userName, userId, ip, country, object, action, attribute}));
 			});
 			
 			Promise.all(scheduledPromises).then(results => {
