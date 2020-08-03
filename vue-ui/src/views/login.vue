@@ -174,15 +174,7 @@ export default {
 		};
 	},
 	beforeMount() {
-		this.availableUsers = [];
-		this.$root.listLoginToken().forEach(email => {
-			this.availableUsers.push({
-				hash: md5(email),
-				email: email,
-			});
-		});
-		
-		this.loading = false;
+		this.loadAvailableUsers();
 	},
 	mounted() {
 		window.addEventListener("message", event => {
@@ -196,6 +188,17 @@ export default {
 		}, false);
 	},
 	methods: {
+		loadAvailableUsers() {
+			this.availableUsers = [];
+			this.$root.listLoginToken().forEach(email => {
+				this.availableUsers.push({
+					hash: md5(email),
+					email: email,
+				});
+			});
+			
+			this.loading = false;
+		},
 		submit() {
 			this.loading = true;
 
@@ -228,7 +231,9 @@ export default {
 				})
 				.catch(() => {
 					this.loading = false;
+					this.error = 404;
 					this.$root.changeUser(this.$root.emptyUser);
+					this.loadAvailableUsers();
 				});
 		},
 		certFrameLoad() {
