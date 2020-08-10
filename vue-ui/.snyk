@@ -1,0 +1,36 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - '@vue/cli-service > html-webpack-plugin > lodash':
+        patched: '2020-08-10T17:25:03.272Z'
+    - '@vue/cli-service > webpack-bundle-analyzer > lodash':
+        patched: '2020-08-10T17:25:03.272Z'
+    - '@vue/cli-service > webpack-merge > lodash':
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/types > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/traverse > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
+    - '@vue/cli-service > portfinder > async > lodash':
+        patched: '2020-08-10T17:25:03.272Z'
+    - '@vue/cli-service > webpack-dev-server > http-proxy-middleware > lodash':
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/traverse > @babel/types > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/traverse > @babel/generator > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
+    - '@vue/cli-service > webpack-dev-server > portfinder > async > lodash':
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/traverse > @babel/generator > @babel/types > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/traverse > @babel/helper-function-name > @babel/types > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
+    - babel-eslint > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2020-08-10T17:25:03.272Z'
