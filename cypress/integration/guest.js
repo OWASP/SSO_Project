@@ -33,6 +33,7 @@ describe("Guest Activity", () => {
 		
 		cy.visit("/");
 		cy.get("#goReset").click();
+		cy.wait(50);
 		cy.get("#email").type(Cypress.env("emailAddress"));
 		cy.get("button[type=submit]").click();
 		
