@@ -27,7 +27,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"mysql2": "^1.7.0",
 		"node-forge": "^0.10.0",
-		"nodemailer": "^6.4.10",
+		"nodemailer": "^6.4.16",
 		"samlp": "^3.4.3",
 		"syslog-pro": "^1.0.0",
 		"validator": "^12.2.0"
