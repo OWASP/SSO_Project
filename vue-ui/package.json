@@ -14,7 +14,7 @@
   "dependencies": {
     "@vue/cli-plugin-router": "^4.4.5",
     "@vue/cli-service": "^4.4.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "base64-arraybuffer": "^0.2.0",
     "bootstrap": "^4.5.0",
