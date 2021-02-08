@@ -136,7 +136,7 @@ new Vue({
 			let tokenUser = this.user.username ? this.user.username : this.listLoginToken()[0];
 			this.removeLoginToken(tokenUser);
 			delete this.axios.defaults.headers.common["Authorization"];
-			delete this.axios.defaults.headers.common["X-SSO-Token"];
+			//delete this.axios.defaults.headers.common["X-SSO-Token"];
 		},
 		getMe() {
 			return new Promise((resolve, reject) => {
