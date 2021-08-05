@@ -1,36 +1,36 @@
 {
 	"general": {
-		"privacy": "Privacy",
-		"imprint": "Imprint",
-		"about": "About",
-		"loading": "Loading...",
-		"email-address": "EMail Address",
-		"password": "Password"
+		"privacy": "Privacidade",
+		"imprint": "Imprimir",
+		"about": "Sobre",
+		"loading": "Carregando...",
+		"email-address": "Endereço de E-mail",
+		"password": "Senha"
 	},
 	"router": {
 		"login": "Login",
-		"register": "Register",
-		"reset-password": "Reset password",
-		"change-password": "Change password",
-		"confirm": "Confirm your identity",
-		"review": "Review Activity",
-		"about": "About this page"
+		"register": "Registar",
+		"reset-password": "Redefinir senha",
+		"change-password": "Mudar senha",
+		"confirm": "Confirme a sua identidade",
+		"review": "Revisar Atividade",
+		"about": "Sobre esta página"
 	},
 	"about": {
-		"icons": "Icons",
-		"opensource": "Open Source Components",
-		"security": "Security Reports",
-		"security-banner": "To be listed here, find and report important security vulnerabilities"
+		"icons": "Ícones",
+		"opensource": "Componentes Open Source",
+		"security": "Relatórios de Segurança",
+		"security-banner": "Para ser listado aqui, encontre e relate importantes vulnerabilidades de segurança"
 	},
 	"audit": {
-		"wrong-account": "Please log into your account {username} to continue to {website}",
-		"logout": "Log out",
-		"continue-page": "Continue to {website}",
-		"sso-out-error": "Encountered an error logging into {website}. Try to reload the page or attempt another sign in from this page!"
+		"wrong-account": "Por favor, faça login na sua conta {username} para continuar em {website}",
+		"logout": "Encerrar sessão",
+		"continue-page": "Continuar para {website}",
+		"sso-out-error": "Ocorreu um erro ao entrar em {website}. Tente recarregar a página ou tente fazer outro login desta página!"
 	},
 	"audit-log": {
-		"load-more": "Load more",
-		"close-sessions": "Close sessions",
+		"load-more": "Carregar mais",
+		"close-sessions": "Encerrar sessões",
 		"report": "This wasn't me - report suspicious event",
 		"meta": "by IP {IP} at {date}",
 		"titles": {
