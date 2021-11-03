@@ -30,7 +30,7 @@
 		"nodemailer": "^6.6.1",
 		"samlp": "^6.0.1",
 		"syslog-pro": "^1.0.0",
-		"validator": "^13.6.0"
+		"validator": "^13.7.0"
 	},
 	"devDependencies": {
 		"babel-eslint": "^10.1.0",
