@@ -26,7 +26,7 @@
 		"ip-country": "^1.0.2",
 		"jsonwebtoken": "^8.5.1",
 		"mysql2": "^1.7.0",
-		"node-forge": "^0.10.0",
+		"node-forge": "^1.0.0",
 		"nodemailer": "^6.6.1",
 		"samlp": "^6.0.1",
 		"syslog-pro": "^1.0.0",
